@@ -8,13 +8,13 @@ import "./styles/App.css";
 
 function App() {
   return (
-    <div className="App">
+    <div className="flex w-screen h-screen">
       <MenuBar />
 
       <Route
         render={({ location }) => (
           <SwitchTransition mode={"out-in"}>
-            <CSSTransition key={location.key} classNames="fade" timeout={300}>
+            <CSSTransition key={location.key} classNames="fade" timeout={200}>
               <Switch location={location}>
                 {/* Switch chooses exactly 1 element and renders it */}
                 <Route path="/" component={Home} exact />
