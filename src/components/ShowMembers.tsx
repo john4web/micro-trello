@@ -1,12 +1,14 @@
 import React, { Fragment } from "react";
-import { AddMember } from "./AddMember";
+import { MemberList } from "./MemberList";
 import { useDispatch } from "react-redux";
-export const MemberDialog = () => {
+export const ShowMembers = () => {
   const dispatch = useDispatch();
 
   return (
     <Fragment>
-      <AddMember />
+      <div>
+        <MemberList />
+      </div>
     </Fragment>
   );
 };
