@@ -5,7 +5,11 @@ export const MenuBar = () => {
 
   return (
     <ul className="bg-gray-400 flex-col flex">
-      <li className={`w-48 ${location.pathname === "/" ? activeColor : ""}`}>
+      <li
+        className={`w-48 ${
+          location.pathname !== "/members" ? activeColor : ""
+        }`}
+      >
         <Link to="/" className="block px-9 py-10">
           Home
         </Link>

@@ -2,13 +2,14 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 import { Members } from "./views/Members";
 import { Home } from "./views/Home";
+import { Board } from "./views/Board";
 import { MenuBar } from "./components/MenuBar";
 import { SwitchTransition, CSSTransition } from "react-transition-group";
 import "./styles/App.css";
 
 function App() {
   return (
-    <div className="flex w-screen h-screen">
+    <div className="flex w-screen h-screen text-lg">
       <MenuBar />
 
       <Route
@@ -19,6 +20,7 @@ function App() {
                 {/* Switch chooses exactly 1 element and renders it */}
                 <Route path="/" component={Home} exact />
                 <Route path="/members" component={Members} />
+                <Route path="/board/:id" component={Board} />
               </Switch>
             </CSSTransition>
           </SwitchTransition>
