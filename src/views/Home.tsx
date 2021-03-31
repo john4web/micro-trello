@@ -54,9 +54,16 @@ export const Home = () => {
                 key={project.id}
                 className="bg-green-200 m-4 border-black border-2"
               >
-                <Link to={`/board/${project.id}`} className="block px-9 py-10">
-                  {project.name}
-                </Link>
+                <div className="block px-9 py-10">
+                  <Link
+                    to={{
+                      pathname: `/board/${project.id}`,
+                      state: project.name,
+                    }}
+                  >
+                    {project.name}
+                  </Link>
+                </div>
               </li>
             );
           })}
