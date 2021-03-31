@@ -9,11 +9,11 @@ export const MemberList = () => {
     <Fragment>
       {members.map((member, index) => {
         return (
-          <ul>
-            <li key={index}>{member.firstname}</li>
-            <li key={index}>{member.lastname}</li>
-            <li key={index}>{member.job}</li>
-            <li key={index}>{member.skill}</li>
+          <ul key={index}>
+            <li>{member.firstname}</li>
+            <li>{member.lastname}</li>
+            <li>{member.job}</li>
+            <li>{member.skill}</li>
           </ul>
         );
       })}

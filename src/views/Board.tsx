@@ -1,6 +1,6 @@
 import { Link, useParams, useLocation } from "react-router-dom";
 import { ModalWindow } from "../components/ModalWindow";
-import React, { useState } from "react";
+import React from "react";
 import { v4 as uuid } from "uuid";
 export const Board = () => {
   let [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);

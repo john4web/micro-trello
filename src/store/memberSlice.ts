@@ -16,21 +16,20 @@ const memberSlice = createSlice({
     name: "member",
     initialState,
     reducers: {
-        addMember(state, action: PayloadAction<string>) {
+        addMember(state, action: PayloadAction<Member>) {
             state.members.push({
-                // Generate the id outside
+                //Generate the id outside
                 id: uuid(),
-                firstname: action.payload,
-                lastname: action.payload,
-                job: action.payload,
-                skill: action.payload,
-            });
-        },
-        toggleMember(state, action: PayloadAction<Member>) { },
-        toggleFilter(state) { },
+                firstname: action.payload.firstname,
+                lastname: action.payload.lastname,
+                job: action.payload.job,
+                skill: action.payload.skill
+            }
+            );
+        }
     },
 });
 
 export default memberSlice.reducer;
 
-export const { addMember, toggleMember, toggleFilter } = memberSlice.actions;
+export const { addMember } = memberSlice.actions;

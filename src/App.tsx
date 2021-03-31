@@ -1,4 +1,3 @@
-import React from "react";
 import { Switch, Route } from "react-router-dom";
 import Members from "./views/Members";
 import { Home } from "./views/Home";
@@ -6,8 +5,6 @@ import { Board } from "./views/Board";
 import { MenuBar } from "./components/MenuBar";
 import { SwitchTransition, CSSTransition } from "react-transition-group";
 import "./styles/App.css";
-import { Provider } from "react-redux";
-import { store } from "./store";
 
 function App() {
   return (

@@ -1,38 +1,31 @@
-import { useState } from "react";
-
-import Modal from "react-modal";
-import { Provider } from "react-redux";
-import { store } from "../store";
+import { ModalWindow } from "../components/ModalWindow";
 import { MemberList } from "../components/MemberList";
-import { MemberModal } from "../components/MemberModal";
-
-Modal.setAppElement("#root");
+import React from "react";
 
 export default function App() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  function toggleModal() {
-    setIsOpen(!isOpen);
-  }
+  let [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
 
   return (
     <div className="App">
-      <button onClick={toggleModal}>Add Member</button>
-      <Provider store={store}>
-        <MemberList />
-      </Provider>
+      <MemberList />
 
-      <Modal
-        isOpen={isOpen}
-        onRequestClose={toggleModal}
-        contentLabel="Add Member"
+      <button
+        onClick={() => {
+          setModalIsOpen(true);
+        }}
+        className="h-10 px-5 m-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
       >
-        <button onClick={toggleModal}>x</button>
+        + New Member
+      </button>
 
-        <Provider store={store}>
-          <MemberModal />
-        </Provider>
-      </Modal>
+      {modalIsOpen && (
+        <ModalWindow
+          closeModal={() => {
+            setModalIsOpen(false);
+          }}
+          type="member"
+        />
+      )}
     </div>
   );
 }
