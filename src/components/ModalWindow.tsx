@@ -8,14 +8,26 @@ interface IProps {
   type: String;
 }
 
+function renderContent(type: String) {
+  switch (type) {
+    case "project":
+      return <ModalProjectContent />;
+    case "column":
+      return <ModalColumnContent />;
+    case "task":
+      return <ModalTaskContent />;
+    case "member":
+      return <ModalMemberContent />;
+    default:
+      return "Something went wrong";
+  }
+}
+
 export const ModalWindow = ({ closeModal, type }: IProps) => {
   return (
     <div className="absolute w-screen h-screen bg-black bg-opacity-50 top-0 left-0 flex justify-center items-center">
       <div className="w-80 h-80 bg-white opacity-100">
-        {type === "project" ? <ModalProjectContent /> : ""}
-        {type === "column" ? <ModalColumnContent /> : ""}
-        {type === "task" ? <ModalTaskContent /> : ""}
-        {type === "member" ? <ModalMemberContent /> : ""}
+        {renderContent(type)}
         <button
           onClick={() => {
             closeModal();
