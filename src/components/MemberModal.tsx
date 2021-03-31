@@ -6,7 +6,7 @@ import { ErrorMessage } from "./Error";
 import { Input } from "./Input";
 import styled from "styled-components";
 
-export const AddMember = () => {
+export const MemberModal = () => {
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
   const [job, setJob] = useState("");

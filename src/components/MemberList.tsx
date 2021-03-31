@@ -1,28 +1,22 @@
-import { useDispatch, useSelector } from "react-redux";
-import { MemberItem } from "./MemberItem";
-import { toggleMember } from "../store/memberSlice";
-import { useFilteredMembers } from "../hooks/useFilteredMembers";
-import styled from "styled-components";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
+import { Fragment } from "react";
 
 export const MemberList = () => {
-  const dispatch = useDispatch();
-  const filteredMembers = useFilteredMembers();
+  const { members } = useSelector((state: RootState) => state.member);
 
   return (
-    <List>
-      {filteredMembers.map((member) => (
-        <MemberItem
-          key={member.id}
-          member={member}
-          onToggle={() => dispatch(toggleMember(member))}
-        />
-      ))}
-    </List>
+    <Fragment>
+      {members.map((member, index) => {
+        return (
+          <ul>
+            <li key={index}>{member.firstname}</li>
+            <li key={index}>{member.lastname}</li>
+            <li key={index}>{member.job}</li>
+            <li key={index}>{member.skill}</li>
+          </ul>
+        );
+      })}
+    </Fragment>
   );
 };
-
-const List = styled.ul`
-  list-style: none;
-  padding: 0;
-  margin: 0;
-`;

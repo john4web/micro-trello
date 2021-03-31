@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 import Modal from "react-modal";
 import { Provider } from "react-redux";
 import { store } from "../store";
-import { ShowMembers } from "../components/ShowMembers";
-import { MemberDialog } from "../components/MemberDialog";
+import { MemberList } from "../components/MemberList";
+import { MemberModal } from "../components/MemberModal";
 
 Modal.setAppElement("#root");
 
@@ -19,7 +19,7 @@ export default function App() {
     <div className="App">
       <button onClick={toggleModal}>Add Member</button>
       <Provider store={store}>
-        <ShowMembers />
+        <MemberList />
       </Provider>
 
       <Modal
@@ -30,7 +30,7 @@ export default function App() {
         <button onClick={toggleModal}>x</button>
 
         <Provider store={store}>
-          <MemberDialog />
+          <MemberModal />
         </Provider>
       </Modal>
     </div>
