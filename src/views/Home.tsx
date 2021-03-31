@@ -1,10 +1,8 @@
 import { Link } from "react-router-dom";
-import { ProjectDialog } from "../components/ProjectDialog";
+import { ModalWindow } from "../components/ModalWindow";
 import React from "react";
 export const Home = () => {
-  let [projectDialogIsOpen, setProjectDialogIsOpen] = React.useState<boolean>(
-    false
-  );
+  let [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
   const projectData = [
     {
       id: "1",
@@ -31,18 +29,19 @@ export const Home = () => {
       <h1>HOME</h1>
       <button
         onClick={() => {
-          setProjectDialogIsOpen(true);
+          setModalIsOpen(true);
         }}
         className="h-10 px-5 m-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
       >
         + New Project
       </button>
 
-      {projectDialogIsOpen && (
-        <ProjectDialog
-          closeProjectDialog={() => {
-            setProjectDialogIsOpen(false);
+      {modalIsOpen && (
+        <ModalWindow
+          closeModal={() => {
+            setModalIsOpen(false);
           }}
+          type="project"
         />
       )}
 

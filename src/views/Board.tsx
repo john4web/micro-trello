@@ -1,8 +1,10 @@
 import { Link, useParams, useLocation } from "react-router-dom";
-import { ColumnDialog } from "../components/ColumnDialog";
+import { ModalWindow } from "../components/ModalWindow";
 import React, { useState } from "react";
 import { v4 as uuid } from "uuid";
 export const Board = () => {
+  let [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
+
   let { id } = useParams<{ id: string }>();
   let params = useLocation();
 
@@ -31,7 +33,7 @@ export const Board = () => {
   return (
     <div className="ml-3 mt-3">
       <div className="mb-3">
-        <h2 className="text-lg font-bold">Project Name: {params.state} </h2>
+        <h2 className="text-lg font-bold">Projectname: {params.state} </h2>
         <p>Project ID: {id}</p>
       </div>
       <div>
@@ -62,6 +64,23 @@ export const Board = () => {
             );
           })}
         </ul>
+        <button
+          onClick={() => {
+            setModalIsOpen(true);
+          }}
+          className="h-10 px-5 m-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
+        >
+          + New Column
+        </button>
+
+        {modalIsOpen && (
+          <ModalWindow
+            closeModal={() => {
+              setModalIsOpen(false);
+            }}
+            type="column"
+          />
+        )}
       </div>
       <div className="mt-4">
         <Link
