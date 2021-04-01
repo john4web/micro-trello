@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Member } from "../types/member";
+import { Member } from "../types/types";
 import { v4 as uuid } from "uuid";
 
 type MemberState = {

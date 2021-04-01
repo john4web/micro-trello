@@ -3,8 +3,12 @@ import { ModalWindow } from "../components/ModalWindow";
 import { TaskList } from "../components/TaskList";
 import React from "react";
 import { v4 as uuid } from "uuid";
+import { ColumnList } from "../components/ColumnList";
 export const Board = () => {
-  let [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
+  let [modalColumnIsOpen, setModalColumnIsOpen] = React.useState<boolean>(
+    false
+  );
+  let [modalTaskIsOpen, setModalTaskIsOpen] = React.useState<boolean>(false);
 
   let { id } = useParams<{ id: string }>();
   let params = useLocation();
@@ -38,28 +42,32 @@ export const Board = () => {
         <p>Project ID: {id}</p>
       </div>
       <div>
+        <p>Columnlist:</p>
+        <ColumnList />
+        <p>Tasklist:</p>
         <TaskList />
         <button
           onClick={() => {
-            setModalIsOpen(true);
+            setModalTaskIsOpen(true);
           }}
           className="h-10 px-5 m-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
         >
           + New Task
         </button>
 
-        {modalIsOpen && (
+        {modalTaskIsOpen && (
           <ModalWindow
             closeModal={() => {
-              setModalIsOpen(false);
+              setModalTaskIsOpen(false);
             }}
             type="task"
           />
         )}
-        <ul>
+        <ul key="columnData">
           {columnData.map((column) => {
             return (
               <li
+                id={column.id}
                 key={column.id}
                 className="bg-gray-300 border-black border-2 p-2"
               >
@@ -67,10 +75,14 @@ export const Board = () => {
                 <div>
                   {column.tasks.map((task) => {
                     return (
-                      <ul>
+                      <ul key="TaskData">
                         {task.map((taskData) => {
                           return (
-                            <li className="align-middle m-auto mt-2 p-2 bg-gray-200 w-11/12 ">
+                            <li
+                              id={column.id + taskData.id}
+                              key={column.id + taskData.id}
+                              className="align-middle m-auto mt-2 p-2 bg-gray-200 w-11/12 "
+                            >
                               {taskData.content}
                             </li>
                           );
@@ -85,17 +97,17 @@ export const Board = () => {
         </ul>
         <button
           onClick={() => {
-            setModalIsOpen(true);
+            setModalColumnIsOpen(true);
           }}
           className="h-10 px-5 m-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
         >
           + New Column
         </button>
 
-        {modalIsOpen && (
+        {modalColumnIsOpen && (
           <ModalWindow
             closeModal={() => {
-              setModalIsOpen(false);
+              setModalColumnIsOpen(false);
             }}
             type="column"
           />

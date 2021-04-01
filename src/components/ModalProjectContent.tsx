@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addProject } from "../store/projectSlice";
-import { Project } from "../types/project";
+import { Project } from "../types/types";
 
 interface IProps {
   closeModal: Function;
@@ -23,6 +23,7 @@ export const ModalProjectContent = ({ closeModal, type }: IProps) => {
       color: color,
       category: category,
     };
+    console.log(category);
     dispatch(addProject(newProject));
   };
 
@@ -57,27 +58,34 @@ export const ModalProjectContent = ({ closeModal, type }: IProps) => {
       />
 
       <label htmlFor="project-category">Project Category:</label>
-      <select>
+      <select
+        id="project-category"
+        onChange={(e) => setCategory(e.target.value)}
+      >
+        <option
+          value="No Category"
+          id="project-no-category"
+          className="border-black border-2"
+        >
+          --- Select Value ---
+        </option>
         <option
           value="Web Project"
-          onChange={(e) => setCategory(e.currentTarget.value)}
-          id="project-category"
+          id="project-category-web"
           className="border-black border-2"
         >
           Web Project
         </option>
         <option
-          value={category}
-          onChange={(e) => setCategory(e.currentTarget.value)}
-          id="project-category"
+          value="Game Project"
+          id="project-category-game"
           className="border-black border-2"
         >
           Game Project
         </option>
         <option
-          value={category}
-          onChange={(e) => setCategory(e.currentTarget.value)}
-          id="project-category"
+          value="Computer Graphics Project"
+          id="project-category-cg"
           className="border-black border-2"
         >
           Computer Graphics Project

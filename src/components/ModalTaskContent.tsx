@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addTask } from "../store/taskSlice";
-import { Task } from "../types/task";
+import { Task } from "../types/types";
 
 interface IProps {
   closeModal: Function;

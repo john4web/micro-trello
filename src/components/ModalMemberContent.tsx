@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addMember } from "../store/memberSlice";
-import { Member } from "../types/member";
+import { Member } from "../types/types";
 
 interface IProps {
   closeModal: Function;

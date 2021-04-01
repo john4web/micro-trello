@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Task } from "../types/task";
+import { Task } from "../types/types";
 import { v4 as uuid } from "uuid";
 
 type TaskState = {
