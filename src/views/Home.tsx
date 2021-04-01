@@ -1,74 +1,35 @@
-import { Link } from "react-router-dom";
 import { ModalWindow } from "../components/ModalWindow";
 import { ProjectList } from "../components/ProjectList";
 import React from "react";
 export const Home = () => {
-  let [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
-  const projectData = [
-    {
-      id: "1",
-      name: " Projekt1",
-      team: [{}, {}, {}],
-      color: "#0000ff",
-    },
-    {
-      id: "2",
-      name: " Projekt2",
-      team: [{}, {}, {}],
-      color: "#00ff00",
-    },
-    {
-      id: "3",
-      name: " Projekt3",
-      team: [{}, {}, {}],
-      color: "#ff0000",
-    },
-  ];
+  let [categoryModalIsOpen, setCategoryModalIsOpen] = React.useState<boolean>(
+    false
+  );
 
   return (
     <div className="bg-yellow-100 w-full">
       <h1>HOME</h1>
-      <ProjectList />
+
       <button
         onClick={() => {
-          setModalIsOpen(true);
+          setCategoryModalIsOpen(true);
         }}
         className="h-10 px-5 m-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
       >
-        + New Project
+        + New Category
       </button>
 
-      {modalIsOpen && (
+      {categoryModalIsOpen && (
         <ModalWindow
           closeModal={() => {
-            setModalIsOpen(false);
+            setCategoryModalIsOpen(false);
           }}
-          type="project"
+          type="category"
         />
       )}
 
       <main className="flex">
-        <ul>
-          {projectData.map((project) => {
-            return (
-              <li
-                key={project.id}
-                className="bg-green-200 m-4 border-black border-2"
-              >
-                <div className="block px-9 py-10">
-                  <Link
-                    to={{
-                      pathname: `/board/${project.id}`,
-                      state: project.name,
-                    }}
-                  >
-                    {project.name}
-                  </Link>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
+        <ProjectList />
       </main>
     </div>
   );

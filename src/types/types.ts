@@ -26,3 +26,8 @@ export type Task = {
   duration: string;
   category: string;
 };
+
+export type Category = {
+  id: string;
+  name: string;
+};

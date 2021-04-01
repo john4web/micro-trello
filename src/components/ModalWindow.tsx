@@ -2,6 +2,7 @@ import { ModalProjectContent } from "../components/ModalProjectContent";
 import { ModalColumnContent } from "../components/ModalColumnContent";
 import { ModalTaskContent } from "../components/ModalTaskContent";
 import { ModalMemberContent } from "../components/ModalMemberContent";
+import { ModalCategoryContent } from "../components/ModalCategoryContent";
 
 interface IProps {
   closeModal: Function;
@@ -36,6 +37,15 @@ export const ModalWindow = ({ closeModal, type }: IProps) => {
               closeModal();
             }}
             type="task"
+          />
+        );
+      case "category":
+        return (
+          <ModalCategoryContent
+            closeModal={() => {
+              closeModal();
+            }}
+            type="category"
           />
         );
       case "member":
