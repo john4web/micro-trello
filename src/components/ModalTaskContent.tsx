@@ -1,6 +1,6 @@
 interface IProps {
   closeModal: Function;
-  type: String;
+  type: string;
 }
 
 export const ModalTaskContent = ({ closeModal, type }: IProps) => {
