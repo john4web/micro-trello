@@ -4,12 +4,10 @@ import { v4 as uuid } from "uuid";
 
 type MemberState = {
   members: Member[];
-  showOnlyDone: boolean;
 };
 
 const initialState: MemberState = {
   members: [],
-  showOnlyDone: false,
 };
 
 const memberSlice = createSlice({

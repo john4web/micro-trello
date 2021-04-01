@@ -1,5 +1,6 @@
 import { Link, useParams, useLocation } from "react-router-dom";
 import { ModalWindow } from "../components/ModalWindow";
+import { TaskList } from "../components/TaskList";
 import React from "react";
 import { v4 as uuid } from "uuid";
 export const Board = () => {
@@ -37,6 +38,24 @@ export const Board = () => {
         <p>Project ID: {id}</p>
       </div>
       <div>
+        <TaskList />
+        <button
+          onClick={() => {
+            setModalIsOpen(true);
+          }}
+          className="h-10 px-5 m-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
+        >
+          + New Task
+        </button>
+
+        {modalIsOpen && (
+          <ModalWindow
+            closeModal={() => {
+              setModalIsOpen(false);
+            }}
+            type="task"
+          />
+        )}
         <ul>
           {columnData.map((column) => {
             return (

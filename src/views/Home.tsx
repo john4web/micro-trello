@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ModalWindow } from "../components/ModalWindow";
+import { ProjectList } from "../components/ProjectList";
 import React from "react";
 export const Home = () => {
   let [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
@@ -27,6 +28,7 @@ export const Home = () => {
   return (
     <div className="bg-yellow-100 w-full">
       <h1>HOME</h1>
+      <ProjectList />
       <button
         onClick={() => {
           setModalIsOpen(true);
