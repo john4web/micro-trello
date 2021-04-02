@@ -42,7 +42,7 @@ export const Board = () => {
       </div>
       <div>
         <p>Columnlist:</p>
-        <ColumnList />
+        <ColumnList boardID={boardID} />
         <p>Tasklist:</p>
         <TaskList />
         <button

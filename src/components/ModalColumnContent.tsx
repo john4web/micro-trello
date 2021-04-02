@@ -21,17 +21,15 @@ export const ModalColumnContent = ({ closeModal, type, boardID }: IProps) => {
       id: uuid(),
       name: name,
     };
-
-    let xProjects = [...projects];
-
-    let currentProject: Project = xProjects.filter(
+    //getting the current project by using the boardID, adding the new column to it and pushing the new project object to the store
+    let currentProject: Project = projects.filter(
       (project) => project.id === boardID
     )[0];
 
     let oldColumns: Column[] = currentProject?.columns || [];
     let newColumns: Column[] = [...oldColumns, newColumn];
-
     currentProject = { ...currentProject, columns: newColumns };
+
     dispatch(removeProject(currentProject.id));
     dispatch(updateProject(currentProject));
   };

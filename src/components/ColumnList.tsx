@@ -2,18 +2,24 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import { Fragment } from "react";
 
-export const ColumnList = () => {
-  const { columns } = useSelector((state: RootState) => state.column);
+interface IProps {
+  boardID: String;
+}
+
+export const ColumnList = ({ boardID }: IProps) => {
+  const { projects } = useSelector((state: RootState) => state.project);
 
   return (
     <Fragment>
-      {columns.map((column, index) => {
-        return (
-          <ul key={index}>
-            <li>{column.name}</li>
-          </ul>
-        );
-      })}
+      {projects
+        .filter((project) => project.id === boardID)[0]
+        ?.columns?.map((column, index) => {
+          return (
+            <ul key={index}>
+              <li>{column.name}</li>
+            </ul>
+          );
+        })}
     </Fragment>
   );
 };
