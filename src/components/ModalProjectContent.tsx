@@ -22,8 +22,7 @@ interface IOption {
 export const ModalProjectContent = ({ closeModal, type }: IProps) => {
   const [name, setName] = useState("");
   const [color, setColor] = useState("#ff0000");
-  //const [category, setCategory] = useState("");
-  const [a, setA] = useState<IOption[]>([]);
+  const [selected, setSelected] = useState<IOption[]>([]);
   const [team, setTeam] = useState<Member[]>([]);
   const dispatch = useDispatch();
   const { members } = useSelector((state: RootState) => state.member);
@@ -34,14 +33,22 @@ export const ModalProjectContent = ({ closeModal, type }: IProps) => {
     };
   });
 
+  let [showAlert, setShowAlert] = useState<Boolean>(false);
+
   const onAdd = () => {
-    const newProject: Project = {
-      id: "",
-      name: name,
-      team: team,
-      color: color,
-    };
-    dispatch(addProject(newProject));
+    if (name !== "" && color !== "" && team.length !== 0) {
+      const newProject: Project = {
+        id: "",
+        name: name,
+        team: team,
+        color: color,
+      };
+      dispatch(addProject(newProject));
+      closeModal();
+    } else {
+      setShowAlert(true);
+      return;
+    }
   };
 
   return (
@@ -49,7 +56,10 @@ export const ModalProjectContent = ({ closeModal, type }: IProps) => {
       <label htmlFor="project-name">Project Name:</label>
       <input
         value={name}
-        onChange={(e) => setName(e.currentTarget.value)}
+        onChange={(e) => {
+          setName(e.currentTarget.value);
+          setShowAlert(false);
+        }}
         type="text"
         id="project-name"
         name="project-name"
@@ -60,11 +70,17 @@ export const ModalProjectContent = ({ closeModal, type }: IProps) => {
         className="h-10 px-5 m-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
         onClick={() => {
           onAdd();
-          closeModal();
         }}
       >
         Add
       </button>
+
+      {showAlert && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
+          Please fill out every field!!
+        </div>
+      )}
+
       <div className="flex">
         <div>Project Color: </div>
         <div
@@ -78,9 +94,10 @@ export const ModalProjectContent = ({ closeModal, type }: IProps) => {
       <div>Project-Team:</div>
       <MultiSelect
         options={options}
-        value={a}
+        value={selected}
         onChange={(optionsArray: IOption[]) => {
-          setA(optionsArray);
+          setShowAlert(false);
+          setSelected(optionsArray);
           let team: Member[] = [];
           optionsArray.forEach((option) => {
             members.forEach((member: Member) => {
