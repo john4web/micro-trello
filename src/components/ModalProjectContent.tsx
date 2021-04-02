@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addProject } from "../store/projectSlice";
 import { Project } from "../types/types";
+import { HexColorPicker } from "react-colorful";
 
 interface IProps {
   closeModal: Function;
@@ -11,7 +12,7 @@ interface IProps {
 export const ModalProjectContent = ({ closeModal, type }: IProps) => {
   const [name, setName] = useState("");
   const [team, setTeam] = useState("");
-  const [color, setColor] = useState("");
+  const [color, setColor] = useState("#ff0000");
   const [category, setCategory] = useState("");
   const dispatch = useDispatch();
 
@@ -23,7 +24,6 @@ export const ModalProjectContent = ({ closeModal, type }: IProps) => {
       color: color,
       category: category,
     };
-    console.log(category);
     dispatch(addProject(newProject));
   };
 
@@ -47,15 +47,16 @@ export const ModalProjectContent = ({ closeModal, type }: IProps) => {
         name="project-team"
         className="border-black border-2"
       />
-      <label htmlFor="project-color">Project Color:</label>
-      <input
-        value={color}
-        onChange={(e) => setColor(e.currentTarget.value)}
-        type="text"
-        id="project-color"
-        name="project-color"
-        className="border-black border-2"
-      />
+
+      <div className="flex">
+        <div>Project Color: </div>
+        <div
+          style={{ backgroundColor: `${color}` }}
+          className="w-10 h-10 border-black border-2"
+        ></div>
+      </div>
+
+      <HexColorPicker color={color} onChange={setColor} />
 
       <label htmlFor="project-category">Project Category:</label>
       <select
