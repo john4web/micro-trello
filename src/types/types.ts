@@ -1,9 +1,8 @@
 export type Project = {
   id: string;
   name: string;
-  team: string;
+  team: Member[];
   color: string;
-  category: string;
 };
 
 export type Member = {

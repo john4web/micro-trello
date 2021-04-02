@@ -54,8 +54,7 @@ export const ModalWindow = ({ closeModal, type }: IProps) => {
 
   return (
     <div className="absolute w-screen h-screen bg-black bg-opacity-50 top-0 left-0 flex justify-center items-center">
-      <div className="w-80 h-80 bg-white opacity-100">
-        {renderContent(type)}
+      <div className="w-4/6 h-4/6 bg-white opacity-100 overflow-auto">
         <button
           onClick={() => {
             closeModal();
@@ -64,6 +63,7 @@ export const ModalWindow = ({ closeModal, type }: IProps) => {
         >
           CLOSE
         </button>
+        {renderContent(type)}
       </div>
     </div>
   );

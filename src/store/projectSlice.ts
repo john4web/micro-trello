@@ -21,7 +21,6 @@ const projectSlice = createSlice({
         name: action.payload.name,
         team: action.payload.team,
         color: action.payload.color,
-        category: action.payload.category,
       });
     },
   },
