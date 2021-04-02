@@ -3,6 +3,7 @@ export type Project = {
   name: string;
   team: Member[];
   color: string;
+  columns?: Column[];
 };
 
 export type Member = {

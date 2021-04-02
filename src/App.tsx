@@ -19,7 +19,7 @@ function App() {
                 {/* Switch chooses exactly 1 element and renders it */}
                 <Route path="/" component={Home} exact />
                 <Route path="/members" component={Members} />
-                <Route path="/board/:id" component={Board} />
+                <Route path="/board/:boardID" component={Board} />
               </Switch>
             </CSSTransition>
           </SwitchTransition>

@@ -6,9 +6,10 @@ import { ModalMemberContent } from "../components/ModalMemberContent";
 interface IProps {
   closeModal: Function;
   type: String;
+  boardID?: String;
 }
 
-export const ModalWindow = ({ closeModal, type }: IProps) => {
+export const ModalWindow = ({ closeModal, type, boardID }: IProps) => {
   function renderContent(type: String) {
     switch (type) {
       case "project":
@@ -26,6 +27,7 @@ export const ModalWindow = ({ closeModal, type }: IProps) => {
             closeModal={() => {
               closeModal();
             }}
+            boardID={boardID}
             type="column"
           />
         );

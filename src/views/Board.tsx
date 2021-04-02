@@ -10,9 +10,8 @@ export const Board = () => {
   );
   let [modalTaskIsOpen, setModalTaskIsOpen] = React.useState<boolean>(false);
 
-  let { id } = useParams<{ id: string }>();
+  let { boardID } = useParams<{ boardID: string }>();
   let params = useLocation();
-
   const taskData = [
     { id: uuid(), content: "First Task" },
     { id: uuid(), content: "Second Task" },
@@ -39,7 +38,7 @@ export const Board = () => {
     <div className="ml-3 mt-3">
       <div className="mb-3">
         <h2 className="text-lg font-bold">Projectname: {params.state} </h2>
-        <p>Project ID: {id}</p>
+        <p>Project ID: {boardID}</p>
       </div>
       <div>
         <p>Columnlist:</p>
@@ -109,6 +108,7 @@ export const Board = () => {
             closeModal={() => {
               setModalColumnIsOpen(false);
             }}
+            boardID={boardID}
             type="column"
           />
         )}

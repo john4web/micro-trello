@@ -23,9 +23,31 @@ const projectSlice = createSlice({
         color: action.payload.color,
       });
     },
+    updateProject(state, action: PayloadAction<Project>) {
+      state.projects.push({
+        //Generate the id outside
+        id: action.payload.id,
+        name: action.payload.name,
+        team: action.payload.team,
+        color: action.payload.color,
+        columns: action.payload.columns,
+      });
+    },
+    removeProject(state, action: PayloadAction<String>) {
+      let arr = state.projects;
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i].id === action.payload) {
+          arr.splice(i, 1);
+        }
+      }
+    },
   },
 });
 
 export default projectSlice.reducer;
 
-export const { addProject } = projectSlice.actions;
+export const {
+  addProject,
+  updateProject,
+  removeProject,
+} = projectSlice.actions;

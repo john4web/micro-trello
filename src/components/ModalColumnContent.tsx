@@ -1,23 +1,39 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addColumn } from "../store/columnSlice";
-import { Column } from "../types/types";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store";
+import { updateProject, removeProject } from "../store/projectSlice";
+import { Column, Project } from "../types/types";
+import { v4 as uuid } from "uuid";
 
 interface IProps {
   closeModal: Function;
   type: String;
+  boardID?: String;
 }
 
-export const ModalColumnContent = ({ closeModal, type }: IProps) => {
+export const ModalColumnContent = ({ closeModal, type, boardID }: IProps) => {
   const [name, setName] = useState("");
   const dispatch = useDispatch();
+  const { projects } = useSelector((state: RootState) => state.project);
 
   const onAdd = () => {
-    const newColumn: Column = {
-      id: "",
+    let newColumn: Column = {
+      id: uuid(),
       name: name,
     };
-    dispatch(addColumn(newColumn));
+
+    let xProjects = [...projects];
+
+    let currentProject: Project = xProjects.filter(
+      (project) => project.id === boardID
+    )[0];
+
+    let oldColumns: Column[] = currentProject?.columns || [];
+    let newColumns: Column[] = [...oldColumns, newColumn];
+
+    currentProject = { ...currentProject, columns: newColumns };
+    dispatch(removeProject(currentProject.id));
+    dispatch(updateProject(currentProject));
   };
 
   return (
