@@ -1,23 +1,27 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addProject } from "../store/projectSlice";
-import { Project } from "../types/types";
-import { Option } from "../types/types";
-import { Member } from "../types/types";
-import { HexColorPicker } from "react-colorful";
+import React, { useState } from "react";
 import MultiSelect from "react-multi-select-component";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
-import React from "react";
+import { addTaskToProjectColumn } from "../store/projectSlice";
 
-export const ModalProjectContent = () => {
+import { Column, Member, Task } from "../types/types";
+import { Option } from "../types/types";
+import { v4 as uuid } from "uuid";
+
+interface IProps {
+  boardID: string;
+  column: Column;
+}
+
+export const ModalAddTask = ({ boardID, column }: IProps) => {
   const [name, setName] = useState("");
-  const [color, setColor] = useState("#ff0000");
-  const [selected, setSelected] = useState<Option[]>([]);
-  const [team, setTeam] = useState<Member[]>([]);
-  let [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
+  const [deadline, setDeadline] = useState("");
   const dispatch = useDispatch();
   const { members } = useSelector((state: RootState) => state.member);
+  const [selected, setSelected] = useState<Option[]>([]);
+  const [team, setTeam] = useState<Member[]>([]);
+  const [modalIsOpen, setModalIsOpen] = useState<Boolean>(false);
+
   const options: Option[] = members.map((member) => {
     return {
       label: `${member.firstname} ${member.lastname}`,
@@ -25,64 +29,38 @@ export const ModalProjectContent = () => {
     };
   });
 
-  let [showAlert, setShowAlert] = useState<Boolean>(false);
-
   const onAdd = () => {
-    if (name !== "" && color !== "" && team.length !== 0) {
-      const newProject: Project = {
-        id: "",
-        name: name,
-        team: team,
-        color: color,
-      };
-      dispatch(addProject(newProject));
-      modalIsOpen = false;
-    } else {
-      setShowAlert(true);
-      return;
-    }
+    const newTask: Task = {
+      id: uuid(),
+      name: name,
+      team: team,
+      deadline: deadline,
+      projectID: boardID,
+      columnID: column.id,
+    };
+    dispatch(addTaskToProjectColumn(newTask));
   };
 
   return (
-    <div className="w-80 h-80">
+    <div>
       {modalIsOpen && (
         <div className="absolute w-screen h-screen bg-black bg-opacity-50 top-0 left-0 flex justify-center items-center">
           <div className="w-4/6 h-4/6 bg-white opacity-100 overflow-auto">
-            <label htmlFor="project-name">Project Name:</label>
+            <label htmlFor="task-name"> Name:</label>
             <input
               value={name}
-              onChange={(e) => {
-                setName(e.currentTarget.value);
-                setShowAlert(false);
-              }}
+              onChange={(e) => setName(e.currentTarget.value)}
               type="text"
-              id="project-name"
-              name="project-name"
+              id="task-name"
+              name="task-name"
               className="border-black border-2"
             />
 
-            {showAlert && (
-              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
-                Please fill out every field!!
-              </div>
-            )}
-
-            <div className="flex">
-              <div>Project Color: </div>
-              <div
-                style={{ backgroundColor: `${color}` }}
-                className="w-10 h-10 border-black border-2"
-              ></div>
-            </div>
-
-            <HexColorPicker color={color} onChange={setColor} />
-
-            <div>Project-Team:</div>
+            <div>Assigned Members:</div>
             <MultiSelect
               options={options}
               value={selected}
               onChange={(optionsArray: Option[]) => {
-                setShowAlert(false);
                 setSelected(optionsArray);
                 let team: Member[] = [];
                 optionsArray.forEach((option) => {
@@ -96,6 +74,17 @@ export const ModalProjectContent = () => {
               }}
               labelledBy="Select"
             />
+
+            <label htmlFor="task-deadline">Deadline:</label>
+            <input
+              value={deadline}
+              onChange={(e) => setDeadline(e.currentTarget.value)}
+              type="text"
+              id="task-deadline"
+              name="task-deadline"
+              className="border-black border-2"
+            />
+
             <button
               className="h-10 px-5 m-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
               onClick={() => {
@@ -106,12 +95,12 @@ export const ModalProjectContent = () => {
               Add
             </button>
             <button
-              className="h-10 px-5 m-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
               onClick={() => {
                 setModalIsOpen(false);
               }}
+              className="h-10 px-5 m-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
             >
-              Close
+              CLOSE
             </button>
           </div>
         </div>
@@ -123,7 +112,7 @@ export const ModalProjectContent = () => {
         }}
         className="h-10 px-5 m-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
       >
-        + New Project
+        + New Task to Column: {column.name}
       </button>
     </div>
   );

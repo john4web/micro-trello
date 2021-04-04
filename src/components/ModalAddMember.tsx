@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { addMember } from "../store/memberSlice";
 import { Member } from "../types/types";
 
-export const ModalMemberContent = () => {
+export const ModalAddMember = () => {
   const [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");

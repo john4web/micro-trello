@@ -1,12 +1,10 @@
 import { Link, useParams, useLocation } from "react-router-dom";
-import { TaskList } from "../components/TaskList";
-import React from "react";
 import { v4 as uuid } from "uuid";
 import { ColumnList } from "../components/ColumnList";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import { Project } from "../types/types";
-import { ModalColumnContent } from "../components/ModalColumnContent";
+import { ModalAddColumn } from "../components/ModalAddColumn";
 export const Board = () => {
   const { projects } = useSelector((state: RootState) => state.project);
 
@@ -59,7 +57,6 @@ export const Board = () => {
         <p>Columnlist:</p>
         <ColumnList boardID={boardID} project={currentProject} />
         <p>Tasklist:</p>
-        <TaskList />
 
         <ul key="columnData">
           {columnData.map((column) => {
@@ -94,7 +91,7 @@ export const Board = () => {
           })}
         </ul>
 
-        <ModalColumnContent boardID={boardID} />
+        <ModalAddColumn boardID={boardID} project={currentProject} />
       </div>
       <div className="mt-4">
         <Link

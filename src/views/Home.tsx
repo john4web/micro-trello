@@ -1,12 +1,11 @@
 import { ProjectList } from "../components/ProjectList";
-import React from "react";
-import { ModalProjectContent } from "../components/ModalProjectContent";
+import { ModalAddProject } from "../components/ModalAddProject";
 export const Home = () => {
   return (
     <div className="bg-yellow-100 w-full">
       <h1>HOME</h1>
 
-      <ModalProjectContent />
+      <ModalAddProject />
 
       <main className="flex">
         <ProjectList />

@@ -19,6 +19,7 @@ const columnSlice = createSlice({
         //Generate the id outside
         id: uuid(),
         name: action.payload.name,
+        projectID: action.payload.projectID,
       });
     },
   },

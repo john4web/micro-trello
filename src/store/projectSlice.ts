@@ -53,19 +53,34 @@ const projectSlice = createSlice({
                   state.projects[index1].columns![index2].tasks = [];
                 }
                 state.projects[index1].columns![index2]?.tasks?.push({
-                  id: uuid(),
-                  projectID: action.payload.projectID,
-                  columnID: action.payload.columnID,
-                  name: action.payload.name,
-                  team: action.payload.team,
-                  deadline: action.payload.deadline,
+                  ...action.payload,
                 });
-
                 return false;
               }
               return true;
             });
           }
+        });
+      } catch (e) {
+        console.log(e);
+        //Todo: auf fehler reagieren!
+      }
+    },
+
+    addColumnToProject(state, action: PayloadAction<Column>) {
+      try {
+        state.projects.every((project) => {
+          if (project.id === action.payload.projectID) {
+            if (project.columns === undefined) {
+              project.columns = [];
+            }
+
+            project.columns?.push({
+              ...action.payload,
+            });
+            return false;
+          }
+          return true;
         });
       } catch (e) {
         console.log(e);
@@ -82,4 +97,5 @@ export const {
   updateProject,
   removeProject,
   addTaskToProjectColumn,
+  addColumnToProject,
 } = projectSlice.actions;

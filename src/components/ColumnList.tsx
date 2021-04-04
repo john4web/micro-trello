@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { Project } from "../types/types";
-import { ModalTaskContent } from "../components/ModalTaskContent";
+import { ModalAddTask } from "./ModalAddTask";
 
 interface IProps {
   boardID: string;
@@ -17,6 +17,7 @@ export const ColumnList = ({ boardID, project }: IProps) => {
 
             <li>
               <div>
+                {/* <TaskList /> */}
                 {column.tasks?.map((task, index) => {
                   return (
                     <div>
@@ -30,7 +31,7 @@ export const ColumnList = ({ boardID, project }: IProps) => {
               </div>
             </li>
 
-            <ModalTaskContent column={column} boardID={boardID} />
+            <ModalAddTask column={column} boardID={boardID} />
           </ul>
         );
       })}
