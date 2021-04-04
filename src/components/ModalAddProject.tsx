@@ -36,7 +36,7 @@ export const ModalAddProject = () => {
         color: color,
       };
       dispatch(addProject(newProject));
-      modalIsOpen = false;
+      setModalIsOpen(false);
     } else {
       setShowAlert(true);
       return;
@@ -100,7 +100,6 @@ export const ModalAddProject = () => {
               className="h-10 px-5 m-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
               onClick={() => {
                 onAdd();
-                setModalIsOpen(false);
               }}
             >
               Add

@@ -1,5 +1,5 @@
 import { Switch, Route } from "react-router-dom";
-import Members from "./views/Members";
+import { Members } from "./views/Members";
 import { Home } from "./views/Home";
 import { Board } from "./views/Board";
 import { MenuBar } from "./components/MenuBar";

@@ -9,7 +9,7 @@ export const MemberList = () => {
     <Fragment>
       {members.map((member, index) => {
         return (
-          <ul key={index}>
+          <ul key={index} className=" m-4 border-black border-2">
             <li>{member.firstname}</li>
             <li>{member.lastname}</li>
             <li>{member.job}</li>

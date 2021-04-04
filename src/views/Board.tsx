@@ -1,5 +1,4 @@
 import { Link, useParams, useLocation } from "react-router-dom";
-import { v4 as uuid } from "uuid";
 import { ColumnList } from "../components/ColumnList";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
@@ -10,32 +9,12 @@ export const Board = () => {
 
   let { boardID } = useParams<{ boardID: string }>();
   let params = useLocation();
-  const taskData = [
-    { id: uuid(), content: "First Task" },
-    { id: uuid(), content: "Second Task" },
-  ];
+
   //get current Project from store
   let currentProject: Project = projects.filter(
     (project) => project.id === boardID
   )[0];
   //TODO: Wenn current Project undefined ist (also wenn jemand eine falsche id eingegeben hat) -> dann auf Home weiterleiten
-  const columnData = [
-    {
-      id: uuid(),
-      name: "Todo",
-      tasks: [taskData],
-    },
-    {
-      id: uuid(),
-      name: "Doing",
-      tasks: [taskData],
-    },
-    {
-      id: uuid(),
-      name: "Done",
-      tasks: [taskData],
-    },
-  ];
 
   return (
     <div className="ml-3 mt-3">
@@ -54,42 +33,7 @@ export const Board = () => {
         </p>
       </div>
       <div>
-        <p>Columnlist:</p>
         <ColumnList boardID={boardID} project={currentProject} />
-        <p>Tasklist:</p>
-
-        <ul key="columnData">
-          {columnData.map((column) => {
-            return (
-              <li
-                id={column.id}
-                key={column.id}
-                className="bg-gray-300 border-black border-2 p-2"
-              >
-                <div className="font-bold text-center mb-2">{column.name}</div>
-                <div>
-                  {column.tasks.map((task) => {
-                    return (
-                      <ul key="TaskData">
-                        {task.map((taskData) => {
-                          return (
-                            <li
-                              id={column.id + taskData.id}
-                              key={column.id + taskData.id}
-                              className="align-middle m-auto mt-2 p-2 bg-gray-200 w-11/12 "
-                            >
-                              {taskData.content}
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    );
-                  })}
-                </div>
-              </li>
-            );
-          })}
-        </ul>
 
         <ModalAddColumn boardID={boardID} project={currentProject} />
       </div>
