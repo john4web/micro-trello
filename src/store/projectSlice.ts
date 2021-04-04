@@ -47,6 +47,11 @@ const projectSlice = createSlice({
           if (project.id === action.payload.projectID) {
             project.columns?.every((column: Column, index2) => {
               if (column.id === action.payload.columnID) {
+                if (
+                  state.projects[index1].columns![index2]?.tasks === undefined
+                ) {
+                  state.projects[index1].columns![index2].tasks = [];
+                }
                 state.projects[index1].columns![index2]?.tasks?.push({
                   id: uuid(),
                   projectID: action.payload.projectID,

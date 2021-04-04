@@ -3,7 +3,7 @@ import { Project } from "../types/types";
 import { ModalTaskContent } from "../components/ModalTaskContent";
 
 interface IProps {
-  boardID: String;
+  boardID: string;
   project: Project;
 }
 
@@ -15,7 +15,22 @@ export const ColumnList = ({ boardID, project }: IProps) => {
           <ul key={index}>
             <li>{column.name}</li>
 
-            <ModalTaskContent column={column} />
+            <li>
+              <div>
+                {column.tasks?.map((task, index) => {
+                  return (
+                    <div>
+                      {`Taskname: ${task.name}`}
+                      {task.team.map((member) => {
+                        return ` Assigned Member: ${member.firstname} ${member.lastname}`;
+                      })}
+                    </div>
+                  );
+                })}
+              </div>
+            </li>
+
+            <ModalTaskContent column={column} boardID={boardID} />
           </ul>
         );
       })}

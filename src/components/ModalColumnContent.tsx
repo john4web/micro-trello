@@ -7,7 +7,7 @@ import { v4 as uuid } from "uuid";
 import React from "react";
 
 interface IProps {
-  boardID?: String;
+  boardID: string;
 }
 
 export const ModalColumnContent = ({ boardID }: IProps) => {

@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import MultiSelect from "react-multi-select-component";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
+import { addTaskToProjectColumn } from "../store/projectSlice";
 
-import { Column, Member } from "../types/types";
+import { Column, Member, Task } from "../types/types";
 import { Option } from "../types/types";
 
 interface IProps {
-  boardID?: String;
+  boardID: string;
   column: Column;
 }
 
@@ -27,15 +28,15 @@ export const ModalTaskContent = ({ boardID, column }: IProps) => {
   });
 
   const onAdd = () => {
-    // const newTask: Task = {
-    //   id: "",
-    //   name: name,
-    //   team: team,
-    //   deadline: deadline,
-    //   projectID: boardID,
-    //   columnID: "",
-    // };
-    // dispatch(addTaskToProjectColumn(newTask));
+    const newTask: Task = {
+      id: "",
+      name: name,
+      team: team,
+      deadline: deadline,
+      projectID: boardID,
+      columnID: column.id,
+    };
+    dispatch(addTaskToProjectColumn(newTask));
   };
 
   return (
