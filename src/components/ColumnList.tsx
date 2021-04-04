@@ -1,25 +1,21 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../store";
 import { Fragment } from "react";
+import { Project } from "../types/types";
 
 interface IProps {
   boardID: String;
+  project: Project;
 }
 
-export const ColumnList = ({ boardID }: IProps) => {
-  const { projects } = useSelector((state: RootState) => state.project);
-
+export const ColumnList = ({ boardID, project }: IProps) => {
   return (
     <Fragment>
-      {projects
-        .filter((project) => project.id === boardID)[0]
-        ?.columns?.map((column, index) => {
-          return (
-            <ul key={index}>
-              <li>{column.name}</li>
-            </ul>
-          );
-        })}
+      {project?.columns?.map((column, index) => {
+        return (
+          <ul key={index}>
+            <li>{column.name}</li>
+          </ul>
+        );
+      })}
     </Fragment>
   );
 };

@@ -4,11 +4,15 @@ import { TaskList } from "../components/TaskList";
 import React from "react";
 import { v4 as uuid } from "uuid";
 import { ColumnList } from "../components/ColumnList";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
+import { Project } from "../types/types";
 export const Board = () => {
   let [modalColumnIsOpen, setModalColumnIsOpen] = React.useState<boolean>(
     false
   );
   let [modalTaskIsOpen, setModalTaskIsOpen] = React.useState<boolean>(false);
+  const { projects } = useSelector((state: RootState) => state.project);
 
   let { boardID } = useParams<{ boardID: string }>();
   let params = useLocation();
@@ -16,6 +20,11 @@ export const Board = () => {
     { id: uuid(), content: "First Task" },
     { id: uuid(), content: "Second Task" },
   ];
+  //get current Project from store
+  let currentProject: Project = projects.filter(
+    (project) => project.id === boardID
+  )[0];
+
   const columnData = [
     {
       id: uuid(),
@@ -39,10 +48,20 @@ export const Board = () => {
       <div className="mb-3">
         <h2 className="text-lg font-bold">Projectname: {params.state} </h2>
         <p>Project ID: {boardID}</p>
+        <p>
+          Team:
+          {currentProject?.team.map((member) => {
+            return `${member.firstname} ${member.lastname}: ${member.job}`;
+          })}
+        </p>
+        <p>
+          Color:
+          {currentProject?.color}
+        </p>
       </div>
       <div>
         <p>Columnlist:</p>
-        <ColumnList boardID={boardID} />
+        <ColumnList boardID={boardID} project={currentProject} />
         <p>Tasklist:</p>
         <TaskList />
         <button

@@ -20,6 +20,7 @@ function App() {
                 <Route path="/" component={Home} exact />
                 <Route path="/members" component={Members} />
                 <Route path="/board/:boardID" component={Board} />
+                {<Route path="*" component={Home} />}
               </Switch>
             </CSSTransition>
           </SwitchTransition>
