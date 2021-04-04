@@ -18,10 +18,11 @@ const taskSlice = createSlice({
       state.tasks.push({
         //Generate the id outside
         id: uuid(),
+        projectID: action.payload.projectID,
+        columnID: action.payload.columnID,
         name: action.payload.name,
-        assignedMember: action.payload.assignedMember,
-        duration: action.payload.duration,
-        category: action.payload.category,
+        team: action.payload.team,
+        deadline: action.payload.deadline,
       });
     },
   },

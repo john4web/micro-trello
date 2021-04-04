@@ -11,9 +11,8 @@ export const TaskList = () => {
         return (
           <ul key={index}>
             <li>{task.name}</li>
-            <li>{task.assignedMember}</li>
-            <li>{task.duration}</li>
-            <li>{task.category}</li>
+            <li>{task.team}</li>
+            <li>{task.deadline}</li>
           </ul>
         );
       })}

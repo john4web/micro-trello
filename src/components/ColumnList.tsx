@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 import { Project } from "../types/types";
+import { ModalTaskContent } from "../components/ModalTaskContent";
 
 interface IProps {
   boardID: String;
@@ -13,6 +14,8 @@ export const ColumnList = ({ boardID, project }: IProps) => {
         return (
           <ul key={index}>
             <li>{column.name}</li>
+
+            <ModalTaskContent column={column} />
           </ul>
         );
       })}

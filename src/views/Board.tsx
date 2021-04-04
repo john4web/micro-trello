@@ -1,5 +1,4 @@
 import { Link, useParams, useLocation } from "react-router-dom";
-import { ModalWindow } from "../components/ModalWindow";
 import { TaskList } from "../components/TaskList";
 import React from "react";
 import { v4 as uuid } from "uuid";
@@ -7,11 +6,8 @@ import { ColumnList } from "../components/ColumnList";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import { Project } from "../types/types";
+import { ModalColumnContent } from "../components/ModalColumnContent";
 export const Board = () => {
-  let [modalColumnIsOpen, setModalColumnIsOpen] = React.useState<boolean>(
-    false
-  );
-  let [modalTaskIsOpen, setModalTaskIsOpen] = React.useState<boolean>(false);
   const { projects } = useSelector((state: RootState) => state.project);
 
   let { boardID } = useParams<{ boardID: string }>();
@@ -24,7 +20,7 @@ export const Board = () => {
   let currentProject: Project = projects.filter(
     (project) => project.id === boardID
   )[0];
-
+  //TODO: Wenn current Project undefined ist (also wenn jemand eine falsche id eingegeben hat) -> dann auf Home weiterleiten
   const columnData = [
     {
       id: uuid(),
@@ -64,23 +60,7 @@ export const Board = () => {
         <ColumnList boardID={boardID} project={currentProject} />
         <p>Tasklist:</p>
         <TaskList />
-        <button
-          onClick={() => {
-            setModalTaskIsOpen(true);
-          }}
-          className="h-10 px-5 m-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
-        >
-          + New Task
-        </button>
 
-        {modalTaskIsOpen && (
-          <ModalWindow
-            closeModal={() => {
-              setModalTaskIsOpen(false);
-            }}
-            type="task"
-          />
-        )}
         <ul key="columnData">
           {columnData.map((column) => {
             return (
@@ -113,24 +93,8 @@ export const Board = () => {
             );
           })}
         </ul>
-        <button
-          onClick={() => {
-            setModalColumnIsOpen(true);
-          }}
-          className="h-10 px-5 m-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
-        >
-          + New Column
-        </button>
 
-        {modalColumnIsOpen && (
-          <ModalWindow
-            closeModal={() => {
-              setModalColumnIsOpen(false);
-            }}
-            boardID={boardID}
-            type="column"
-          />
-        )}
+        <ModalColumnContent boardID={boardID} />
       </div>
       <div className="mt-4">
         <Link

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Project } from "../types/types";
+import { Column, Project, Task } from "../types/types";
 import { v4 as uuid } from "uuid";
 
 type ProjectState = {
@@ -41,6 +41,32 @@ const projectSlice = createSlice({
         }
       }
     },
+    addTaskToProjectColumn(state, action: PayloadAction<Task>) {
+      try {
+        state.projects.forEach((project: Project, index1) => {
+          if (project.id === action.payload.projectID) {
+            project.columns?.every((column: Column, index2) => {
+              if (column.id === action.payload.columnID) {
+                state.projects[index1].columns![index2]?.tasks?.push({
+                  id: uuid(),
+                  projectID: action.payload.projectID,
+                  columnID: action.payload.columnID,
+                  name: action.payload.name,
+                  team: action.payload.team,
+                  deadline: action.payload.deadline,
+                });
+
+                return false;
+              }
+              return true;
+            });
+          }
+        });
+      } catch (e) {
+        console.log(e);
+        //Todo: auf fehler reagieren!
+      }
+    },
   },
 });
 
@@ -50,4 +76,5 @@ export const {
   addProject,
   updateProject,
   removeProject,
+  addTaskToProjectColumn,
 } = projectSlice.actions;

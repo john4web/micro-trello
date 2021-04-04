@@ -2,31 +2,23 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addProject } from "../store/projectSlice";
 import { Project } from "../types/types";
+import { Option } from "../types/types";
 import { Member } from "../types/types";
 import { HexColorPicker } from "react-colorful";
 import MultiSelect from "react-multi-select-component";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
+import React from "react";
 
-interface IProps {
-  closeModal: Function;
-  type: String;
-}
-
-interface IOption {
-  label: string;
-  value: string;
-  disabled?: boolean;
-}
-
-export const ModalProjectContent = ({ closeModal, type }: IProps) => {
+export const ModalProjectContent = () => {
   const [name, setName] = useState("");
   const [color, setColor] = useState("#ff0000");
-  const [selected, setSelected] = useState<IOption[]>([]);
+  const [selected, setSelected] = useState<Option[]>([]);
   const [team, setTeam] = useState<Member[]>([]);
+  let [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
   const dispatch = useDispatch();
   const { members } = useSelector((state: RootState) => state.member);
-  const options: IOption[] = members.map((member) => {
+  const options: Option[] = members.map((member) => {
     return {
       label: `${member.firstname} ${member.lastname}`,
       value: member.id,
@@ -44,7 +36,7 @@ export const ModalProjectContent = ({ closeModal, type }: IProps) => {
         color: color,
       };
       dispatch(addProject(newProject));
-      closeModal();
+      modalIsOpen = false;
     } else {
       setShowAlert(true);
       return;
@@ -53,63 +45,86 @@ export const ModalProjectContent = ({ closeModal, type }: IProps) => {
 
   return (
     <div className="w-80 h-80">
-      <label htmlFor="project-name">Project Name:</label>
-      <input
-        value={name}
-        onChange={(e) => {
-          setName(e.currentTarget.value);
-          setShowAlert(false);
-        }}
-        type="text"
-        id="project-name"
-        name="project-name"
-        className="border-black border-2"
-      />
+      {modalIsOpen && (
+        <div className="absolute w-screen h-screen bg-black bg-opacity-50 top-0 left-0 flex justify-center items-center">
+          <div className="w-4/6 h-4/6 bg-white opacity-100 overflow-auto">
+            <label htmlFor="project-name">Project Name:</label>
+            <input
+              value={name}
+              onChange={(e) => {
+                setName(e.currentTarget.value);
+                setShowAlert(false);
+              }}
+              type="text"
+              id="project-name"
+              name="project-name"
+              className="border-black border-2"
+            />
 
-      <button
-        className="h-10 px-5 m-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
-        onClick={() => {
-          onAdd();
-        }}
-      >
-        Add
-      </button>
+            {showAlert && (
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
+                Please fill out every field!!
+              </div>
+            )}
 
-      {showAlert && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
-          Please fill out every field!!
+            <div className="flex">
+              <div>Project Color: </div>
+              <div
+                style={{ backgroundColor: `${color}` }}
+                className="w-10 h-10 border-black border-2"
+              ></div>
+            </div>
+
+            <HexColorPicker color={color} onChange={setColor} />
+
+            <div>Project-Team:</div>
+            <MultiSelect
+              options={options}
+              value={selected}
+              onChange={(optionsArray: Option[]) => {
+                setShowAlert(false);
+                setSelected(optionsArray);
+                let team: Member[] = [];
+                optionsArray.forEach((option) => {
+                  members.forEach((member: Member) => {
+                    if (option.value === member.id) {
+                      team.push(member);
+                    }
+                  });
+                });
+                setTeam(team);
+              }}
+              labelledBy="Select"
+            />
+            <button
+              className="h-10 px-5 m-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
+              onClick={() => {
+                onAdd();
+                setModalIsOpen(false);
+              }}
+            >
+              Add
+            </button>
+            <button
+              className="h-10 px-5 m-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
+              onClick={() => {
+                setModalIsOpen(false);
+              }}
+            >
+              Close
+            </button>
+          </div>
         </div>
       )}
 
-      <div className="flex">
-        <div>Project Color: </div>
-        <div
-          style={{ backgroundColor: `${color}` }}
-          className="w-10 h-10 border-black border-2"
-        ></div>
-      </div>
-
-      <HexColorPicker color={color} onChange={setColor} />
-
-      <div>Project-Team:</div>
-      <MultiSelect
-        options={options}
-        value={selected}
-        onChange={(optionsArray: IOption[]) => {
-          setShowAlert(false);
-          setSelected(optionsArray);
-          let team: Member[] = [];
-          optionsArray.forEach((option) => {
-            members.forEach((member: Member) => {
-              if (option.value === member.id) {
-                team.push(member);
-              }
-            });
-          });
-          setTeam(team);
+      <button
+        onClick={() => {
+          setModalIsOpen(true);
         }}
-        labelledBy="Select"
-      />
+        className="h-10 px-5 m-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
+      >
+        + New Project
+      </button>
     </div>
   );
 };

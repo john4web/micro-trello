@@ -17,12 +17,20 @@ export type Member = {
 export type Column = {
   id: string;
   name: string;
+  tasks?: Task[];
 };
 
 export type Task = {
   id: string;
+  projectID: string;
+  columnID: string;
   name: string;
-  assignedMember: string; //sollte dann vom Typ Member sein
-  duration: string;
-  category: string;
+  team: Member[];
+  deadline: string;
+};
+
+export type Option = {
+  label: string;
+  value: string;
+  disabled?: boolean;
 };
