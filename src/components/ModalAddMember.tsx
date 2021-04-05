@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addMember } from "../store/memberSlice";
+import memberSlice, { addMember } from "../store/memberSlice";
 import { Member } from "../types/types";
 
 export const ModalAddMember = () => {
@@ -10,6 +10,7 @@ export const ModalAddMember = () => {
   const [lastname, setLastName] = useState("");
   const [job, setJob] = useState("");
   const [skill, setSkill] = useState("");
+  const [photo, setPhoto] = React.useState("");
   const dispatch = useDispatch();
 
   const onAdd = () => {
@@ -19,10 +20,18 @@ export const ModalAddMember = () => {
       lastname: lastname,
       job: job,
       skill: skill,
+      photo: photo,
     };
 
     dispatch(addMember(newMember));
   };
+
+  function handleUpload(event: any) {
+    setPhoto(event.target.files[0]);
+
+    // Add code here to upload file to server
+    // ...
+  }
 
   return (
     <div>
@@ -66,6 +75,9 @@ export const ModalAddMember = () => {
               name="member-skill"
               className="border-black border-2"
             />
+
+            <label htmlFor="member-photo">Photo:</label>
+            <input type="file" onChange={handleUpload} />
 
             <button
               className="h-10 px-5 m-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"

@@ -14,6 +14,9 @@ export const MemberList = () => {
             <li>{member.lastname}</li>
             <li>{member.job}</li>
             <li>{member.skill}</li>
+            <li>
+              <img src={URL.createObjectURL(member.photo)} alt="img"></img>
+            </li>
           </ul>
         );
       })}
