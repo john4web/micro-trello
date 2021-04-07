@@ -38,14 +38,9 @@ export const Board = () => {
       <main className="">
         <ColumnList boardID={boardID} project={currentProject} />
       </main>
-      <div className="mt-4">
-        <Link
-          to="/"
-          className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
-        >
-          Back to Home
-        </Link>
-      </div>
+      <button className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700">
+        <Link to="/">Back to Home</Link>
+      </button>
     </div>
   );
 };

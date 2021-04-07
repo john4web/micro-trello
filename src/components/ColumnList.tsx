@@ -14,7 +14,7 @@ export const ColumnList = ({ boardID, project }: IProps) => {
         return (
           <ul
             key={index}
-            className="w-96 bg-gray-300 border-gray-400 border shadow-md p-2 m-5 inline-block "
+            className="w-96 bg-gray-300 border-gray-400 border shadow-md p-2 m-5 inline-block align-top"
           >
             <li className="font-bold text-center mb-2">{column.name}</li>
 

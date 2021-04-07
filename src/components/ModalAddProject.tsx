@@ -47,8 +47,13 @@ export const ModalAddProject = () => {
     <div className="w-80 float-right">
       {modalIsOpen && (
         <div className="absolute w-screen h-screen bg-black bg-opacity-50 top-0 left-0 flex justify-center items-center">
-          <div className="w-4/6 h-4/6 bg-white opacity-100 overflow-auto">
-            <label htmlFor="project-name">Project Name:</label>
+          <div className="w-4/6 h-4/6 bg-white opacity-100 overflow-auto p-4">
+            <label
+              className="mb-2 uppercase text-lg text-gray-700"
+              htmlFor="project-name"
+            >
+              Project Name:
+            </label>
             <input
               value={name}
               onChange={(e) => {
@@ -58,7 +63,7 @@ export const ModalAddProject = () => {
               type="text"
               id="project-name"
               name="project-name"
-              className="border-black border-2"
+              className="border py-2 px-3 text-gray-700 ml-4"
             />
 
             {showAlert && (
@@ -68,7 +73,9 @@ export const ModalAddProject = () => {
             )}
 
             <div className="flex">
-              <div>Project Color: </div>
+              <div className="mb-2 uppercase  text-lg text-gray-700">
+                Project Color:{" "}
+              </div>
               <div
                 style={{ backgroundColor: `${color}` }}
                 className="w-10 h-10 border-black border-2"
@@ -77,7 +84,9 @@ export const ModalAddProject = () => {
 
             <HexColorPicker color={color} onChange={setColor} />
 
-            <div>Project-Team:</div>
+            <div className="mb-2 uppercase text-lg text-gray-700">
+              Project-Team:
+            </div>
             <MultiSelect
               options={options}
               value={selected}

@@ -29,15 +29,20 @@ export const ModalAddColumn = ({ boardID, project }: IProps) => {
     <div>
       {modalIsOpen && (
         <div className="absolute w-screen h-screen bg-black bg-opacity-50 top-0 left-0 flex justify-center items-center">
-          <div className="w-4/6 h-4/6 bg-white opacity-100 overflow-auto">
-            <label htmlFor="column-name">Column Name:</label>
+          <div className="w-4/6 h-4/6 bg-white opacity-100 overflow-auto p-4">
+            <label
+              className="mb-2 uppercase text-lg text-gray-700"
+              htmlFor="column-name"
+            >
+              Column Name:
+            </label>
             <input
               value={name}
               onChange={(e) => setName(e.currentTarget.value)}
               type="text"
               id="column-name"
               name="column-name"
-              className="border-black border-2"
+              className="border py-2 px-3 text-gray-700 ml-4"
             />
 
             <button
