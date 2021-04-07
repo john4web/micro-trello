@@ -44,7 +44,7 @@ export const ModalAddProject = () => {
   };
 
   return (
-    <div className="w-80 h-80">
+    <div className="w-80 float-right">
       {modalIsOpen && (
         <div className="absolute w-screen h-screen bg-black bg-opacity-50 top-0 left-0 flex justify-center items-center">
           <div className="w-4/6 h-4/6 bg-white opacity-100 overflow-auto">
@@ -97,7 +97,7 @@ export const ModalAddProject = () => {
               labelledBy="Select"
             />
             <button
-              className="h-10 px-5 m-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
+              className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
               onClick={() => {
                 onAdd();
               }}
@@ -105,7 +105,7 @@ export const ModalAddProject = () => {
               Add
             </button>
             <button
-              className="h-10 px-5 m-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
+              className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
               onClick={() => {
                 setModalIsOpen(false);
               }}
@@ -120,7 +120,7 @@ export const ModalAddProject = () => {
         onClick={() => {
           setModalIsOpen(true);
         }}
-        className="h-10 px-5 m-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
+        className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
       >
         + New Project
       </button>

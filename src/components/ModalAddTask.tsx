@@ -42,7 +42,7 @@ export const ModalAddTask = ({ boardID, column }: IProps) => {
   };
 
   return (
-    <div>
+    <div className="text-center">
       {modalIsOpen && (
         <div className="absolute w-screen h-screen bg-black bg-opacity-50 top-0 left-0 flex justify-center items-center">
           <div className="w-4/6 h-4/6 bg-white opacity-100 overflow-auto">
@@ -86,7 +86,7 @@ export const ModalAddTask = ({ boardID, column }: IProps) => {
             />
 
             <button
-              className="h-10 px-5 m-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
+              className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
               onClick={() => {
                 onAdd();
                 setModalIsOpen(false);
@@ -98,7 +98,7 @@ export const ModalAddTask = ({ boardID, column }: IProps) => {
               onClick={() => {
                 setModalIsOpen(false);
               }}
-              className="h-10 px-5 m-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
+              className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
             >
               CLOSE
             </button>
@@ -110,7 +110,7 @@ export const ModalAddTask = ({ boardID, column }: IProps) => {
         onClick={() => {
           setModalIsOpen(true);
         }}
-        className="h-10 px-5 m-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
+        className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-black"
       >
         + New Task to Column: {column.name}
       </button>

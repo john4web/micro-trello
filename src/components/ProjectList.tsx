@@ -13,8 +13,8 @@ export const ProjectList = () => {
           return (
             <li
               key={project.id}
-              className=" m-4 border-black border-2"
-              style={{ backgroundColor: `${project.color}` }}
+              className="m-4 shadow-md border border-l-8 bg-white"
+              style={{ borderColor: `${project.color}` }}
             >
               <div className="block px-9 py-10">
                 <Link
