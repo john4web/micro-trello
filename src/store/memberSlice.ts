@@ -23,6 +23,7 @@ const memberSlice = createSlice({
         job: action.payload.job,
         skill: action.payload.skill,
       });
+      localStorage.setItem("members", JSON.stringify(state.members));
     },
   },
 });
