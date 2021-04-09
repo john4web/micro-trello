@@ -13,6 +13,13 @@ export const MemberList = () => {
             key={index}
             className="m-4 p-4 shadow-md border bg-white w-60 text-gray-700"
           >
+            <div className="float-right">
+              <img
+                src={URL.createObjectURL(member.photo)}
+                className="max-w-xs max-h-7"
+                alt="img"
+              ></img>
+            </div>
             <li>
               {member.firstname} {member.lastname}
             </li>

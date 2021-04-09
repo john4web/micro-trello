@@ -10,6 +10,7 @@ export const ModalAddMember = () => {
   const [lastname, setLastName] = useState("");
   const [job, setJob] = useState("");
   const [skill, setSkill] = useState("");
+  const [photo, setPhoto] = useState("");
   const dispatch = useDispatch();
 
   const onAdd = () => {
@@ -19,13 +20,18 @@ export const ModalAddMember = () => {
       lastname: lastname,
       job: job,
       skill: skill,
+      photo: photo,
     };
 
     dispatch(addMember(newMember));
   };
 
+  function handleUpload(event: any) {
+    setPhoto(event.target.files[0]);
+  }
+
   return (
-    <div>
+    <div className="w-80 float-right">
       {modalIsOpen && (
         <div className="absolute w-screen h-screen bg-black bg-opacity-50 top-0 left-0 flex justify-center items-center">
           <div className="w-4/6 h-4/6 bg-white opacity-100 overflow-auto p-4">
@@ -90,13 +96,22 @@ export const ModalAddMember = () => {
               className="border py-2 px-3 text-gray-700 ml-4"
             />
             <br></br>
+            <label
+              className="mb-2 uppercase text-lg text-gray-700"
+              htmlFor="member-skill"
+            >
+              Photo:
+            </label>
+            <input type="file" onChange={handleUpload} />
+
+            <br></br>
             <button
               className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
               onClick={() => {
                 setModalIsOpen(false);
               }}
             >
-              Close
+              CLOSE
             </button>
 
             <button
@@ -106,7 +121,7 @@ export const ModalAddMember = () => {
                 setModalIsOpen(false);
               }}
             >
-              Add
+              ADD
             </button>
           </div>
         </div>

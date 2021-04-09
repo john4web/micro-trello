@@ -20,17 +20,24 @@ export const Board = () => {
     <div className="bg-gray-100 w-full">
       <div className="bg-gray-300 h-20">
         <div className="float-left m-2 mt-6">
-          <h2 className="text-lg font-bold">{params.state} </h2>
+          <h2 className="text-lg font-bold inline-block mr-4">
+            {params.state}{" "}
+          </h2>
+
+          {currentProject?.team.map((member) => {
+            return (
+              <img
+                src={URL.createObjectURL(member.photo)}
+                alt="img"
+                className="max-w-xs max-h-7 inline-block mr-2"
+              ></img>
+            );
+          })}
         </div>
         <ModalAddColumn boardID={boardID} project={currentProject} />
       </div>
       <p>Project ID: {boardID}</p>
-      <p>
-        Team:
-        {currentProject?.team.map((member) => {
-          return `${member.firstname} ${member.lastname}: ${member.job}`;
-        })}
-      </p>
+
       <p>
         Color:
         {currentProject?.color}

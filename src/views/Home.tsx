@@ -9,7 +9,7 @@ export const Home = () => {
         </div>
         <ModalAddProject />
       </div>
-      <main className="flex">
+      <main className="grid grid-rows-3 gap-1 grid-flow-col">
         <ProjectList />
       </main>
     </div>

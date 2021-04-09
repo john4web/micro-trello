@@ -92,7 +92,7 @@ export const ModalAddTask = ({ boardID, column }: IProps) => {
             <input
               value={deadline}
               onChange={(e) => setDeadline(e.currentTarget.value)}
-              type="text"
+              type="date"
               id="task-deadline"
               name="task-deadline"
               className="border py-2 px-3 text-gray-700 ml-4"

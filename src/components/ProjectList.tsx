@@ -8,14 +8,13 @@ export const ProjectList = () => {
 
   return (
     <Fragment>
-      <ul>
-        {projects.map((project) => {
-          return (
-            <li
-              key={project.id}
-              className="m-4 shadow-md border border-l-8 bg-white"
-              style={{ borderColor: `${project.color}` }}
-            >
+      {projects.map((project) => {
+        return (
+          <ul
+            className="m-4 p-4 shadow-md border border-l-8 bg-white w-60 text-gray-700"
+            style={{ borderColor: `${project.color}` }}
+          >
+            <li key={project.id}>
               <div className="block px-9 py-10">
                 <Link
                   to={{
@@ -27,9 +26,9 @@ export const ProjectList = () => {
                 </Link>
               </div>
             </li>
-          );
-        })}
-      </ul>
+          </ul>
+        );
+      })}
     </Fragment>
   );
 };
