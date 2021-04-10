@@ -11,8 +11,8 @@ import { RootState } from "../store";
 import React from "react";
 
 export const ModalAddProject = () => {
-  const [name, setName] = useState("");
-  const [color, setColor] = useState("#ff0000");
+  const [name, setName] = useState<string>("");
+  const [color, setColor] = useState<string>("#ff0000");
   const [selected, setSelected] = useState<Option[]>([]);
   const [team, setTeam] = useState<Member[]>([]);
   let [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
@@ -63,14 +63,8 @@ export const ModalAddProject = () => {
               type="text"
               id="project-name"
               name="project-name"
-              className="border py-2 px-3 text-gray-700 ml-4"
+              className="border py-2 px-3 text-gray-700 m-4"
             />
-
-            {showAlert && (
-              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
-                Please fill out every field!!
-              </div>
-            )}
 
             <div className="flex">
               <div className="mb-2 uppercase  text-lg text-gray-700">
@@ -105,6 +99,11 @@ export const ModalAddProject = () => {
               }}
               labelledBy="Select"
             />
+            {showAlert && (
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mt-4 mb-4 rounded relative">
+                Please fill out every field!
+              </div>
+            )}
             <button
               className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
               onClick={() => {

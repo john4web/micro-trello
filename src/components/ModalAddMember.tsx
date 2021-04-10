@@ -6,24 +6,37 @@ import { Member } from "../types/types";
 
 export const ModalAddMember = () => {
   const [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
-  const [firstname, setFirstName] = useState("");
-  const [lastname, setLastName] = useState("");
-  const [job, setJob] = useState("");
-  const [skill, setSkill] = useState("");
-  const [photo, setPhoto] = useState("");
+  const [firstname, setFirstName] = useState<string>("");
+  const [lastname, setLastName] = useState<string>("");
+  const [job, setJob] = useState<string>("");
+  const [skill, setSkill] = useState<string>("");
+  const [photo, setPhoto] = useState<string>("");
   const dispatch = useDispatch();
 
+  let [showAlert, setShowAlert] = useState<Boolean>(false);
   const onAdd = () => {
-    const newMember: Member = {
-      id: "",
-      firstname: firstname,
-      lastname: lastname,
-      job: job,
-      skill: skill,
-      photo: photo,
-    };
+    if (
+      firstname !== "" &&
+      lastname !== "" &&
+      job !== "" &&
+      skill !== "" &&
+      photo !== ""
+    ) {
+      const newMember: Member = {
+        id: "",
+        firstname: firstname,
+        lastname: lastname,
+        job: job,
+        skill: skill,
+        photo: photo,
+      };
 
-    dispatch(addMember(newMember));
+      dispatch(addMember(newMember));
+      setModalIsOpen(false);
+    } else {
+      setShowAlert(true);
+      return;
+    }
   };
 
   function handleUpload(event: any) {
@@ -51,11 +64,14 @@ export const ModalAddMember = () => {
             </label>
             <input
               value={firstname}
-              onChange={(e) => setFirstName(e.currentTarget.value)}
+              onChange={(e) => {
+                setFirstName(e.currentTarget.value);
+                setShowAlert(false);
+              }}
               type="text"
               id="member-firstname"
               name="member-firstname"
-              className="border py-2 px-3 text-gray-700 ml-4"
+              className="border py-2 px-3 text-gray-700 m-4"
             />
             <br></br>
             <label
@@ -66,11 +82,14 @@ export const ModalAddMember = () => {
             </label>
             <input
               value={lastname}
-              onChange={(e) => setLastName(e.currentTarget.value)}
+              onChange={(e) => {
+                setLastName(e.currentTarget.value);
+                setShowAlert(false);
+              }}
               type="text"
               id="member-lastname"
               name="member-lastname"
-              className="border py-2 px-3 text-gray-700 ml-4"
+              className="border py-2 px-3 text-gray-700 m-4"
             />
             <br></br>
             <label
@@ -81,11 +100,14 @@ export const ModalAddMember = () => {
             </label>
             <input
               value={job}
-              onChange={(e) => setJob(e.currentTarget.value)}
+              onChange={(e) => {
+                setJob(e.currentTarget.value);
+                setShowAlert(false);
+              }}
               type="text"
               id="member-job"
               name="member-job"
-              className="border py-2 px-3 text-gray-700 ml-4"
+              className="border py-2 px-3 text-gray-700 m-4"
             />
             <br></br>
             <label
@@ -96,11 +118,14 @@ export const ModalAddMember = () => {
             </label>
             <input
               value={skill}
-              onChange={(e) => setSkill(e.currentTarget.value)}
+              onChange={(e) => {
+                setSkill(e.currentTarget.value);
+                setShowAlert(false);
+              }}
               type="text"
               id="member-skill"
               name="member-skill"
-              className="border py-2 px-3 text-gray-700 ml-4"
+              className="border py-2 px-3 text-gray-700 m-4"
             />
             <br></br>
             <label
@@ -112,6 +137,11 @@ export const ModalAddMember = () => {
             <input type="file" onChange={handleUpload} />
 
             <br></br>
+            {showAlert && (
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mt-4 mb-4 rounded relative">
+                Please fill out every field!
+              </div>
+            )}
             <button
               className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
               onClick={() => {
@@ -125,7 +155,6 @@ export const ModalAddMember = () => {
               className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
               onClick={() => {
                 onAdd();
-                setModalIsOpen(false);
               }}
             >
               ADD
