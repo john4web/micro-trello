@@ -1,0 +1,39 @@
+.dropdown {
+    position: absolute;
+    top: -2px;
+    left: 100%;
+    width: 100px;
+    z-index: 2;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  li {
+    padding: 8px 12px;
+  }
+  
+  li:hover {
+    background-color: rgba(0, 0, 0, 0.14);
+    cursor: pointer;
+  }
+
+
+  /* --- Dropdown for members --- */
+  .member-dropdown
+    .drop-down-menu{
+      right: -37px;
+      top: 32px;
+    
+  }
+
+  .member-dropdown
+    .dropdown{
+      position: absolute;
+      top: 0px;
+      left: 90%;
+      width: 100px;
+      z-index: 2;
+  }

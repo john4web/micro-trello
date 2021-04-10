@@ -25,10 +25,18 @@ const memberSlice = createSlice({
         photo: action.payload.photo,
       });
     },
+    removeMember(state, action: PayloadAction<String>) {
+      let arr = state.members;
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i].id === action.payload) {
+          arr.splice(i, 1);
+        }
+      }
+    },
   },
-  //TODO: implement methods removeMember, updateMember & local storage
+  //TODO: implement methods updateMember
 });
 
 export default memberSlice.reducer;
 
-export const { addMember } = memberSlice.actions;
+export const { addMember, removeMember } = memberSlice.actions;

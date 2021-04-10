@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import { Fragment } from "react";
+import { DropDownMenu } from "./DropDownMenu";
 
 export const MemberList = () => {
   const { members } = useSelector((state: RootState) => state.member);
@@ -22,6 +23,9 @@ export const MemberList = () => {
                   alt="img"
                 ></img>
               }
+            </div>
+            <div className="member-dropdown">
+              <DropDownMenu type="member" item={member} />
             </div>
             <li>
               {member.firstname} {member.lastname}

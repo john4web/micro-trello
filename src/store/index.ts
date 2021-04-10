@@ -1,4 +1,4 @@
-import { combineReducers, configureStore, createStore } from "@reduxjs/toolkit";
+import { combineReducers, createStore } from "@reduxjs/toolkit";
 import memberReducer from "./memberSlice";
 import projectReducer from "./projectSlice";
 import taskReducer from "./taskSlice";
