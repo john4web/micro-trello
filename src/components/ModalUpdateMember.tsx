@@ -1,14 +1,14 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { addMember } from "../store/memberSlice";
+import { updateMember } from "../store/memberSlice";
 import { Member } from "../types/types";
 
 interface IProps {
   member: Member;
+  modalIsOpen: boolean;
 }
 
-export const ModalUpdateMember = ({ member }: IProps) => {
-  const [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
+export const ModalUpdateMember = ({ member, modalIsOpen }: IProps) => {
   const [firstname, setFirstName] = React.useState<string>(member.firstname);
   const [lastname, setLastName] = React.useState<string>(member.lastname);
   const [job, setJob] = React.useState<string>(member.job);
@@ -17,7 +17,7 @@ export const ModalUpdateMember = ({ member }: IProps) => {
   const dispatch = useDispatch();
 
   const onUpdate = () => {
-    const newMember: Member = {
+    const updateCurrentMember: Member = {
       id: member.id,
       firstname: firstname,
       lastname: lastname,
@@ -25,8 +25,7 @@ export const ModalUpdateMember = ({ member }: IProps) => {
       skill: skill,
       photo: photo,
     };
-
-    dispatch(addMember(newMember));
+    dispatch(updateMember(updateCurrentMember));
   };
 
   function handleUpload(event: any) {
@@ -40,15 +39,14 @@ export const ModalUpdateMember = ({ member }: IProps) => {
   }
 
   return (
-    <div className="w-80 float-right">
+    <div>
       {modalIsOpen && (
-        <div className="absolute w-screen h-screen bg-black bg-opacity-50 top-0 left-0 flex justify-center items-center">
+        <div className="fixed w-screen h-screen top-0 left-0 bg-black bg-opacity-50 flex justify-center items-center z-10">
           <div className="w-4/6 h-4/6 bg-white opacity-100 overflow-auto p-4">
             <label
               className="mb-2 uppercase text-lg text-gray-700"
               htmlFor="member-firstname"
             >
-              {" "}
               First Name:
             </label>
             <input
@@ -114,12 +112,7 @@ export const ModalUpdateMember = ({ member }: IProps) => {
             <input type="file" onChange={handleUpload} />
 
             <br></br>
-            <button
-              className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
-              onClick={() => {
-                setModalIsOpen(false);
-              }}
-            >
+            <button className="close-update-modal h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700">
               CLOSE
             </button>
 
@@ -127,7 +120,6 @@ export const ModalUpdateMember = ({ member }: IProps) => {
               className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
               onClick={() => {
                 onUpdate();
-                setModalIsOpen(false);
               }}
             >
               UPDATE

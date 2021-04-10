@@ -26,10 +26,22 @@ const memberSlice = createSlice({
       });
     },
     removeMember(state, action: PayloadAction<String>) {
-      let arr = state.members;
-      for (let i = 0; i < arr.length; i++) {
-        if (arr[i].id === action.payload) {
-          arr.splice(i, 1);
+      let membersInStorage = state.members;
+      for (let i = 0; i < membersInStorage.length; i++) {
+        if (membersInStorage[i].id === action.payload) {
+          membersInStorage.splice(i, 1);
+        }
+      }
+    },
+    updateMember(state, action: PayloadAction<Member>) {
+      let membersInStorage = state.members;
+      for (let i = 0; i < membersInStorage.length; i++) {
+        if (membersInStorage[i].id === action.payload.id) {
+          membersInStorage[i].firstname = action.payload.firstname;
+          membersInStorage[i].lastname = action.payload.lastname;
+          membersInStorage[i].job = action.payload.job;
+          membersInStorage[i].skill = action.payload.skill;
+          membersInStorage[i].photo = action.payload.photo;
         }
       }
     },
@@ -39,4 +51,4 @@ const memberSlice = createSlice({
 
 export default memberSlice.reducer;
 
-export const { addMember, removeMember } = memberSlice.actions;
+export const { addMember, removeMember, updateMember } = memberSlice.actions;

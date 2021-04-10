@@ -3,6 +3,8 @@ import "../styles/DropDown.css";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { removeMember } from "../store/memberSlice";
+import { ModalUpdateMember } from "./ModalUpdateMember";
+import { store } from "../store";
 
 interface IProps {
   type: string;
@@ -11,9 +13,36 @@ interface IProps {
 
 export const DropDownMenu = ({ type, item }: IProps) => {
   let [dropDownIsOpen, dropDownIsVisible] = React.useState<boolean>(false);
+  let [modalMemberIsOpen, setModalMemberIsOpen] = React.useState<boolean>(
+    false
+  );
   const dispatch = useDispatch();
 
   React.useEffect(() => {
+    document.addEventListener("click", () => {
+      if (dropDownIsOpen) {
+        dropDownIsVisible(false);
+        dropDownIsOpen = false;
+      }
+    });
+    let btnList = document.getElementsByClassName("close-update-modal");
+    if (btnList.length !== 0) {
+      for (let btn of Array.from(btnList)) {
+        btn.addEventListener("click", () => {
+          switch (type) {
+            case "member":
+              setModalMemberIsOpen(false);
+              break;
+            default:
+              console.log("It was not possible to close the modal window");
+          }
+        });
+
+        store.subscribe(() => {
+          setModalMemberIsOpen(false);
+        });
+      }
+    }
     document.addEventListener("click", () => {
       if (dropDownIsOpen) {
         dropDownIsVisible(false);
@@ -33,7 +62,14 @@ export const DropDownMenu = ({ type, item }: IProps) => {
   };
 
   const onUpdate = () => {
-    console.log("update member!");
+    switch (type) {
+      case "member":
+        setModalMemberIsOpen(true);
+
+        break;
+      default:
+        console.log("It was not possible to remove the current object");
+    }
   };
 
   return (
@@ -78,6 +114,7 @@ export const DropDownMenu = ({ type, item }: IProps) => {
             </ul>
           </div>
         )}
+        <ModalUpdateMember member={item} modalIsOpen={modalMemberIsOpen} />
       </div>
     </Fragment>
   );
