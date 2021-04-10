@@ -24,7 +24,9 @@ export const MemberList = () => {
                 ></img>
               }
             </div>
-            <DropDownMenu type="member" item={member} />
+            <div className="member-dropdown">
+              <DropDownMenu type="member" item={member} />
+            </div>
             <li>
               {member.firstname} {member.lastname}
             </li>

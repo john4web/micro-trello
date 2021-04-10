@@ -55,7 +55,10 @@ export const DropDownMenu = ({ type, item }: IProps) => {
         </button>
         {dropDownIsOpen && (
           <div className="dropdown">
-            <ul key={type + item.id}>
+            <ul
+              key={type + item.id}
+              className="shadow-md border bg-white text-gray-700"
+            >
               <li
                 onClick={() => {
                   dropDownIsVisible(false);
