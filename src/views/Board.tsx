@@ -27,7 +27,7 @@ export const Board = () => {
           {/* {currentProject?.team.map((member) => {
             return (
               <img
-                src={URL.createObjectURL(member.photo)}
+                src={member.photo}
                 alt="img"
                 className="max-w-xs max-h-7 inline-block mr-2"
               ></img>
