@@ -42,21 +42,29 @@ export const ModalAddTask = ({ boardID, column }: IProps) => {
   };
 
   return (
-    <div>
+    <div className="">
       {modalIsOpen && (
         <div className="absolute w-screen h-screen bg-black bg-opacity-50 top-0 left-0 flex justify-center items-center">
-          <div className="w-4/6 h-4/6 bg-white opacity-100 overflow-auto">
-            <label htmlFor="task-name"> Name:</label>
+          <div className="w-4/6 h-4/6 bg-white opacity-100 overflow-auto p-4">
+            <label
+              className="mb-2 uppercase text-lg text-gray-700"
+              htmlFor="task-name"
+            >
+              {" "}
+              Name:
+            </label>
             <input
               value={name}
               onChange={(e) => setName(e.currentTarget.value)}
               type="text"
               id="task-name"
               name="task-name"
-              className="border-black border-2"
+              className="border py-2 px-3 text-gray-700 ml-4"
             />
 
-            <div>Assigned Members:</div>
+            <div className="mb-2 uppercase text-lg text-gray-700">
+              Assigned Members:
+            </div>
             <MultiSelect
               options={options}
               value={selected}
@@ -75,30 +83,35 @@ export const ModalAddTask = ({ boardID, column }: IProps) => {
               labelledBy="Select"
             />
 
-            <label htmlFor="task-deadline">Deadline:</label>
+            <label
+              className="mb-2 uppercase text-lg text-gray-700"
+              htmlFor="task-deadline"
+            >
+              Deadline:
+            </label>
             <input
               value={deadline}
               onChange={(e) => setDeadline(e.currentTarget.value)}
-              type="text"
+              type="date"
               id="task-deadline"
               name="task-deadline"
-              className="border-black border-2"
+              className="border py-2 px-3 text-gray-700 ml-4"
             />
-
+            <br></br>
             <button
-              className="h-10 px-5 m-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
+              className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
               onClick={() => {
                 onAdd();
                 setModalIsOpen(false);
               }}
             >
-              Add
+              ADD
             </button>
             <button
               onClick={() => {
                 setModalIsOpen(false);
               }}
-              className="h-10 px-5 m-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
+              className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
             >
               CLOSE
             </button>
@@ -110,7 +123,7 @@ export const ModalAddTask = ({ boardID, column }: IProps) => {
         onClick={() => {
           setModalIsOpen(true);
         }}
-        className="h-10 px-5 m-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
+        className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-black"
       >
         + New Task to Column: {column.name}
       </button>

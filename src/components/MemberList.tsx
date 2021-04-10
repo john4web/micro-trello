@@ -9,11 +9,22 @@ export const MemberList = () => {
     <Fragment>
       {members.map((member, index) => {
         return (
-          <ul key={index} className=" m-4 border-black border-2">
-            <li>{member.firstname}</li>
-            <li>{member.lastname}</li>
-            <li>{member.job}</li>
-            <li>{member.skill}</li>
+          <ul
+            key={index}
+            className="m-4 p-4 shadow-md border bg-white w-60 text-gray-700"
+          >
+            <div className="float-right">
+              <img
+                src={URL.createObjectURL(member.photo)}
+                className="max-w-xs max-h-7"
+                alt="img"
+              ></img>
+            </div>
+            <li>
+              {member.firstname} {member.lastname}
+            </li>
+            <li>Job: {member.job}</li>
+            <li>Skill: {member.skill}</li>
           </ul>
         );
       })}
