@@ -12,6 +12,7 @@ export type Member = {
   lastname: string;
   job: string;
   skill: string;
+  photo: string;
 };
 
 export type Column = {

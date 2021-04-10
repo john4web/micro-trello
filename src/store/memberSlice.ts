@@ -22,6 +22,7 @@ const memberSlice = createSlice({
         lastname: action.payload.lastname,
         job: action.payload.job,
         skill: action.payload.skill,
+        photo: action.payload.photo,
       });
     },
     removeMember(state, action: PayloadAction<String>) {
