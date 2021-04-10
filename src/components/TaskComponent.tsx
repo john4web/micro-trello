@@ -1,5 +1,4 @@
 import { Task } from "../types/types";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 interface IProps {
   task: Task;
