@@ -27,7 +27,14 @@ export const ModalAddMember = () => {
   };
 
   function handleUpload(event: any) {
-    setPhoto(event.target.files[0]);
+    var reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+    reader.onloadend = function () {
+      var base64data = reader.result;
+      console.log(base64data);
+      var photoURL = String(base64data);
+      setPhoto(photoURL);
+    };
   }
 
   return (
