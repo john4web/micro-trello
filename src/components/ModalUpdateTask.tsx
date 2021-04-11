@@ -1,49 +1,62 @@
 import React from "react";
 import MultiSelect from "react-multi-select-component";
 import { useDispatch } from "react-redux";
-import { addTaskToProjectColumn } from "../store/projectSlice";
+import { updateTaskFromProjectColumn } from "../store/projectSlice";
 
-import { Column, Member, Project, Task } from "../types/types";
+import { Member, Task } from "../types/types";
 import { Option } from "../types/types";
-import { v4 as uuid } from "uuid";
 
 interface IProps {
-  boardID: string;
-  column: Column;
-  project: Project;
+  task: Task;
+  project: any;
+  modalIsOpen: boolean;
 }
 
-export const ModalAddTask = ({ boardID, column, project }: IProps) => {
-  const [name, setName] = React.useState<string>("");
-  const [deadline, setDeadline] = React.useState<string>("");
+export const ModalUpdateTask = ({ task, project, modalIsOpen }: IProps) => {
+  const [name, setName] = React.useState<string>(task.name);
+  const [deadline, setDeadline] = React.useState<string>(task.deadline);
   const dispatch = useDispatch();
-  const [selected, setSelected] = React.useState<Option[]>([]);
-  const [team, setTeam] = React.useState<Member[]>(project.team);
-  const [modalIsOpen, setModalIsOpen] = React.useState<Boolean>(false);
 
-  const options: Option[] = project.team?.map((member) => {
+  const options: Option[] = project.team?.map((member: Member) => {
     return {
       label: `${member.firstname} ${member.lastname}`,
       value: member.id,
     };
   });
 
-  const onAdd = () => {
-    const newTask: Task = {
-      id: uuid(),
+  function setPreselection() {
+    let preSelection: Option[] = [];
+    options.map((option) => {
+      task.team.map((member: Member) => {
+        if (option.value === member.id) {
+          preSelection.push(option);
+        }
+        return true;
+      });
+      return true;
+    });
+    return preSelection;
+  }
+
+  const [selected, setSelected] = React.useState<Option[]>(setPreselection());
+  const [team, setTeam] = React.useState<Member[]>(project.team);
+
+  const onUpdate = () => {
+    const updateCurrentTask: Task = {
+      id: task.id,
       name: name,
       team: team,
       deadline: deadline,
-      projectID: boardID,
-      columnID: column.id,
+      projectID: task.projectID,
+      columnID: task.columnID,
     };
-    dispatch(addTaskToProjectColumn(newTask));
+    dispatch(updateTaskFromProjectColumn(updateCurrentTask));
   };
 
   return (
     <div className="">
       {modalIsOpen && (
-        <div className="absolute w-screen h-screen bg-black bg-opacity-50 top-0 left-0 flex justify-center items-center z-10">
+        <div className="fixed w-screen h-screen bg-black bg-opacity-50 top-0 left-0 flex justify-center items-center z-10">
           <div className="w-4/6 h-4/6 bg-white opacity-100 overflow-auto p-4">
             <label
               className="mb-2 uppercase text-lg text-gray-700"
@@ -71,7 +84,7 @@ export const ModalAddTask = ({ boardID, column, project }: IProps) => {
                 setSelected(optionsArray);
                 let team: Member[] = [];
                 optionsArray.forEach((option) => {
-                  project.team.forEach((member: Member) => {
+                  project.team?.forEach((member: Member) => {
                     if (option.value === member.id) {
                       team.push(member);
                     }
@@ -100,32 +113,17 @@ export const ModalAddTask = ({ boardID, column, project }: IProps) => {
             <button
               className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
               onClick={() => {
-                onAdd();
-                setModalIsOpen(false);
+                onUpdate();
               }}
             >
-              ADD
+              UPDATE
             </button>
-            <button
-              onClick={() => {
-                setModalIsOpen(false);
-              }}
-              className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
-            >
+            <button className="close-update-modal h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700">
               CLOSE
             </button>
           </div>
         </div>
       )}
-
-      <button
-        onClick={() => {
-          setModalIsOpen(true);
-        }}
-        className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-black"
-      >
-        + New Task to Column: {column.name}
-      </button>
     </div>
   );
 };

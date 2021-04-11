@@ -1,16 +1,15 @@
 import React from "react";
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addMember } from "../store/memberSlice";
 import { Member } from "../types/types";
 
 export const ModalAddMember = () => {
   const [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
-  const [firstname, setFirstName] = useState("");
-  const [lastname, setLastName] = useState("");
-  const [job, setJob] = useState("");
-  const [skill, setSkill] = useState("");
-  const [photo, setPhoto] = useState("");
+  const [firstname, setFirstName] = React.useState<string>("");
+  const [lastname, setLastName] = React.useState<string>("");
+  const [job, setJob] = React.useState<string>("");
+  const [skill, setSkill] = React.useState<string>("");
+  const [photo, setPhoto] = React.useState<string>("");
   const dispatch = useDispatch();
 
   const onAdd = () => {
@@ -31,7 +30,6 @@ export const ModalAddMember = () => {
     reader.readAsDataURL(event.target.files[0]);
     reader.onloadend = function () {
       var base64data = reader.result;
-      console.log(base64data);
       var photoURL = String(base64data);
       setPhoto(photoURL);
     };

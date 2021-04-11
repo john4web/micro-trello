@@ -46,7 +46,8 @@ export const ColumnList = ({ boardID, project }: IProps) => {
           if (column.tasks === undefined) {
             column.tasks = [];
           }
-          //insert element at index destination.index
+          //insert element at index destination.index and updates column id
+          draggedTask.columnID = column.id;
           column.tasks.splice(destination.index, 0, draggedTask);
         }
         return true;
