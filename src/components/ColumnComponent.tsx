@@ -1,14 +1,16 @@
-import { Column } from "../types/types";
+import { Column, Project } from "../types/types";
 import { ModalAddTask } from "./ModalAddTask";
 import { TaskComponent } from "./TaskComponent";
 import { Draggable, Droppable } from "react-beautiful-dnd";
+import { DropDownMenu } from "./DropDownMenu";
 
 interface IProps {
   boardID: string;
   column: Column;
+  project: Project;
 }
 
-export const ColumnComponent = ({ boardID, column }: IProps) => {
+export const ColumnComponent = ({ boardID, column, project }: IProps) => {
   return (
     <Droppable droppableId={column.id} key={column.id}>
       {(provided, snapshot) => (
@@ -18,7 +20,10 @@ export const ColumnComponent = ({ boardID, column }: IProps) => {
           {...provided.droppableProps}
           className="w-96 bg-gray-300 border-gray-400 border shadow-md p-2 m-5 inline-block align-top"
         >
-          <div className="font-bold text-center mb-2">{column.name}</div>
+          <div className="column-dropdown">
+            <DropDownMenu type="column" item={column} />
+          </div>
+          <div className="font-bold text-center mb-7">{column.name}</div>
 
           <div>
             <div>
@@ -39,6 +44,7 @@ export const ColumnComponent = ({ boardID, column }: IProps) => {
                             ...provided.draggableProps.style,
                           }}
                         >
+                          {" "}
                           <TaskComponent task={task} />
                         </div>
                       );
@@ -49,7 +55,7 @@ export const ColumnComponent = ({ boardID, column }: IProps) => {
             </div>
           </div>
 
-          <ModalAddTask column={column} boardID={boardID} />
+          <ModalAddTask column={column} boardID={boardID} project={project} />
           {provided.placeholder}
         </div>
       )}

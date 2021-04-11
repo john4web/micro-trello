@@ -1,34 +1,33 @@
-import React, { useState } from "react";
+import React from "react";
 import MultiSelect from "react-multi-select-component";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store";
+import { useDispatch } from "react-redux";
 import { addTaskToProjectColumn } from "../store/projectSlice";
 
-import { Column, Member, Task } from "../types/types";
+import { Column, Member, Project, Task } from "../types/types";
 import { Option } from "../types/types";
 import { v4 as uuid } from "uuid";
 
 interface IProps {
   boardID: string;
   column: Column;
+  project: Project;
 }
 
-export const ModalAddTask = ({ boardID, column }: IProps) => {
-  const [name, setName] = useState<string>("");
-  const [deadline, setDeadline] = useState<string>("");
+export const ModalAddTask = ({ boardID, column, project }: IProps) => {
+  const [name, setName] = React.useState<string>("");
+  const [deadline, setDeadline] = React.useState<string>("");
   const dispatch = useDispatch();
-  const { members } = useSelector((state: RootState) => state.member);
-  const [selected, setSelected] = useState<Option[]>([]);
-  const [team, setTeam] = useState<Member[]>([]);
-  const [modalIsOpen, setModalIsOpen] = useState<Boolean>(false);
+  const [selected, setSelected] = React.useState<Option[]>([]);
+  const [team, setTeam] = React.useState<Member[]>(project.team);
+  const [modalIsOpen, setModalIsOpen] = React.useState<Boolean>(false);
 
-  const options: Option[] = members.map((member) => {
+  const options: Option[] = project.team?.map((member) => {
     return {
       label: `${member.firstname} ${member.lastname}`,
       value: member.id,
     };
   });
-  let [showAlert, setShowAlert] = useState<Boolean>(false);
+  let [showAlert, setShowAlert] = React.useState<Boolean>(false);
 
   const onAdd = () => {
     if (name !== "" && team.length !== 0 && deadline !== "") {
@@ -82,7 +81,7 @@ export const ModalAddTask = ({ boardID, column }: IProps) => {
                 setSelected(optionsArray);
                 let team: Member[] = [];
                 optionsArray.forEach((option) => {
-                  members.forEach((member: Member) => {
+                  project.team?.forEach((member: Member) => {
                     if (option.value === member.id) {
                       team.push(member);
                     }

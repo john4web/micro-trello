@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addProject } from "../store/projectSlice";
+import { updateProject } from "../store/projectSlice";
 import { Project } from "../types/types";
 import { Option } from "../types/types";
 import { Member } from "../types/types";
@@ -10,14 +10,16 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import React from "react";
 
-export const ModalAddProject = () => {
-  const [name, setName] = useState<string>("");
-  const [color, setColor] = useState<string>("#ff0000");
-  const [selected, setSelected] = useState<Option[]>([]);
-  const [team, setTeam] = useState<Member[]>([]);
-  let [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
-  const dispatch = useDispatch();
+interface IProps {
+  project: Project;
+  modalIsOpen: boolean;
+}
+
+export const ModalUpdateProject = ({ project, modalIsOpen }: IProps) => {
+  const [name, setName] = React.useState<string>(project.name);
+  const [color, setColor] = React.useState<string>(project.color);
   const { members } = useSelector((state: RootState) => state.member);
+
   const options: Option[] = members.map((member) => {
     return {
       label: `${member.firstname} ${member.lastname}`,
@@ -25,20 +27,36 @@ export const ModalAddProject = () => {
     };
   });
 
-  let [showAlert, setShowAlert] = useState<Boolean>(false);
+  function setPreselection() {
+    let preSelection: Option[] = [];
+    options.map((option) => {
+      project.team.map((member: Member) => {
+        if (option.value === member.id) {
+          preSelection.push(option);
+        }
+        return true;
+      });
+      return true;
+    });
+    return preSelection;
+  }
 
-  const onAdd = () => {
+  const [selected, setSelected] = useState<Option[]>(setPreselection());
+  const [team, setTeam] = React.useState<Member[]>(project.team);
+  const dispatch = useDispatch();
+  let [showAlert, setShowAlert] = React.useState<Boolean>(false);
+
+  const onUpdate = () => {
     if (name !== "" && color !== "" && team.length !== 0) {
-      const newProject: Project = {
-        id: "",
+      const updateCurrentProject: Project = {
+        id: project.id,
         name: name,
         team: team,
         color: color,
+        columns: project.columns,
       };
-      dispatch(addProject(newProject));
-      setModalIsOpen(false);
+      dispatch(updateProject(updateCurrentProject));
     } else {
-      setShowAlert(true);
       return;
     }
   };
@@ -46,7 +64,7 @@ export const ModalAddProject = () => {
   return (
     <div className="w-80 float-right">
       {modalIsOpen && (
-        <div className="absolute w-screen h-screen bg-black bg-opacity-50 top-0 left-0 flex justify-center items-center z-10">
+        <div className="fixed w-screen h-screen bg-black bg-opacity-50 top-0 left-0 flex justify-center items-center z-10">
           <div className="w-4/6 h-4/6 bg-white opacity-100 overflow-auto p-4">
             <label
               className="mb-2 uppercase text-lg text-gray-700"
@@ -63,8 +81,14 @@ export const ModalAddProject = () => {
               type="text"
               id="project-name"
               name="project-name"
-              className="border py-2 px-3 text-gray-700 m-4"
+              className="border py-2 px-3 text-gray-700 ml-4"
             />
+
+            {showAlert && (
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
+                Please fill out every field!!
+              </div>
+            )}
 
             <div className="flex">
               <div className="mb-2 uppercase  text-lg text-gray-700">
@@ -99,39 +123,20 @@ export const ModalAddProject = () => {
               }}
               labelledBy="Select"
             />
-            {showAlert && (
-              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mt-4 mb-4 rounded relative">
-                Please fill out every field!
-              </div>
-            )}
             <button
               className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
               onClick={() => {
-                onAdd();
+                onUpdate();
               }}
             >
-              ADD
+              UPDATE
             </button>
-            <button
-              className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
-              onClick={() => {
-                setModalIsOpen(false);
-              }}
-            >
+            <button className="close-update-modal h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700">
               CLOSE
             </button>
           </div>
         </div>
       )}
-
-      <button
-        onClick={() => {
-          setModalIsOpen(true);
-        }}
-        className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
-      >
-        + New Project
-      </button>
     </div>
   );
 };

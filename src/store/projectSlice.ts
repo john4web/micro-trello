@@ -23,22 +23,27 @@ const projectSlice = createSlice({
         color: action.payload.color,
       });
     },
-    updateProject(state, action: PayloadAction<Project>) {
-      state.projects.push({
-        //Generate the id outside
-        id: action.payload.id,
-        name: action.payload.name,
-        team: action.payload.team,
-        color: action.payload.color,
-        columns: action.payload.columns,
-      });
-    },
     removeProject(state, action: PayloadAction<String>) {
-      let arr = state.projects;
-      for (let i = 0; i < arr.length; i++) {
-        if (arr[i].id === action.payload) {
-          arr.splice(i, 1);
+      let projectsInStorage = state.projects;
+      for (let i = 0; i < projectsInStorage.length; i++) {
+        if (projectsInStorage[i].id === action.payload) {
+          projectsInStorage.splice(i, 1);
         }
+      }
+    },
+    updateProject(state, action: PayloadAction<Project>) {
+      try {
+        state.projects.every((project, index) => {
+          if (project.id === action.payload.id) {
+            // replaces 1 element at index
+            state.projects.splice(index, 1, action.payload);
+            return false;
+          }
+          return true;
+        });
+      } catch (e) {
+        console.log(e);
+        //Todo: auf fehler reagieren!
       }
     },
     addTaskToProjectColumn(state, action: PayloadAction<Task>) {
@@ -87,6 +92,38 @@ const projectSlice = createSlice({
         //Todo: auf fehler reagieren!
       }
     },
+    removeColumnFromProject(state, action: PayloadAction<Column>) {
+      state.projects.every((project) => {
+        if (project.id === action.payload.projectID) {
+          let columnsInStorage = project.columns;
+          if (columnsInStorage) {
+            for (let i = 0; i < columnsInStorage.length; i++) {
+              if (columnsInStorage[i].id === action.payload.id) {
+                columnsInStorage.splice(i, 1);
+              }
+            }
+          }
+          return false;
+        }
+        return true;
+      });
+    },
+    updateColumnFromProject(state, action: PayloadAction<Column>) {
+      state.projects.every((project) => {
+        if (project.id === action.payload.projectID) {
+          let columnsInStorage = project.columns;
+          if (columnsInStorage) {
+            for (let i = 0; i < columnsInStorage.length; i++) {
+              if (columnsInStorage[i].id === action.payload.id) {
+                columnsInStorage[i].name = action.payload.name;
+              }
+            }
+          }
+          return false;
+        }
+        return true;
+      });
+    },
   },
 });
 
@@ -98,4 +135,6 @@ export const {
   removeProject,
   addTaskToProjectColumn,
   addColumnToProject,
+  removeColumnFromProject,
+  updateColumnFromProject,
 } = projectSlice.actions;

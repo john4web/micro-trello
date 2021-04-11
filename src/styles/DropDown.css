@@ -1,9 +1,8 @@
 .dropdown {
     position: absolute;
-    top: -2px;
+    top: 3px;
     left: 100%;
     width: 100px;
-    z-index: 2;
   }
   
   ul {
@@ -35,5 +34,4 @@
       top: 0px;
       left: 90%;
       width: 100px;
-      z-index: 2;
   }

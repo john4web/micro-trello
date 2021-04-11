@@ -3,6 +3,11 @@ import "../styles/DropDown.css";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { removeMember } from "../store/memberSlice";
+import { ModalUpdateMember } from "./ModalUpdateMember";
+import { store } from "../store";
+import { removeColumnFromProject, removeProject } from "../store/projectSlice";
+import { ModalUpdateProject } from "./ModalUpdateProject";
+import { ModalUdateColumn } from "./ModalUpdateColumn";
 
 interface IProps {
   type: string;
@@ -11,6 +16,15 @@ interface IProps {
 
 export const DropDownMenu = ({ type, item }: IProps) => {
   let [dropDownIsOpen, dropDownIsVisible] = React.useState<boolean>(false);
+  let [modalMemberIsOpen, setModalMemberIsOpen] = React.useState<boolean>(
+    false
+  );
+  let [modalProjectIsOpen, setModalProjectIsOpen] = React.useState<boolean>(
+    false
+  );
+  let [modalColumnIsOpen, setModalColumnIsOpen] = React.useState<boolean>(
+    false
+  );
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -20,12 +34,69 @@ export const DropDownMenu = ({ type, item }: IProps) => {
         dropDownIsOpen = false;
       }
     });
+    let btnList = document.getElementsByClassName("close-update-modal");
+    if (btnList.length !== 0) {
+      for (let btn of Array.from(btnList)) {
+        btn.addEventListener("click", () => {
+          switch (type) {
+            case "member":
+              setModalMemberIsOpen(false);
+              break;
+            case "project":
+              setModalProjectIsOpen(false);
+              break;
+            case "column":
+              setModalColumnIsOpen(false);
+              break;
+            default:
+              console.log("It was not possible to close the modal window");
+          }
+        });
+
+        store.subscribe(() => {
+          setModalMemberIsOpen(false);
+          setModalProjectIsOpen(false);
+          setModalColumnIsOpen(false);
+        });
+      }
+    }
+    document.addEventListener("click", () => {
+      if (dropDownIsOpen) {
+        dropDownIsVisible(false);
+        dropDownIsOpen = false;
+      }
+    });
   });
+
+  function setModalWindowForUpdate() {
+    switch (type) {
+      case "member":
+        return (
+          <ModalUpdateMember member={item} modalIsOpen={modalMemberIsOpen} />
+        );
+      case "project":
+        return (
+          <ModalUpdateProject project={item} modalIsOpen={modalProjectIsOpen} />
+        );
+      case "column":
+        return (
+          <ModalUdateColumn column={item} modalIsOpen={modalColumnIsOpen} />
+        );
+      default:
+        console.log("It was not possible to remove the current object");
+    }
+  }
 
   const onRemove = () => {
     switch (type) {
       case "member":
         dispatch(removeMember(item.id));
+        break;
+      case "project":
+        dispatch(removeProject(item.id));
+        break;
+      case "column":
+        dispatch(removeColumnFromProject(item));
         break;
       default:
         console.log("It was not possible to remove the current object");
@@ -33,7 +104,19 @@ export const DropDownMenu = ({ type, item }: IProps) => {
   };
 
   const onUpdate = () => {
-    console.log("update member!");
+    switch (type) {
+      case "member":
+        setModalMemberIsOpen(true);
+        break;
+      case "project":
+        setModalProjectIsOpen(true);
+        break;
+      case "column":
+        setModalColumnIsOpen(true);
+        break;
+      default:
+        console.log("It was not possible to remove the current object");
+    }
   };
 
   return (
@@ -78,6 +161,7 @@ export const DropDownMenu = ({ type, item }: IProps) => {
             </ul>
           </div>
         )}
+        {setModalWindowForUpdate()}
       </div>
     </Fragment>
   );

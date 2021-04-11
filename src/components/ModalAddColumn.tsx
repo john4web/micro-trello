@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addColumnToProject } from "../store/projectSlice";
 import { Column, Project } from "../types/types";
@@ -6,16 +5,15 @@ import { v4 as uuid } from "uuid";
 import React from "react";
 
 interface IProps {
-  boardID: string;
   project: Project;
 }
 
-export const ModalAddColumn = ({ boardID, project }: IProps) => {
-  const [name, setName] = useState<string>("");
+export const ModalAddColumn = ({ project }: IProps) => {
+  const [name, setName] = React.useState<string>("");
   const dispatch = useDispatch();
 
   const [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
-  let [showAlert, setShowAlert] = useState<Boolean>(false);
+  let [showAlert, setShowAlert] = React.useState<Boolean>(false);
 
   const onAdd = () => {
     if (name !== "") {
@@ -36,7 +34,7 @@ export const ModalAddColumn = ({ boardID, project }: IProps) => {
   return (
     <div className="w-80 float-right">
       {modalIsOpen && (
-        <div className="absolute w-screen h-screen bg-black bg-opacity-50 top-0 left-0 flex justify-center items-center">
+        <div className="absolute w-screen h-screen bg-black bg-opacity-50 top-0 left-0 flex justify-center items-center z-10">
           <div className="w-4/6 h-4/6 bg-white opacity-100 overflow-auto p-4">
             <label
               className="mb-2 uppercase text-lg text-gray-700"

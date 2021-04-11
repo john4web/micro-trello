@@ -24,9 +24,10 @@ export const Board = () => {
             {params.state}{" "}
           </h2>
 
-          {currentProject?.team.map((member) => {
+          {currentProject?.team.map((member, index) => {
             return (
               <img
+                key={index}
                 src={member.photo}
                 alt="img"
                 className="max-w-xs max-h-7 inline-block mr-2"
@@ -34,7 +35,7 @@ export const Board = () => {
             );
           })}
         </div>
-        <ModalAddColumn boardID={boardID} project={currentProject} />
+        <ModalAddColumn project={currentProject} />
       </div>
       <p>Project ID: {boardID}</p>
 
