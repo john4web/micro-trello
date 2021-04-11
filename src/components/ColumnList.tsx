@@ -13,28 +13,46 @@ export const ColumnList = ({ boardID, project }: IProps) => {
   const dispatch = useDispatch();
   const onDragEnd = (result: any) => {
     if (result.destination === null) {
-      console.log("ins nichts");
       //Wenn Task ins "nichts" gezogen wird  --> abbrechen
       return;
     }
 
     const { source, destination } = result;
 
+    //perform a a deep copy of the object
+    //explanation: https://www.samanthaming.com/tidbits/70-3-ways-to-clone-objects/#_3-using-json
+    let projectCopy = JSON.parse(JSON.stringify(project));
     if (source.droppableId !== destination.droppableId) {
-      console.log("in andere column");
+      // When task is dragged into any other column
+      let draggedTask!: Task;
 
-      //perform a a deep copy of the object
-      //explanation: https://www.samanthaming.com/tidbits/70-3-ways-to-clone-objects/#_3-using-json
-      let projectCopy = JSON.parse(JSON.stringify(project));
+      projectCopy.columns!.every((column: Column) => {
+        if (column.id === source.droppableId) {
+          return column.tasks!.every((task: Task, index) => {
+            if (task.id === result.draggableId) {
+              //delete dragged Task from source column
+              column.tasks!.splice(index, 1);
+              draggedTask = task;
+              return false;
+            }
+            return true;
+          });
+        }
+        return true;
+      });
 
-      //Wenn Task in eine andere column gezogen wird
-      //delete task from original column and insert it in new column
+      projectCopy.columns!.every((column: Column) => {
+        if (column.id === destination.droppableId) {
+          if (column.tasks === undefined) {
+            column.tasks = [];
+          }
+          //insert element at index destination.index
+          column.tasks.splice(destination.index, 0, draggedTask);
+        }
+        return true;
+      });
     } else {
-      //When task is dragged in the same column
-
-      //perform a a deep copy of the object
-      //explanation: https://www.samanthaming.com/tidbits/70-3-ways-to-clone-objects/#_3-using-json
-      let projectCopy = JSON.parse(JSON.stringify(project));
+      //When task is dragged into the same column
 
       const column: Column = projectCopy.columns!.filter(
         (column: Column) => column.id === source.droppableId
@@ -50,9 +68,8 @@ export const ColumnList = ({ boardID, project }: IProps) => {
 
       //insert element at index destination.index
       tasks.splice(destination.index, 0, draggedTask);
-
-      dispatch(updateProject(projectCopy));
     }
+    dispatch(updateProject(projectCopy));
   };
   return (
     <Fragment>

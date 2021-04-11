@@ -27,14 +27,8 @@ const projectSlice = createSlice({
       try {
         state.projects.every((project, index) => {
           if (project.id === action.payload.id) {
-            // replaces 1 element at index 4
+            // replaces 1 element at index
             state.projects.splice(index, 1, action.payload);
-
-            // //remove project
-            // state.projects.splice(index, 1);
-
-            // //add new project
-            // state.projects.push({ ...action.payload });
             return false;
           }
           return true;
@@ -44,24 +38,6 @@ const projectSlice = createSlice({
         //Todo: auf fehler reagieren!
       }
     },
-    /* updateProject(state, action: PayloadAction<Project>) {
-      state.projects.push({
-        //Generate the id outside
-        id: action.payload.id,
-        name: action.payload.name,
-        team: action.payload.team,
-        color: action.payload.color,
-        columns: action.payload.columns,
-      });
-    },
-    removeProject(state, action: PayloadAction<String>) {
-      let arr = state.projects;
-      for (let i = 0; i < arr.length; i++) {
-        if (arr[i].id === action.payload) {
-          arr.splice(i, 1);
-        }
-      }
-    },*/
     addTaskToProjectColumn(state, action: PayloadAction<Task>) {
       try {
         state.projects.forEach((project: Project, index1) => {
@@ -116,8 +92,6 @@ export default projectSlice.reducer;
 export const {
   addProject,
   updateProject,
-  /*updateProject,
-  removeProject,*/
   addTaskToProjectColumn,
   addColumnToProject,
 } = projectSlice.actions;
