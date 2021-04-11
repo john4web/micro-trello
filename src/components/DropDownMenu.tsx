@@ -5,8 +5,9 @@ import { useDispatch } from "react-redux";
 import { removeMember } from "../store/memberSlice";
 import { ModalUpdateMember } from "./ModalUpdateMember";
 import { store } from "../store";
-import { removeProject } from "../store/projectSlice";
+import { removeColumnFromProject, removeProject } from "../store/projectSlice";
 import { ModalUpdateProject } from "./ModalUpdateProject";
+import { ModalUdateColumn } from "./ModalUpdateColumn";
 
 interface IProps {
   type: string;
@@ -19,6 +20,9 @@ export const DropDownMenu = ({ type, item }: IProps) => {
     false
   );
   let [modalProjectIsOpen, setModalProjectIsOpen] = React.useState<boolean>(
+    false
+  );
+  let [modalColumnIsOpen, setModalColumnIsOpen] = React.useState<boolean>(
     false
   );
   const dispatch = useDispatch();
@@ -41,6 +45,9 @@ export const DropDownMenu = ({ type, item }: IProps) => {
             case "project":
               setModalProjectIsOpen(false);
               break;
+            case "column":
+              setModalColumnIsOpen(false);
+              break;
             default:
               console.log("It was not possible to close the modal window");
           }
@@ -49,6 +56,7 @@ export const DropDownMenu = ({ type, item }: IProps) => {
         store.subscribe(() => {
           setModalMemberIsOpen(false);
           setModalProjectIsOpen(false);
+          setModalColumnIsOpen(false);
         });
       }
     }
@@ -70,6 +78,10 @@ export const DropDownMenu = ({ type, item }: IProps) => {
         return (
           <ModalUpdateProject project={item} modalIsOpen={modalProjectIsOpen} />
         );
+      case "column":
+        return (
+          <ModalUdateColumn column={item} modalIsOpen={modalColumnIsOpen} />
+        );
       default:
         console.log("It was not possible to remove the current object");
     }
@@ -83,6 +95,9 @@ export const DropDownMenu = ({ type, item }: IProps) => {
       case "project":
         dispatch(removeProject(item.id));
         break;
+      case "column":
+        dispatch(removeColumnFromProject(item));
+        break;
       default:
         console.log("It was not possible to remove the current object");
     }
@@ -92,11 +107,12 @@ export const DropDownMenu = ({ type, item }: IProps) => {
     switch (type) {
       case "member":
         setModalMemberIsOpen(true);
-
         break;
       case "project":
         setModalProjectIsOpen(true);
-
+        break;
+      case "column":
+        setModalColumnIsOpen(true);
         break;
       default:
         console.log("It was not possible to remove the current object");

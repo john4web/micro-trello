@@ -92,6 +92,38 @@ const projectSlice = createSlice({
         //Todo: auf fehler reagieren!
       }
     },
+    removeColumnFromProject(state, action: PayloadAction<Column>) {
+      state.projects.every((project) => {
+        if (project.id === action.payload.projectID) {
+          let columnsInStorage = project.columns;
+          if (columnsInStorage) {
+            for (let i = 0; i < columnsInStorage.length; i++) {
+              if (columnsInStorage[i].id === action.payload.id) {
+                columnsInStorage.splice(i, 1);
+              }
+            }
+          }
+          return false;
+        }
+        return true;
+      });
+    },
+    updateColumnFromProject(state, action: PayloadAction<Column>) {
+      state.projects.every((project) => {
+        if (project.id === action.payload.projectID) {
+          let columnsInStorage = project.columns;
+          if (columnsInStorage) {
+            for (let i = 0; i < columnsInStorage.length; i++) {
+              if (columnsInStorage[i].id === action.payload.id) {
+                columnsInStorage[i].name = action.payload.name;
+              }
+            }
+          }
+          return false;
+        }
+        return true;
+      });
+    },
   },
 });
 
@@ -103,4 +135,6 @@ export const {
   removeProject,
   addTaskToProjectColumn,
   addColumnToProject,
+  removeColumnFromProject,
+  updateColumnFromProject,
 } = projectSlice.actions;

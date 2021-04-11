@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import MultiSelect from "react-multi-select-component";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store";
+import { useDispatch } from "react-redux";
 import { addTaskToProjectColumn } from "../store/projectSlice";
 
 import { Column, Member, Project, Task } from "../types/types";

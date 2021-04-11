@@ -34,15 +34,17 @@ export const ModalUpdateProject = ({ project, modalIsOpen }: IProps) => {
         if (option.value === member.id) {
           preSelection.push(option);
         }
+        return true;
       });
+      return true;
     });
     return preSelection;
   }
 
   const [selected, setSelected] = useState<Option[]>(setPreselection());
-  const [team, setTeam] = useState<Member[]>(project.team);
+  const [team, setTeam] = React.useState<Member[]>(project.team);
   const dispatch = useDispatch();
-  let [showAlert, setShowAlert] = useState<Boolean>(false);
+  let [showAlert, setShowAlert] = React.useState<Boolean>(false);
 
   const onUpdate = () => {
     if (name !== "" && color !== "" && team.length !== 0) {

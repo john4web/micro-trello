@@ -2,6 +2,7 @@ import { Column, Project } from "../types/types";
 import { ModalAddTask } from "./ModalAddTask";
 import { TaskComponent } from "./TaskComponent";
 import { Draggable, Droppable } from "react-beautiful-dnd";
+import { DropDownMenu } from "./DropDownMenu";
 
 interface IProps {
   boardID: string;
@@ -19,7 +20,10 @@ export const ColumnComponent = ({ boardID, column, project }: IProps) => {
           {...provided.droppableProps}
           className="w-96 bg-gray-300 border-gray-400 border shadow-md p-2 m-5 inline-block align-top"
         >
-          <div className="font-bold text-center mb-2">{column.name}</div>
+          <div className="column-dropdown">
+            <DropDownMenu type="column" item={column} />
+          </div>
+          <div className="font-bold text-center mb-7">{column.name}</div>
 
           <div>
             <div>
@@ -40,6 +44,7 @@ export const ColumnComponent = ({ boardID, column, project }: IProps) => {
                             ...provided.draggableProps.style,
                           }}
                         >
+                          {" "}
                           <TaskComponent task={task} />
                         </div>
                       );

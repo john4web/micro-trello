@@ -35,7 +35,7 @@ export const Board = () => {
             );
           })}
         </div>
-        <ModalAddColumn boardID={boardID} project={currentProject} />
+        <ModalAddColumn project={currentProject} />
       </div>
       <p>Project ID: {boardID}</p>
 
