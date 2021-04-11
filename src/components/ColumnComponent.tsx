@@ -1,4 +1,4 @@
-import { Column } from "../types/types";
+import { Column, Project } from "../types/types";
 import { ModalAddTask } from "./ModalAddTask";
 import { TaskComponent } from "./TaskComponent";
 import { Draggable, Droppable } from "react-beautiful-dnd";
@@ -6,9 +6,10 @@ import { Draggable, Droppable } from "react-beautiful-dnd";
 interface IProps {
   boardID: string;
   column: Column;
+  project: Project;
 }
 
-export const ColumnComponent = ({ boardID, column }: IProps) => {
+export const ColumnComponent = ({ boardID, column, project }: IProps) => {
   return (
     <Droppable droppableId={column.id} key={column.id}>
       {(provided, snapshot) => (
@@ -49,7 +50,7 @@ export const ColumnComponent = ({ boardID, column }: IProps) => {
             </div>
           </div>
 
-          <ModalAddTask column={column} boardID={boardID} />
+          <ModalAddTask column={column} boardID={boardID} project={project} />
           {provided.placeholder}
         </div>
       )}

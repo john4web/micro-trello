@@ -19,6 +19,7 @@ export const ModalUpdateProject = ({ project, modalIsOpen }: IProps) => {
   const [name, setName] = React.useState<string>(project.name);
   const [color, setColor] = React.useState<string>(project.color);
   const { members } = useSelector((state: RootState) => state.member);
+
   const options: Option[] = members.map((member) => {
     return {
       label: `${member.firstname} ${member.lastname}`,
@@ -26,8 +27,8 @@ export const ModalUpdateProject = ({ project, modalIsOpen }: IProps) => {
     };
   });
 
-  /*  function setPreselection() {
-    let preSelection: Option[];
+  function setPreselection() {
+    let preSelection: Option[] = [];
     options.map((option) => {
       project.team.map((member: Member) => {
         if (option.value === member.id) {
@@ -36,13 +37,11 @@ export const ModalUpdateProject = ({ project, modalIsOpen }: IProps) => {
       });
     });
     return preSelection;
-  }*/
+  }
 
-  const [selected, setSelected] = useState<Option[]>([]);
+  const [selected, setSelected] = useState<Option[]>(setPreselection());
   const [team, setTeam] = useState<Member[]>(project.team);
-
   const dispatch = useDispatch();
-
   let [showAlert, setShowAlert] = useState<Boolean>(false);
 
   const onUpdate = () => {

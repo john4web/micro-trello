@@ -77,7 +77,11 @@ export const ColumnList = ({ boardID, project }: IProps) => {
         {project?.columns?.map((column, index) => {
           return (
             <div key={index}>
-              <ColumnComponent boardID={boardID} column={column} />
+              <ColumnComponent
+                boardID={boardID}
+                column={column}
+                project={project}
+              />
             </div>
           );
         })}
