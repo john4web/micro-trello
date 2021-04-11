@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { updateOnlyProject } from "../store/projectSlice";
+import { updateProject } from "../store/projectSlice";
 import { Project } from "../types/types";
 import { Option } from "../types/types";
 import { Member } from "../types/types";
@@ -52,8 +52,9 @@ export const ModalUpdateProject = ({ project, modalIsOpen }: IProps) => {
         name: name,
         team: team,
         color: color,
+        columns: project.columns,
       };
-      dispatch(updateOnlyProject(updateCurrentProject));
+      dispatch(updateProject(updateCurrentProject));
     } else {
       return;
     }

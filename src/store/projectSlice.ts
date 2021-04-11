@@ -23,23 +23,27 @@ const projectSlice = createSlice({
         color: action.payload.color,
       });
     },
-    updateOnlyProject(state, action: PayloadAction<Project>) {
-      let projectsInStorage = state.projects;
-      for (let i = 0; i < projectsInStorage.length; i++) {
-        if (projectsInStorage[i].id === action.payload.id) {
-          projectsInStorage[i].name = action.payload.name;
-          projectsInStorage[i].team = action.payload.team;
-          projectsInStorage[i].color = action.payload.color;
-          projectsInStorage[i].columns = action.payload.columns;
-        }
-      }
-    },
     removeProject(state, action: PayloadAction<String>) {
       let projectsInStorage = state.projects;
       for (let i = 0; i < projectsInStorage.length; i++) {
         if (projectsInStorage[i].id === action.payload) {
           projectsInStorage.splice(i, 1);
         }
+      }
+    },
+    updateProject(state, action: PayloadAction<Project>) {
+      try {
+        state.projects.every((project, index) => {
+          if (project.id === action.payload.id) {
+            // replaces 1 element at index
+            state.projects.splice(index, 1, action.payload);
+            return false;
+          }
+          return true;
+        });
+      } catch (e) {
+        console.log(e);
+        //Todo: auf fehler reagieren!
       }
     },
     addTaskToProjectColumn(state, action: PayloadAction<Task>) {
@@ -95,7 +99,7 @@ export default projectSlice.reducer;
 
 export const {
   addProject,
-  updateOnlyProject,
+  updateProject,
   removeProject,
   addTaskToProjectColumn,
   addColumnToProject,
