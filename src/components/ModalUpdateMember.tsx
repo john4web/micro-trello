@@ -112,10 +112,6 @@ export const ModalUpdateMember = ({ member, modalIsOpen }: IProps) => {
             <input type="file" onChange={handleUpload} />
 
             <br></br>
-            <button className="close-update-modal h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700">
-              CLOSE
-            </button>
-
             <button
               className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
               onClick={() => {
@@ -123,6 +119,9 @@ export const ModalUpdateMember = ({ member, modalIsOpen }: IProps) => {
               }}
             >
               UPDATE
+            </button>
+            <button className="close-update-modal h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700">
+              CLOSE
             </button>
           </div>
         </div>

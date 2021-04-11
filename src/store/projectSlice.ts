@@ -23,21 +23,22 @@ const projectSlice = createSlice({
         color: action.payload.color,
       });
     },
-    updateProject(state, action: PayloadAction<Project>) {
-      state.projects.push({
-        //Generate the id outside
-        id: action.payload.id,
-        name: action.payload.name,
-        team: action.payload.team,
-        color: action.payload.color,
-        columns: action.payload.columns,
-      });
+    updateOnlyProject(state, action: PayloadAction<Project>) {
+      let projectsInStorage = state.projects;
+      for (let i = 0; i < projectsInStorage.length; i++) {
+        if (projectsInStorage[i].id === action.payload.id) {
+          projectsInStorage[i].name = action.payload.name;
+          projectsInStorage[i].team = action.payload.team;
+          projectsInStorage[i].color = action.payload.color;
+          projectsInStorage[i].columns = action.payload.columns;
+        }
+      }
     },
     removeProject(state, action: PayloadAction<String>) {
-      let arr = state.projects;
-      for (let i = 0; i < arr.length; i++) {
-        if (arr[i].id === action.payload) {
-          arr.splice(i, 1);
+      let projectsInStorage = state.projects;
+      for (let i = 0; i < projectsInStorage.length; i++) {
+        if (projectsInStorage[i].id === action.payload) {
+          projectsInStorage.splice(i, 1);
         }
       }
     },
@@ -94,7 +95,7 @@ export default projectSlice.reducer;
 
 export const {
   addProject,
-  updateProject,
+  updateOnlyProject,
   removeProject,
   addTaskToProjectColumn,
   addColumnToProject,

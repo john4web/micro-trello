@@ -115,20 +115,19 @@ export const ModalAddMember = () => {
             <button
               className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
               onClick={() => {
-                setModalIsOpen(false);
-              }}
-            >
-              CLOSE
-            </button>
-
-            <button
-              className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
-              onClick={() => {
                 onAdd();
                 setModalIsOpen(false);
               }}
             >
               ADD
+            </button>
+            <button
+              className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
+              onClick={() => {
+                setModalIsOpen(false);
+              }}
+            >
+              CLOSE
             </button>
           </div>
         </div>

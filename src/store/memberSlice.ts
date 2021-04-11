@@ -25,14 +25,6 @@ const memberSlice = createSlice({
         photo: action.payload.photo,
       });
     },
-    removeMember(state, action: PayloadAction<String>) {
-      let membersInStorage = state.members;
-      for (let i = 0; i < membersInStorage.length; i++) {
-        if (membersInStorage[i].id === action.payload) {
-          membersInStorage.splice(i, 1);
-        }
-      }
-    },
     updateMember(state, action: PayloadAction<Member>) {
       let membersInStorage = state.members;
       for (let i = 0; i < membersInStorage.length; i++) {
@@ -45,10 +37,18 @@ const memberSlice = createSlice({
         }
       }
     },
+    removeMember(state, action: PayloadAction<String>) {
+      let membersInStorage = state.members;
+      for (let i = 0; i < membersInStorage.length; i++) {
+        if (membersInStorage[i].id === action.payload) {
+          membersInStorage.splice(i, 1);
+        }
+      }
+    },
   },
   //TODO: implement methods updateMember
 });
 
 export default memberSlice.reducer;
 
-export const { addMember, removeMember, updateMember } = memberSlice.actions;
+export const { addMember, updateMember, removeMember } = memberSlice.actions;

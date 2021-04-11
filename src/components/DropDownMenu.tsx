@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import { removeMember } from "../store/memberSlice";
 import { ModalUpdateMember } from "./ModalUpdateMember";
 import { store } from "../store";
+import { removeProject } from "../store/projectSlice";
+import { ModalUpdateProject } from "./ModalUpdateProject";
 
 interface IProps {
   type: string;
@@ -14,6 +16,9 @@ interface IProps {
 export const DropDownMenu = ({ type, item }: IProps) => {
   let [dropDownIsOpen, dropDownIsVisible] = React.useState<boolean>(false);
   let [modalMemberIsOpen, setModalMemberIsOpen] = React.useState<boolean>(
+    false
+  );
+  let [modalProjectIsOpen, setModalProjectIsOpen] = React.useState<boolean>(
     false
   );
   const dispatch = useDispatch();
@@ -33,6 +38,9 @@ export const DropDownMenu = ({ type, item }: IProps) => {
             case "member":
               setModalMemberIsOpen(false);
               break;
+            case "project":
+              setModalProjectIsOpen(false);
+              break;
             default:
               console.log("It was not possible to close the modal window");
           }
@@ -40,6 +48,7 @@ export const DropDownMenu = ({ type, item }: IProps) => {
 
         store.subscribe(() => {
           setModalMemberIsOpen(false);
+          setModalProjectIsOpen(false);
         });
       }
     }
@@ -51,10 +60,28 @@ export const DropDownMenu = ({ type, item }: IProps) => {
     });
   });
 
+  function setModalWindowForUpdate() {
+    switch (type) {
+      case "member":
+        return (
+          <ModalUpdateMember member={item} modalIsOpen={modalMemberIsOpen} />
+        );
+      case "project":
+        return (
+          <ModalUpdateProject project={item} modalIsOpen={modalProjectIsOpen} />
+        );
+      default:
+        console.log("It was not possible to remove the current object");
+    }
+  }
+
   const onRemove = () => {
     switch (type) {
       case "member":
         dispatch(removeMember(item.id));
+        break;
+      case "project":
+        dispatch(removeProject(item.id));
         break;
       default:
         console.log("It was not possible to remove the current object");
@@ -65,6 +92,10 @@ export const DropDownMenu = ({ type, item }: IProps) => {
     switch (type) {
       case "member":
         setModalMemberIsOpen(true);
+
+        break;
+      case "project":
+        setModalProjectIsOpen(true);
 
         break;
       default:
@@ -114,7 +145,7 @@ export const DropDownMenu = ({ type, item }: IProps) => {
             </ul>
           </div>
         )}
-        <ModalUpdateMember member={item} modalIsOpen={modalMemberIsOpen} />
+        {setModalWindowForUpdate()}
       </div>
     </Fragment>
   );

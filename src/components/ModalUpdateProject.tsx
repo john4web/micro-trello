@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addProject } from "../store/projectSlice";
+import { updateOnlyProject } from "../store/projectSlice";
 import { Project } from "../types/types";
 import { Option } from "../types/types";
 import { Member } from "../types/types";
@@ -10,13 +10,14 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import React from "react";
 
-export const ModalAddProject = () => {
-  const [name, setName] = useState("");
-  const [color, setColor] = useState("#ff0000");
-  const [selected, setSelected] = useState<Option[]>([]);
-  const [team, setTeam] = useState<Member[]>([]);
-  let [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
-  const dispatch = useDispatch();
+interface IProps {
+  project: Project;
+  modalIsOpen: boolean;
+}
+
+export const ModalUpdateProject = ({ project, modalIsOpen }: IProps) => {
+  const [name, setName] = React.useState<string>(project.name);
+  const [color, setColor] = React.useState<string>(project.color);
   const { members } = useSelector((state: RootState) => state.member);
   const options: Option[] = members.map((member) => {
     return {
@@ -25,20 +26,35 @@ export const ModalAddProject = () => {
     };
   });
 
+  /*  function setPreselection() {
+    let preSelection: Option[];
+    options.map((option) => {
+      project.team.map((member: Member) => {
+        if (option.value === member.id) {
+          preSelection.push(option);
+        }
+      });
+    });
+    return preSelection;
+  }*/
+
+  const [selected, setSelected] = useState<Option[]>([]);
+  const [team, setTeam] = useState<Member[]>(project.team);
+
+  const dispatch = useDispatch();
+
   let [showAlert, setShowAlert] = useState<Boolean>(false);
 
-  const onAdd = () => {
+  const onUpdate = () => {
     if (name !== "" && color !== "" && team.length !== 0) {
-      const newProject: Project = {
-        id: "",
+      const updateCurrentProject: Project = {
+        id: project.id,
         name: name,
         team: team,
         color: color,
       };
-      dispatch(addProject(newProject));
-      setModalIsOpen(false);
+      dispatch(updateOnlyProject(updateCurrentProject));
     } else {
-      setShowAlert(true);
       return;
     }
   };
@@ -46,7 +62,7 @@ export const ModalAddProject = () => {
   return (
     <div className="w-80 float-right">
       {modalIsOpen && (
-        <div className="absolute w-screen h-screen bg-black bg-opacity-50 top-0 left-0 flex justify-center items-center z-10">
+        <div className="fixed w-screen h-screen bg-black bg-opacity-50 top-0 left-0 flex justify-center items-center z-10">
           <div className="w-4/6 h-4/6 bg-white opacity-100 overflow-auto p-4">
             <label
               className="mb-2 uppercase text-lg text-gray-700"
@@ -108,31 +124,17 @@ export const ModalAddProject = () => {
             <button
               className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
               onClick={() => {
-                onAdd();
+                onUpdate();
               }}
             >
-              ADD
+              UPDATE
             </button>
-            <button
-              className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
-              onClick={() => {
-                setModalIsOpen(false);
-              }}
-            >
+            <button className="close-update-modal h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700">
               CLOSE
             </button>
           </div>
         </div>
       )}
-
-      <button
-        onClick={() => {
-          setModalIsOpen(true);
-        }}
-        className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
-      >
-        + New Project
-      </button>
     </div>
   );
 };
