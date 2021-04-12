@@ -16,9 +16,11 @@ interface IProps {
 export const ModalAddTask = ({ boardID, column, project }: IProps) => {
   const [name, setName] = React.useState<string>("");
   const [deadline, setDeadline] = React.useState<string>("");
+  const [priority, setPriority] = React.useState<string>("");
   const dispatch = useDispatch();
   const [selected, setSelected] = React.useState<Option[]>([]);
   const [team, setTeam] = React.useState<Member[]>(project.team);
+
   const [modalIsOpen, setModalIsOpen] = React.useState<Boolean>(false);
 
   const options: Option[] = project.team?.map((member) => {
@@ -27,23 +29,45 @@ export const ModalAddTask = ({ boardID, column, project }: IProps) => {
       value: member.id,
     };
   });
-  let [showAlert, setShowAlert] = React.useState<Boolean>(false);
+  let [showAlertName, setShowAlertName] = React.useState<Boolean>(false);
+  let [showAlertDeadline, setShowAlertDeadline] = React.useState<Boolean>(
+    false
+  );
+  let [showAlertTeam, setShowAlertTeam] = React.useState<Boolean>(false);
+  let [showAlertPriority, setShowAlertPriority] = React.useState<Boolean>(
+    false
+  );
 
   const onAdd = () => {
-    if (name !== "" && team.length !== 0 && deadline !== "") {
+    if (
+      name !== "" &&
+      team.length !== 0 &&
+      deadline !== "" &&
+      priority !== ""
+    ) {
       const newTask: Task = {
         id: uuid(),
         name: name,
         team: team,
         deadline: deadline,
+        priority: priority,
         projectID: boardID,
         columnID: column.id,
       };
       dispatch(addTaskToProjectColumn(newTask));
       setModalIsOpen(false);
-    } else {
-      setShowAlert(true);
-      return;
+    }
+    if (name === "") {
+      setShowAlertName(true);
+    }
+    if (team.length === 0) {
+      setShowAlertTeam(true);
+    }
+    if (deadline === "") {
+      setShowAlertDeadline(true);
+    }
+    if (priority === "") {
+      setShowAlertPriority(true);
     }
   };
 
@@ -63,7 +87,7 @@ export const ModalAddTask = ({ boardID, column, project }: IProps) => {
               value={name}
               onChange={(e) => {
                 setName(e.currentTarget.value);
-                setShowAlert(false);
+                setShowAlertName(false);
               }}
               type="text"
               id="task-name"
@@ -78,10 +102,11 @@ export const ModalAddTask = ({ boardID, column, project }: IProps) => {
               options={options}
               value={selected}
               onChange={(optionsArray: Option[]) => {
+                setShowAlertTeam(false);
                 setSelected(optionsArray);
                 let team: Member[] = [];
                 optionsArray.forEach((option) => {
-                  project.team?.forEach((member: Member) => {
+                  project.team.forEach((member: Member) => {
                     if (option.value === member.id) {
                       team.push(member);
                     }
@@ -102,7 +127,7 @@ export const ModalAddTask = ({ boardID, column, project }: IProps) => {
               value={deadline}
               onChange={(e) => {
                 setDeadline(e.currentTarget.value);
-                setShowAlert(false);
+                setShowAlertDeadline(false);
               }}
               type="date"
               id="task-deadline"
@@ -110,9 +135,69 @@ export const ModalAddTask = ({ boardID, column, project }: IProps) => {
               className="border py-2 px-3 text-gray-700 m-4"
             />
             <br></br>
-            {showAlert && (
+            <label
+              className="mb-2 uppercase text-lg text-gray-700"
+              htmlFor="task-priority"
+            >
+              Priority:
+            </label>
+
+            <input
+              type="radio"
+              id="high"
+              name="Priority"
+              className="border py-2 px-3 text-gray-700 m-4"
+              value="1"
+              onChange={(e) => {
+                setPriority(e.currentTarget.value);
+                setShowAlertPriority(false);
+              }}
+            />
+            <label htmlFor="high"> high</label>
+            <input
+              type="radio"
+              id="medium"
+              name="Priority"
+              className="border py-2 px-3 text-gray-700 m-4"
+              value="2"
+              onChange={(e) => {
+                setPriority(e.currentTarget.value);
+                setShowAlertPriority(false);
+              }}
+            />
+            <label htmlFor="medium"> medium</label>
+            <input
+              type="radio"
+              id="low"
+              name="Priority"
+              className="border py-2 px-3 text-gray-700 m-4"
+              value="3"
+              onChange={(e) => {
+                setPriority(e.currentTarget.value);
+                setShowAlertPriority(false);
+              }}
+            />
+            <label htmlFor="low">low</label>
+
+            <br></br>
+            {showAlertName && (
               <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mt-4 mb-4 rounded relative">
-                Please fill out every field!
+                Please fill out a name for this task!
+              </div>
+            )}
+            {showAlertTeam && (
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mt-4 mb-4 rounded relative">
+                Please add at least on team member to this task!
+              </div>
+            )}
+            {showAlertDeadline && (
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mt-4 mb-4 rounded relative">
+                Please fill out a deadline!
+              </div>
+            )}
+            {showAlertPriority && (
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mt-4 mb-4 rounded relative">
+                Please select a priority for the task!
               </div>
             )}
             <button

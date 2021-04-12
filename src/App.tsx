@@ -8,7 +8,7 @@ import "./styles/App.css";
 
 function App() {
   return (
-    <div className="flex w-screen h-screen text-lg">
+    <div className="flex min-w-screen w-auto min-h-screen text-lg">
       <MenuBar />
 
       <Route

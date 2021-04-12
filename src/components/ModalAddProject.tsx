@@ -25,7 +25,8 @@ export const ModalAddProject = () => {
     };
   });
 
-  let [showAlert, setShowAlert] = useState<Boolean>(false);
+  let [showAlertName, setShowAlertName] = useState<Boolean>(false);
+  let [showAlertTeam, setShowAlertTeam] = useState<Boolean>(false);
 
   const onAdd = () => {
     if (name !== "" && color !== "" && team.length !== 0) {
@@ -37,9 +38,12 @@ export const ModalAddProject = () => {
       };
       dispatch(addProject(newProject));
       setModalIsOpen(false);
-    } else {
-      setShowAlert(true);
-      return;
+    }
+    if (name === "") {
+      setShowAlertName(true);
+    }
+    if (team.length === 0) {
+      setShowAlertTeam(true);
     }
   };
 
@@ -58,7 +62,7 @@ export const ModalAddProject = () => {
               value={name}
               onChange={(e) => {
                 setName(e.currentTarget.value);
-                setShowAlert(false);
+                setShowAlertName(false);
               }}
               type="text"
               id="project-name"
@@ -72,11 +76,14 @@ export const ModalAddProject = () => {
               </div>
               <div
                 style={{ backgroundColor: `${color}` }}
-                className="w-10 h-10 border-black border-2"
+                className="w-10 h-10 border-black border-2 m-4 mt-0"
               ></div>
+              <HexColorPicker
+                color={color}
+                onChange={setColor}
+                style={{ width: "150px", height: "150px" }}
+              />
             </div>
-
-            <HexColorPicker color={color} onChange={setColor} />
 
             <div className="mb-2 uppercase text-lg text-gray-700">
               Project-Team:
@@ -85,7 +92,7 @@ export const ModalAddProject = () => {
               options={options}
               value={selected}
               onChange={(optionsArray: Option[]) => {
-                setShowAlert(false);
+                setShowAlertTeam(false);
                 setSelected(optionsArray);
                 let team: Member[] = [];
                 optionsArray.forEach((option) => {
@@ -99,9 +106,14 @@ export const ModalAddProject = () => {
               }}
               labelledBy="Select"
             />
-            {showAlert && (
+            {showAlertName && (
               <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mt-4 mb-4 rounded relative">
-                Please fill out every field!
+                Please fill out a name for this project!
+              </div>
+            )}
+            {showAlertTeam && (
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mt-4 mb-4 rounded relative">
+                Please assign at least one team member to this project!
               </div>
             )}
             <button

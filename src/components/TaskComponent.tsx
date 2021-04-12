@@ -6,7 +6,7 @@ interface IProps {
 
 export const TaskComponent = ({ task }: IProps) => {
   return (
-    <div className="align-middle m-auto mt-2 p-2 bg-gray-200 w-11/12">
+    <ul className="align-middle m-auto mt-2 p-2 w-11/12">
       <li>{`Taskname: ${task.name}`}</li>
       <li>
         Assigned Members:
@@ -21,6 +21,7 @@ export const TaskComponent = ({ task }: IProps) => {
         </ul>
       </li>
       <li>{`Deadline: ${task.deadline}`} </li>
-    </div>
+      <li>{`Priority: ${task.priority}`} </li>
+    </ul>
   );
 };

@@ -18,9 +18,20 @@ export const Board = () => {
 
   return (
     <div className="bg-gray-100 w-full">
-      <div className="bg-gray-300 h-20">
+      <div
+        className="bg-gray-300 h-20 border-b-2"
+        style={{ borderColor: `${currentProject?.color}` }}
+      >
         <div className="float-left m-2 mt-6">
-          <h2 className="text-lg font-bold inline-block mr-4">
+          <div
+            style={{
+              backgroundColor: `${currentProject?.color}`,
+              width: "15px",
+              height: "15px",
+            }}
+            className="inline-block ml-2 mr-2"
+          ></div>
+          <h2 className="text-lg text-gray-700 uppercase inline-block mr-4">
             {params.state}{" "}
           </h2>
 
@@ -37,13 +48,7 @@ export const Board = () => {
         </div>
         <ModalAddColumn project={currentProject} />
       </div>
-      <p>Project ID: {boardID}</p>
-
-      <p>
-        Color:
-        {currentProject?.color}
-      </p>
-      <main className="">
+      <main className="grid grid-rows-1 gap-1 grid-flow-col">
         <ColumnList boardID={boardID} project={currentProject} />
       </main>
       <button className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700">

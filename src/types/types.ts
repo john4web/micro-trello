@@ -29,6 +29,7 @@ export type Task = {
   name: string;
   team: Member[];
   deadline: string;
+  priority: string;
 };
 
 export type Option = {

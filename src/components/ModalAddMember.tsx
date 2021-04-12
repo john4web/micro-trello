@@ -12,8 +12,14 @@ export const ModalAddMember = () => {
   const [skill, setSkill] = useState<string>("");
   const [photo, setPhoto] = useState<string>("");
   const dispatch = useDispatch();
+  let picture = "";
 
-  let [showAlert, setShowAlert] = useState<Boolean>(false);
+  let [showAlertFirstName, setShowAlertFirstName] = useState<Boolean>(false);
+  let [showAlertLastName, setShowAlertLastName] = useState<Boolean>(false);
+  let [showAlertJob, setShowAlertJob] = useState<Boolean>(false);
+  let [showAlertSkill, setShowAlertSkill] = useState<Boolean>(false);
+  let [showAlertPhoto, setShowAlertPhoto] = useState<Boolean>(false);
+
   const onAdd = () => {
     if (
       firstname !== "" &&
@@ -33,20 +39,45 @@ export const ModalAddMember = () => {
 
       dispatch(addMember(newMember));
       setModalIsOpen(false);
-    } else {
-      setShowAlert(true);
-      return;
+    }
+    if (firstname === "") {
+      setShowAlertFirstName(true);
+    }
+    if (lastname === "") {
+      setShowAlertLastName(true);
+    }
+    if (job === "") {
+      setShowAlertJob(true);
+    }
+    if (skill === "") {
+      setShowAlertSkill(true);
+    }
+    if (photo === "") {
+      setShowAlertPhoto(true);
     }
   };
 
-  function handleUpload(event: any) {
+  function handleUploadResize(event: any) {
     var reader = new FileReader();
     reader.readAsDataURL(event.target.files[0]);
-    reader.onloadend = function () {
+
+    reader.onload = function (e) {
       var base64data = reader.result;
-      console.log(base64data);
       var photoURL = String(base64data);
-      setPhoto(photoURL);
+      var img = new Image();
+
+      img.onload = function () {
+        var canvas = document.createElement("canvas");
+        var ctx = canvas.getContext("2d")!;
+        canvas.width = 400;
+        canvas.height = 400;
+        ctx.drawImage(img, 0, 0);
+        var photoURL = canvas.toDataURL(event.target.files[0].type);
+        console.log(photoURL);
+        setPhoto(photoURL);
+      };
+      img.src = photoURL;
+      console.log(img);
     };
   }
 
@@ -66,7 +97,7 @@ export const ModalAddMember = () => {
               value={firstname}
               onChange={(e) => {
                 setFirstName(e.currentTarget.value);
-                setShowAlert(false);
+                setShowAlertFirstName(false);
               }}
               type="text"
               id="member-firstname"
@@ -84,7 +115,7 @@ export const ModalAddMember = () => {
               value={lastname}
               onChange={(e) => {
                 setLastName(e.currentTarget.value);
-                setShowAlert(false);
+                setShowAlertLastName(false);
               }}
               type="text"
               id="member-lastname"
@@ -102,7 +133,7 @@ export const ModalAddMember = () => {
               value={job}
               onChange={(e) => {
                 setJob(e.currentTarget.value);
-                setShowAlert(false);
+                setShowAlertJob(false);
               }}
               type="text"
               id="member-job"
@@ -120,7 +151,7 @@ export const ModalAddMember = () => {
               value={skill}
               onChange={(e) => {
                 setSkill(e.currentTarget.value);
-                setShowAlert(false);
+                setShowAlertSkill(false);
               }}
               type="text"
               id="member-skill"
@@ -129,24 +160,49 @@ export const ModalAddMember = () => {
             />
             <br></br>
             <label
-              className="mb-2 uppercase text-lg text-gray-700"
+              className="mb-2 uppercase text-lg text-gray-700 mr-4"
               htmlFor="member-skill"
             >
               Photo:
             </label>
-            <input type="file" onChange={handleUpload} />
+            <input
+              type="file"
+              onChange={(e) => {
+                handleUploadResize(e);
+                setShowAlertPhoto(false);
+              }}
+            />
 
             <br></br>
-            {showAlert && (
+            {showAlertFirstName && (
               <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mt-4 mb-4 rounded relative">
-                Please fill out every field!
+                Please fill out a first name!
+              </div>
+            )}
+            {showAlertLastName && (
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mt-4 mb-4 rounded relative">
+                Please fill out a last name!
+              </div>
+            )}
+            {showAlertJob && (
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mt-4 mb-4 rounded relative">
+                Please fill out your job!
+              </div>
+            )}
+            {showAlertSkill && (
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mt-4 mb-4 rounded relative">
+                Please fill out one or more skills!
+              </div>
+            )}
+            {showAlertPhoto && (
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mt-4 mb-4 rounded relative">
+                Please upload a photo!
               </div>
             )}
             <button
               className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
               onClick={() => {
                 onAdd();
-                setModalIsOpen(false);
               }}
             >
               ADD

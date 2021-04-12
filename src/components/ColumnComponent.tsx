@@ -16,40 +16,48 @@ export const ColumnComponent = ({ boardID, column, project }: IProps) => {
       {(provided, snapshot) => (
         <div
           ref={provided.innerRef}
-          style={{ backgroundColor: snapshot.isDraggingOver ? "blue" : "grey" }}
+          style={{
+            backgroundColor: snapshot.isDraggingOver ? "#9ca3af" : "#f9fafb",
+          }}
           {...provided.droppableProps}
           className="w-96 bg-gray-300 border-gray-400 border shadow-md p-2 m-5 inline-block align-top"
         >
           <div className="column-dropdown">
             <DropDownMenu type="column" item={column} />
           </div>
-          <div className="font-bold text-center mb-7">{column.name}</div>
+          <div className="uppercase text-center mb-7">{column.name}</div>
 
           <div>
-            <div>
+            <div className="taskWrapper">
               {column.tasks?.map((task, index) => {
                 return (
-                  <Draggable key={task.id} draggableId={task.id} index={index}>
-                    {(provided, snapshot) => {
-                      return (
-                        <div
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          style={{
-                            userSelect: "none",
-                            backgroundColor: snapshot.isDragging
-                              ? "#263B4A"
-                              : "#456C86",
-                            ...provided.draggableProps.style,
-                          }}
-                        >
-                          {" "}
-                          <TaskComponent task={task} />
-                        </div>
-                      );
-                    }}
-                  </Draggable>
+                  <div className="task-sort" data-name={task.priority}>
+                    <Draggable
+                      key={task.id}
+                      draggableId={task.id}
+                      index={index}
+                    >
+                      {(provided, snapshot) => {
+                        return (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            style={{
+                              userSelect: "none",
+                              backgroundColor: snapshot.isDragging
+                                ? "#d1d5db"
+                                : "#e5e7eb",
+                              ...provided.draggableProps.style,
+                            }}
+                          >
+                            {" "}
+                            <TaskComponent task={task} />
+                          </div>
+                        );
+                      }}
+                    </Draggable>
+                  </div>
                 );
               })}
             </div>
