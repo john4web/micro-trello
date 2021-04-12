@@ -13,7 +13,7 @@ export const ProjectList = () => {
         return (
           <ul
             key={index}
-            className="m-4 p-4 shadow-md border border-l-8 bg-white w-60 text-gray-700"
+            className="m-4 p-4 shadow-md border border-l-8 bg-white w-60"
             style={{ borderColor: `${project.color}` }}
           >
             <div className="project-dropdown">

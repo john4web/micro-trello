@@ -14,9 +14,8 @@ export const TaskComponent = ({ task, project }: IProps) => {
       </div>
       {task.team.map((member, index) => {
         return (
-          <div className="inline-block float-right">
+          <div key={index} className="inline-block float-right">
             <img
-              key={index}
               src={member.photo}
               alt="img"
               className="max-w-xs max-h-7 inline-block mr-2"

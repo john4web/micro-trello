@@ -10,29 +10,27 @@ export const MemberList = () => {
     <Fragment>
       {members.map((member, index) => {
         return (
-          <ul
+          <div
             key={index}
             className="m-4 p-4 shadow-md border bg-white w-60 text-gray-700"
           >
             <div className="float-right">
-              {
-                <img
-                  id="memberPhoto"
-                  src={member.photo}
-                  className="max-w-xs max-h-7"
-                  alt="img"
-                ></img>
-              }
+              <img
+                id="memberPhoto"
+                src={member.photo}
+                className="max-w-xs max-h-7"
+                alt="img"
+              ></img>
             </div>
             <div className="member-dropdown">
               <DropDownMenu type="member" item={member} />
             </div>
-            <li>
+            <div>
               {member.firstname} {member.lastname}
-            </li>
-            <li>Job: {member.job}</li>
-            <li>Skill: {member.skill}</li>
-          </ul>
+            </div>
+            <div>Job: {member.job}</div>
+            <div>Skill: {member.skill}</div>
+          </div>
         );
       })}
     </Fragment>

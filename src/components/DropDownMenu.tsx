@@ -1,5 +1,4 @@
 import { Fragment } from "react";
-import "../styles/DropDown.css";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { removeMember } from "../store/memberSlice";
@@ -163,12 +162,13 @@ export const DropDownMenu = ({ type, item, project }: IProps) => {
           </svg>
         </button>
         {dropDownIsOpen && (
-          <div className="dropdown">
+          <div className="absolute left-full w-full top-1">
             <ul
               key={type + item.id}
-              className="shadow-md border bg-white text-gray-700"
+              className="shadow-md border bg-white text-gray-700 p-0 m-0"
             >
               <li
+                className="py-2 px-3 cursor-pointer hover:bg-gray-200"
                 onClick={() => {
                   dropDownIsVisible(false);
                   onUpdate();
@@ -177,6 +177,7 @@ export const DropDownMenu = ({ type, item, project }: IProps) => {
                 Edit
               </li>
               <li
+                className="py-2 px-3 cursor-pointer hover:bg-gray-200"
                 onClick={() => {
                   dropDownIsVisible(false);
                   onRemove();
