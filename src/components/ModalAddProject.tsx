@@ -11,8 +11,8 @@ import { RootState } from "../store";
 import React from "react";
 
 export const ModalAddProject = () => {
-  const [name, setName] = useState<string>("");
-  const [color, setColor] = useState<string>("#ff0000");
+  const [name, setName] = React.useState<string>("");
+  const [color, setColor] = React.useState<string>("#ff0000");
   const [selected, setSelected] = useState<Option[]>([]);
   const [team, setTeam] = useState<Member[]>([]);
   let [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);

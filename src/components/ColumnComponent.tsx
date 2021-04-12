@@ -59,7 +59,7 @@ export const ColumnComponent = ({ boardID, column, project }: IProps) => {
                           }}
                         >
                           {" "}
-                          <TaskComponent task={task} />
+                          <TaskComponent task={task} project={project} />
                         </div>
                       );
                     }}

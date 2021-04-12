@@ -12,7 +12,7 @@ export const MemberList = () => {
         return (
           <ul
             key={index}
-            className="m-4 p-4 shadow-md border bg-white w-60 text-gray-700 overflow-hidden"
+            className="m-4 p-4 shadow-md border bg-white w-60 text-gray-700"
           >
             <div className="float-right">
               {

@@ -71,7 +71,53 @@ const projectSlice = createSlice({
         //Todo: auf fehler reagieren!
       }
     },
-
+    removeTaskFromProjectColumn(state, action: PayloadAction<Task>) {
+      try {
+        state.projects.forEach((project: Project) => {
+          if (project.id === action.payload.projectID) {
+            project.columns?.every((column: Column) => {
+              if (column.id === action.payload.columnID) {
+                let tasksInStorage = column.tasks;
+                if (tasksInStorage) {
+                  for (let i = 0; i < tasksInStorage.length; i++) {
+                    if (tasksInStorage[i].id === action.payload.id) {
+                      tasksInStorage.splice(i, 1);
+                    }
+                  }
+                }
+              }
+              return true;
+            });
+          }
+        });
+      } catch (e) {
+        console.log(e);
+        //Todo: auf fehler reagieren!
+      }
+    },
+    updateTaskFromProjectColumn(state, action: PayloadAction<Task>) {
+      try {
+        state.projects.forEach((project: Project) => {
+          if (project.id === action.payload.projectID) {
+            project.columns?.forEach((column: Column) => {
+              if (column.id === action.payload.columnID) {
+                column.tasks?.forEach((task: Task, index) => {
+                  if (task.id === action.payload.id) {
+                    column.tasks?.splice(index, 1, action.payload);
+                  }
+                  return false;
+                });
+                return true;
+              }
+              return false;
+            });
+          }
+        });
+      } catch (e) {
+        console.log(e);
+        //Todo: auf fehler reagieren!
+      }
+    },
     addColumnToProject(state, action: PayloadAction<Column>) {
       try {
         state.projects.every((project) => {
@@ -134,6 +180,8 @@ export const {
   updateProject,
   removeProject,
   addTaskToProjectColumn,
+  removeTaskFromProjectColumn,
+  updateTaskFromProjectColumn,
   addColumnToProject,
   removeColumnFromProject,
   updateColumnFromProject,

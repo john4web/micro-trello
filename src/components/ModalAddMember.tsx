@@ -1,24 +1,29 @@
 import React from "react";
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addMember } from "../store/memberSlice";
 import { Member } from "../types/types";
 
 export const ModalAddMember = () => {
   const [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
-  const [firstname, setFirstName] = useState<string>("");
-  const [lastname, setLastName] = useState<string>("");
-  const [job, setJob] = useState<string>("");
-  const [skill, setSkill] = useState<string>("");
-  const [photo, setPhoto] = useState<string>("");
+
+  const [firstname, setFirstName] = React.useState<string>("");
+  const [lastname, setLastName] = React.useState<string>("");
+  const [job, setJob] = React.useState<string>("");
+  const [skill, setSkill] = React.useState<string>("");
+  const [photo, setPhoto] = React.useState<string>("");
+
   const dispatch = useDispatch();
   let picture = "";
 
-  let [showAlertFirstName, setShowAlertFirstName] = useState<Boolean>(false);
-  let [showAlertLastName, setShowAlertLastName] = useState<Boolean>(false);
-  let [showAlertJob, setShowAlertJob] = useState<Boolean>(false);
-  let [showAlertSkill, setShowAlertSkill] = useState<Boolean>(false);
-  let [showAlertPhoto, setShowAlertPhoto] = useState<Boolean>(false);
+  let [showAlertFirstName, setShowAlertFirstName] = React.useState<Boolean>(
+    false
+  );
+  let [showAlertLastName, setShowAlertLastName] = React.useState<Boolean>(
+    false
+  );
+  let [showAlertJob, setShowAlertJob] = React.useState<Boolean>(false);
+  let [showAlertSkill, setShowAlertSkill] = React.useState<Boolean>(false);
+  let [showAlertPhoto, setShowAlertPhoto] = React.useState<Boolean>(false);
 
   const onAdd = () => {
     if (

@@ -5,16 +5,23 @@ import { useDispatch } from "react-redux";
 import { removeMember } from "../store/memberSlice";
 import { ModalUpdateMember } from "./ModalUpdateMember";
 import { store } from "../store";
-import { removeColumnFromProject, removeProject } from "../store/projectSlice";
+import {
+  removeColumnFromProject,
+  removeProject,
+  removeTaskFromProjectColumn,
+} from "../store/projectSlice";
 import { ModalUpdateProject } from "./ModalUpdateProject";
 import { ModalUdateColumn } from "./ModalUpdateColumn";
+import { ModalUpdateTask } from "./ModalUpdateTask";
+import { Project } from "../types/types";
 
 interface IProps {
   type: string;
   item: any;
+  project?: Project;
 }
 
-export const DropDownMenu = ({ type, item }: IProps) => {
+export const DropDownMenu = ({ type, item, project }: IProps) => {
   let [dropDownIsOpen, dropDownIsVisible] = React.useState<boolean>(false);
   let [modalMemberIsOpen, setModalMemberIsOpen] = React.useState<boolean>(
     false
@@ -25,6 +32,7 @@ export const DropDownMenu = ({ type, item }: IProps) => {
   let [modalColumnIsOpen, setModalColumnIsOpen] = React.useState<boolean>(
     false
   );
+  let [modalTaskIsOpen, setModalTaskIsOpen] = React.useState<boolean>(false);
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -48,6 +56,9 @@ export const DropDownMenu = ({ type, item }: IProps) => {
             case "column":
               setModalColumnIsOpen(false);
               break;
+            case "task":
+              setModalTaskIsOpen(false);
+              break;
             default:
               console.log("It was not possible to close the modal window");
           }
@@ -57,6 +68,7 @@ export const DropDownMenu = ({ type, item }: IProps) => {
           setModalMemberIsOpen(false);
           setModalProjectIsOpen(false);
           setModalColumnIsOpen(false);
+          setModalTaskIsOpen(false);
         });
       }
     }
@@ -82,6 +94,14 @@ export const DropDownMenu = ({ type, item }: IProps) => {
         return (
           <ModalUdateColumn column={item} modalIsOpen={modalColumnIsOpen} />
         );
+      case "task":
+        return (
+          <ModalUpdateTask
+            task={item}
+            project={project}
+            modalIsOpen={modalTaskIsOpen}
+          />
+        );
       default:
         console.log("It was not possible to remove the current object");
     }
@@ -98,6 +118,9 @@ export const DropDownMenu = ({ type, item }: IProps) => {
       case "column":
         dispatch(removeColumnFromProject(item));
         break;
+      case "task":
+        dispatch(removeTaskFromProjectColumn(item));
+        break;
       default:
         console.log("It was not possible to remove the current object");
     }
@@ -113,6 +136,9 @@ export const DropDownMenu = ({ type, item }: IProps) => {
         break;
       case "column":
         setModalColumnIsOpen(true);
+        break;
+      case "task":
+        setModalTaskIsOpen(true);
         break;
       default:
         console.log("It was not possible to remove the current object");
