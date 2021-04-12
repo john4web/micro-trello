@@ -146,31 +146,31 @@ export const ModalAddTask = ({ boardID, column, project }: IProps) => {
               type="radio"
               id="high"
               name="Priority"
-              className="border py-2 px-3 text-gray-700 m-4"
+              className="border py-2 px-3 text-gray-700 mr-1 ml-4"
               value="high"
               onChange={(e) => {
                 setPriority(e.currentTarget.value);
                 setShowAlertPriority(false);
               }}
             />
-            <label htmlFor="high"> high</label>
+            <label htmlFor="high">high</label>
             <input
               type="radio"
               id="medium"
               name="Priority"
-              className="border py-2 px-3 text-gray-700 m-4"
+              className="border py-2 px-3 text-gray-700 mr-1 ml-4"
               value="medium"
               onChange={(e) => {
                 setPriority(e.currentTarget.value);
                 setShowAlertPriority(false);
               }}
             />
-            <label htmlFor="medium"> medium</label>
+            <label htmlFor="medium">medium</label>
             <input
               type="radio"
               id="low"
               name="Priority"
-              className="border py-2 px-3 text-gray-700 m-4"
+              className="border py-2 px-3 text-gray-700 mr-1 ml-4"
               value="low"
               onChange={(e) => {
                 setPriority(e.currentTarget.value);

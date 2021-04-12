@@ -8,7 +8,7 @@ interface IProps {
 
 export const TaskComponent = ({ task, project }: IProps) => {
   return (
-    <div className="align-middle m-auto mt-2 p-2 bg-gray-200 w-11/12">
+    <div className="align-middle m-auto mt-2 p-2 w-11/12">
       <div className="column-dropdown">
         <DropDownMenu type="task" item={task} project={project} />
       </div>
@@ -24,10 +24,11 @@ export const TaskComponent = ({ task, project }: IProps) => {
           </div>
         );
       })}
-      <li className="uppercase">{task.name}</li>
-
-      <li>{`Deadline: ${task.deadline}`} </li>
-      <li>{`Priority: ${task.priority}`} </li>
+      <ul className="list-none">
+        <li className="uppercase">{task.name}</li>
+        <li className="text-sm">{`Deadline: ${task.deadline}`} </li>
+        <li className="text-sm pt-0">{`Priority: ${task.priority}`} </li>
+      </ul>
     </div>
   );
 };
