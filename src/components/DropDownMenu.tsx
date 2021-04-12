@@ -146,7 +146,7 @@ export const DropDownMenu = ({ type, item, project }: IProps) => {
 
   return (
     <Fragment>
-      <div className="drop-down-menu relative">
+      <div className="relative">
         <button
           className="inline-flex float-right items-center justify-center w-10 h-10 mt-1 mr-1 text-gray-700 transition-colors duration-150 bg-white rounded-full focus:shadow-outline hover:bg-gray-200"
           onClick={() => {

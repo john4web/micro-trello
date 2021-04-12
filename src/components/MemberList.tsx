@@ -22,7 +22,7 @@ export const MemberList = () => {
                 alt="img"
               ></img>
             </div>
-            <div className="member-dropdown">
+            <div>
               <DropDownMenu type="member" item={member} />
             </div>
             <div>

@@ -9,7 +9,7 @@ interface IProps {
 export const TaskComponent = ({ task, project }: IProps) => {
   return (
     <div className="align-middle m-auto mt-2 p-2 w-11/12">
-      <div className="column-dropdown">
+      <div>
         <DropDownMenu type="task" item={task} project={project} />
       </div>
       {task.team.map((member, index) => {
