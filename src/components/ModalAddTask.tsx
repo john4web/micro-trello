@@ -147,7 +147,7 @@ export const ModalAddTask = ({ boardID, column, project }: IProps) => {
               id="high"
               name="Priority"
               className="border py-2 px-3 text-gray-700 m-4"
-              value="1"
+              value="high"
               onChange={(e) => {
                 setPriority(e.currentTarget.value);
                 setShowAlertPriority(false);
@@ -159,7 +159,7 @@ export const ModalAddTask = ({ boardID, column, project }: IProps) => {
               id="medium"
               name="Priority"
               className="border py-2 px-3 text-gray-700 m-4"
-              value="2"
+              value="medium"
               onChange={(e) => {
                 setPriority(e.currentTarget.value);
                 setShowAlertPriority(false);
@@ -171,7 +171,7 @@ export const ModalAddTask = ({ boardID, column, project }: IProps) => {
               id="low"
               name="Priority"
               className="border py-2 px-3 text-gray-700 m-4"
-              value="3"
+              value="low"
               onChange={(e) => {
                 setPriority(e.currentTarget.value);
                 setShowAlertPriority(false);

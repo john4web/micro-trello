@@ -28,36 +28,42 @@ export const ColumnComponent = ({ boardID, column, project }: IProps) => {
           <div className="uppercase text-center mb-7">{column.name}</div>
 
           <div>
-            <div className="taskWrapper">
+            <div>
               {column.tasks?.map((task, index) => {
+                var color = "";
+                if (task.priority === "low") {
+                  color = "green";
+                }
+                if (task.priority === "medium") {
+                  color = "yellow";
+                }
+                if (task.priority === "high") {
+                  color = "red";
+                }
                 return (
-                  <div className="task-sort" data-name={task.priority}>
-                    <Draggable
-                      key={task.id}
-                      draggableId={task.id}
-                      index={index}
-                    >
-                      {(provided, snapshot) => {
-                        return (
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            style={{
-                              userSelect: "none",
-                              backgroundColor: snapshot.isDragging
-                                ? "#d1d5db"
-                                : "#e5e7eb",
-                              ...provided.draggableProps.style,
-                            }}
-                          >
-                            {" "}
-                            <TaskComponent task={task} />
-                          </div>
-                        );
-                      }}
-                    </Draggable>
-                  </div>
+                  <Draggable key={task.id} draggableId={task.id} index={index}>
+                    {(provided, snapshot) => {
+                      return (
+                        <div
+                          className="border-l-8"
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          style={{
+                            userSelect: "none",
+                            borderColor: `${color}`,
+                            backgroundColor: snapshot.isDragging
+                              ? "#d1d5db"
+                              : "#e5e7eb",
+                            ...provided.draggableProps.style,
+                          }}
+                        >
+                          {" "}
+                          <TaskComponent task={task} />
+                        </div>
+                      );
+                    }}
+                  </Draggable>
                 );
               })}
             </div>

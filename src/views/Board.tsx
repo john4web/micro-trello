@@ -17,9 +17,9 @@ export const Board = () => {
   //TODO: Wenn current Project undefined ist (also wenn jemand eine falsche id eingegeben hat) -> dann auf Home weiterleiten
 
   return (
-    <div className="bg-gray-100 w-full">
+    <div className="bg-gray-100 w-full overflow-auto">
       <div
-        className="bg-gray-300 h-20 border-b-2"
+        className="bg-gray-300 h-20 border-b-2 overflow-auto"
         style={{ borderColor: `${currentProject?.color}` }}
       >
         <div className="float-left m-2 mt-6">
