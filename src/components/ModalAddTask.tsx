@@ -165,6 +165,7 @@ export const ModalAddTask = ({ boardID, column, project }: IProps) => {
             <input
               type="radio"
               id="medium"
+              defaultChecked
               name="Priority"
               className="border py-2 px-3 text-gray-700 mr-1 ml-4"
               value="medium"

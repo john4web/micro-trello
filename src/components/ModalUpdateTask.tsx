@@ -124,6 +124,7 @@ export const ModalUpdateTask = ({ task, project, modalIsOpen }: IProps) => {
               id="high"
               name="Priority"
               className="border py-2 px-3 text-gray-700 m-4"
+              defaultChecked={"high" === task.priority}
               value="high"
               onChange={(e) => {
                 setPriority(e.currentTarget.value);
@@ -135,6 +136,7 @@ export const ModalUpdateTask = ({ task, project, modalIsOpen }: IProps) => {
               id="medium"
               name="Priority"
               className="border py-2 px-3 text-gray-700 m-4"
+              defaultChecked={"medium" === task.priority}
               value="medium"
               onChange={(e) => {
                 setPriority(e.currentTarget.value);
@@ -146,6 +148,7 @@ export const ModalUpdateTask = ({ task, project, modalIsOpen }: IProps) => {
               id="low"
               name="Priority"
               className="border py-2 px-3 text-gray-700 m-4"
+              defaultChecked={"low" === task.priority}
               value="low"
               onChange={(e) => {
                 setPriority(e.currentTarget.value);
