@@ -162,7 +162,7 @@ export const DropDownMenu = ({ type, item, project }: IProps) => {
           </svg>
         </button>
         {dropDownIsOpen && (
-          <div className="absolute left-full w-full top-1">
+          <div className="absolute left-full w-56 top-1">
             <ul
               key={type + item.id}
               className="shadow-md border bg-white text-gray-700 p-0 m-0"
