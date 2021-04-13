@@ -31,6 +31,10 @@ export const ModalAddColumn = ({ project }: IProps) => {
     }
   };
 
+  function clearContent() {
+    setName("");
+  }
+
   return (
     <div className="w-80 float-right">
       {modalIsOpen && (
@@ -80,6 +84,7 @@ export const ModalAddColumn = ({ project }: IProps) => {
       )}
       <button
         onClick={() => {
+          clearContent();
           setModalIsOpen(true);
         }}
         className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"

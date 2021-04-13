@@ -71,6 +71,14 @@ export const ModalAddTask = ({ boardID, column, project }: IProps) => {
     }
   };
 
+  function clearContent() {
+    setName("");
+    setDeadline("");
+    setPriority("");
+    setSelected([]);
+    setTeam([]);
+  }
+
   return (
     <div className="">
       {modalIsOpen && (
@@ -222,6 +230,7 @@ export const ModalAddTask = ({ boardID, column, project }: IProps) => {
 
       <button
         onClick={() => {
+          clearContent();
           setModalIsOpen(true);
         }}
         className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-black"

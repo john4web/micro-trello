@@ -5,7 +5,6 @@ import { Member } from "../types/types";
 
 export const ModalAddMember = () => {
   const [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
-
   const [firstname, setFirstName] = React.useState<string>("");
   const [lastname, setLastName] = React.useState<string>("");
   const [job, setJob] = React.useState<string>("");
@@ -78,12 +77,18 @@ export const ModalAddMember = () => {
         canvas.height = 400;
         ctx.drawImage(img, 0, 0);
         var photoURL = canvas.toDataURL(event.target.files[0].type);
-        console.log(photoURL);
         setPhoto(photoURL);
       };
       img.src = photoURL;
-      console.log(img);
     };
+  }
+
+  function clearContent() {
+    setFirstName("");
+    setLastName("");
+    setJob("");
+    setSkill("");
+    setPhoto("");
   }
 
   return (
@@ -226,6 +231,7 @@ export const ModalAddMember = () => {
 
       <button
         onClick={() => {
+          clearContent();
           setModalIsOpen(true);
         }}
         className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
