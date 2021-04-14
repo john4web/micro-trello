@@ -12,7 +12,6 @@ export const ModalAddMember = () => {
   const [photo, setPhoto] = React.useState<string>("");
 
   const dispatch = useDispatch();
-  let picture = "";
 
   let [showAlertFirstName, setShowAlertFirstName] = React.useState<Boolean>(
     false
@@ -63,11 +62,10 @@ export const ModalAddMember = () => {
 
   function handleUploadResize(event: any) {
     var reader = new FileReader();
-    reader.readAsDataURL(event.target.files[0]);
+    reader.readAsDataURL(event.target!.files[0]!);
 
     reader.onload = function (e) {
-      var base64data = reader.result;
-      var photoURL = String(base64data);
+      var photoURL = String(reader.result);
       var img = new Image();
 
       img.onload = function () {
@@ -76,8 +74,8 @@ export const ModalAddMember = () => {
         canvas.width = 400;
         canvas.height = 400;
         ctx.drawImage(img, 0, 0);
-        var photoURL = canvas.toDataURL(event.target.files[0].type);
-        setPhoto(photoURL);
+        var resizedPhoto = canvas.toDataURL(event.target.files[0].type);
+        setPhoto(resizedPhoto);
       };
       img.src = photoURL;
     };
@@ -95,7 +93,7 @@ export const ModalAddMember = () => {
     <div className="w-80 float-right">
       {modalIsOpen && (
         <div className="absolute w-screen h-screen bg-black bg-opacity-50 top-0 left-0 flex justify-center items-center z-10">
-          <div className="w-4/6 h-4/6 bg-white opacity-100 overflow-auto p-4">
+          <form className="w-4/6 h-4/6 bg-white opacity-100 overflow-auto p-4">
             <label
               className="mb-2 uppercase text-lg text-gray-700"
               htmlFor="member-firstname"
@@ -225,7 +223,7 @@ export const ModalAddMember = () => {
             >
               CLOSE
             </button>
-          </div>
+          </form>
         </div>
       )}
 

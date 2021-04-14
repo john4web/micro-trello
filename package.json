@@ -34,7 +34,8 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts",
+    "e2e": "cypress open"
   },
   "eslintConfig": {
     "extends": [
@@ -59,6 +60,8 @@
     "@types/uuid": "^8.3.0",
     "@typescript-eslint/parser": "^4.20.0",
     "autoprefixer": "^9.8.6",
+    "cypress": "^7.1.0",
+    "cypress-file-upload": "^5.0.5",
     "eslint": "^7.23.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-prettier": "^3.3.1",

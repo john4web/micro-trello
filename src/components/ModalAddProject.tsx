@@ -58,7 +58,7 @@ export const ModalAddProject = () => {
     <div className="w-80 float-right">
       {modalIsOpen && (
         <div className="absolute w-screen h-screen bg-black bg-opacity-50 top-0 left-0 flex justify-center items-center z-10">
-          <div className="w-4/6 h-4/6 bg-white opacity-100 overflow-auto p-4">
+          <form className="w-4/6 h-4/6 bg-white opacity-100 overflow-auto p-4">
             <label
               className="mb-2 uppercase text-lg text-gray-700"
               htmlFor="project-name"
@@ -139,7 +139,7 @@ export const ModalAddProject = () => {
             >
               CLOSE
             </button>
-          </div>
+          </form>
         </div>
       )}
 

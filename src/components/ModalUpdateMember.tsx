@@ -28,13 +28,24 @@ export const ModalUpdateMember = ({ member, modalIsOpen }: IProps) => {
     dispatch(updateMember(updateCurrentMember));
   };
 
-  function handleUpload(event: any) {
+  function handleUploadResize(event: any) {
     var reader = new FileReader();
-    reader.readAsDataURL(event.target.files[0]);
-    reader.onloadend = function () {
-      var base64data = reader.result;
-      var photoURL = String(base64data);
-      setPhoto(photoURL);
+    reader.readAsDataURL(event.target!.files[0]!);
+
+    reader.onload = function (e) {
+      var photoURL = String(reader.result);
+      var img = new Image();
+
+      img.onload = function () {
+        var canvas = document.createElement("canvas");
+        var ctx = canvas.getContext("2d")!;
+        canvas.width = 400;
+        canvas.height = 400;
+        ctx.drawImage(img, 0, 0);
+        var resizedPhoto = canvas.toDataURL(event.target.files[0].type);
+        setPhoto(resizedPhoto);
+      };
+      img.src = photoURL;
     };
   }
 
@@ -109,7 +120,7 @@ export const ModalUpdateMember = ({ member, modalIsOpen }: IProps) => {
             >
               Photo:
             </label>
-            <input type="file" onChange={handleUpload} />
+            <input type="file" onChange={handleUploadResize} />
 
             <br></br>
             <button
