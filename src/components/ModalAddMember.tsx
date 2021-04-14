@@ -24,13 +24,7 @@ export const ModalAddMember = () => {
   let [showAlertPhoto, setShowAlertPhoto] = React.useState<Boolean>(false);
 
   const onAdd = () => {
-    if (
-      firstname !== "" &&
-      lastname !== "" &&
-      job !== "" &&
-      skill !== "" &&
-      photo !== ""
-    ) {
+    if (firstname !== "" && lastname !== "" && job !== "" && skill !== "") {
       const newMember: Member = {
         id: "",
         firstname: firstname,
@@ -208,7 +202,7 @@ export const ModalAddMember = () => {
               </div>
             )}
             <button
-              className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
+              className="btn-add-member h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
               onClick={() => {
                 onAdd();
               }}
@@ -216,7 +210,7 @@ export const ModalAddMember = () => {
               ADD
             </button>
             <button
-              className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
+              className="btn-close-member h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
               onClick={() => {
                 setModalIsOpen(false);
               }}
@@ -232,7 +226,7 @@ export const ModalAddMember = () => {
           clearContent();
           setModalIsOpen(true);
         }}
-        className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
+        className="btn-member h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
       >
         + New Member
       </button>

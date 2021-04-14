@@ -77,7 +77,7 @@ export const ModalAddProject = () => {
               className="border py-2 px-3 text-gray-700 m-4"
             />
 
-            <div className="flex">
+            <div className="colorPicker flex">
               <div className="mb-2 uppercase  text-lg text-gray-700">
                 Project Color:{" "}
               </div>
@@ -124,7 +124,7 @@ export const ModalAddProject = () => {
               </div>
             )}
             <button
-              className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
+              className="btn-add-project h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
               onClick={() => {
                 onAdd();
               }}
@@ -132,7 +132,7 @@ export const ModalAddProject = () => {
               ADD
             </button>
             <button
-              className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
+              className="btn-close-project h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
               onClick={() => {
                 setModalIsOpen(false);
               }}
@@ -148,7 +148,7 @@ export const ModalAddProject = () => {
           clearContent();
           setModalIsOpen(true);
         }}
-        className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
+        className="btn-project h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
       >
         + New Project
       </button>
