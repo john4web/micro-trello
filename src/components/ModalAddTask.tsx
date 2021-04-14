@@ -16,7 +16,7 @@ interface IProps {
 export const ModalAddTask = ({ boardID, column, project }: IProps) => {
   const [name, setName] = React.useState<string>("");
   const [deadline, setDeadline] = React.useState<string>("");
-  const [priority, setPriority] = React.useState<string>("");
+  const [priority, setPriority] = React.useState<string>("medium");
   const dispatch = useDispatch();
   const [selected, setSelected] = React.useState<Option[]>([]);
   const [team, setTeam] = React.useState<Member[]>(project.team);
@@ -34,9 +34,6 @@ export const ModalAddTask = ({ boardID, column, project }: IProps) => {
     false
   );
   let [showAlertTeam, setShowAlertTeam] = React.useState<Boolean>(false);
-  let [showAlertPriority, setShowAlertPriority] = React.useState<Boolean>(
-    false
-  );
 
   const onAdd = () => {
     if (
@@ -66,15 +63,12 @@ export const ModalAddTask = ({ boardID, column, project }: IProps) => {
     if (deadline === "") {
       setShowAlertDeadline(true);
     }
-    if (priority === "") {
-      setShowAlertPriority(true);
-    }
   };
 
   function clearContent() {
     setName("");
     setDeadline("");
-    setPriority("");
+    setPriority("medium");
     setSelected([]);
     setTeam([]);
   }
@@ -158,7 +152,6 @@ export const ModalAddTask = ({ boardID, column, project }: IProps) => {
               value="high"
               onChange={(e) => {
                 setPriority(e.currentTarget.value);
-                setShowAlertPriority(false);
               }}
             />
             <label htmlFor="high">high</label>
@@ -171,7 +164,6 @@ export const ModalAddTask = ({ boardID, column, project }: IProps) => {
               value="medium"
               onChange={(e) => {
                 setPriority(e.currentTarget.value);
-                setShowAlertPriority(false);
               }}
             />
             <label htmlFor="medium">medium</label>
@@ -183,7 +175,6 @@ export const ModalAddTask = ({ boardID, column, project }: IProps) => {
               value="low"
               onChange={(e) => {
                 setPriority(e.currentTarget.value);
-                setShowAlertPriority(false);
               }}
             />
             <label htmlFor="low">low</label>
@@ -202,11 +193,6 @@ export const ModalAddTask = ({ boardID, column, project }: IProps) => {
             {showAlertDeadline && (
               <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mt-4 mb-4 rounded relative">
                 Please fill out a deadline!
-              </div>
-            )}
-            {showAlertPriority && (
-              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mt-4 mb-4 rounded relative">
-                Please select a priority for the task!
               </div>
             )}
             <button
