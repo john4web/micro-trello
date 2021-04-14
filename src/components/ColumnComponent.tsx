@@ -20,7 +20,7 @@ export const ColumnComponent = ({ boardID, column, project }: IProps) => {
             backgroundColor: snapshot.isDraggingOver ? "#9ca3af" : "#f9fafb",
           }}
           {...provided.droppableProps}
-          className="w-96 bg-gray-300 border-gray-400 border shadow-md p-2 m-5 inline-block align-top"
+          className="droppable w-96 bg-gray-300 border-gray-400 border shadow-md p-2 m-5 inline-block align-top"
         >
           <div className="column-dropdown">
             <DropDownMenu type="column" item={column} />

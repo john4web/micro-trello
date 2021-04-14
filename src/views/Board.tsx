@@ -17,9 +17,9 @@ export const Board = () => {
   //TODO: Wenn current Project undefined ist (also wenn jemand eine falsche id eingegeben hat) -> dann auf Home weiterleiten
 
   return (
-    <div className="bg-gray-100 w-full overflow-auto">
+    <div className="bg-gray-100 w-full">
       <div
-        className="bg-gray-300 h-20 border-b-2 overflow-auto"
+        className="bg-gray-300 h-20 border-b-2"
         style={{ borderColor: `${currentProject?.color}` }}
       >
         <div className="float-left m-2 mt-6">
@@ -51,7 +51,7 @@ export const Board = () => {
       <main className="grid grid-rows-1 gap-1 grid-flow-col">
         <ColumnList boardID={boardID} project={currentProject} />
       </main>
-      <button className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700">
+      <button className="btn-back-home h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700">
         <Link to="/">Back to Home</Link>
       </button>
     </div>

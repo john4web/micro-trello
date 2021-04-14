@@ -12,7 +12,6 @@ export const ModalAddMember = () => {
   const [photo, setPhoto] = React.useState<string>("");
 
   const dispatch = useDispatch();
-  let picture = "";
 
   let [showAlertFirstName, setShowAlertFirstName] = React.useState<Boolean>(
     false
@@ -22,16 +21,9 @@ export const ModalAddMember = () => {
   );
   let [showAlertJob, setShowAlertJob] = React.useState<Boolean>(false);
   let [showAlertSkill, setShowAlertSkill] = React.useState<Boolean>(false);
-  let [showAlertPhoto, setShowAlertPhoto] = React.useState<Boolean>(false);
 
   const onAdd = () => {
-    if (
-      firstname !== "" &&
-      lastname !== "" &&
-      job !== "" &&
-      skill !== "" &&
-      photo !== ""
-    ) {
+    if (firstname !== "" && lastname !== "" && job !== "" && skill !== "") {
       const newMember: Member = {
         id: "",
         firstname: firstname,
@@ -55,9 +47,6 @@ export const ModalAddMember = () => {
     }
     if (skill === "") {
       setShowAlertSkill(true);
-    }
-    if (photo === "") {
-      setShowAlertPhoto(true);
     }
   };
 
@@ -95,7 +84,7 @@ export const ModalAddMember = () => {
     <div className="w-80 float-right">
       {modalIsOpen && (
         <div className="absolute w-screen h-screen bg-black bg-opacity-50 top-0 left-0 flex justify-center items-center z-10">
-          <div className="w-4/6 h-4/6 bg-white opacity-100 overflow-auto p-4">
+          <div className="form-member w-4/6 h-4/6 bg-white opacity-100 overflow-auto p-4">
             <label
               className="mb-2 uppercase text-lg text-gray-700"
               htmlFor="member-firstname"
@@ -179,7 +168,6 @@ export const ModalAddMember = () => {
               type="file"
               onChange={(e) => {
                 handleUploadResize(e);
-                setShowAlertPhoto(false);
               }}
             />
 
@@ -204,13 +192,9 @@ export const ModalAddMember = () => {
                 Please fill out one or more skills!
               </div>
             )}
-            {showAlertPhoto && (
-              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mt-4 mb-4 rounded relative">
-                Please upload a photo!
-              </div>
-            )}
+
             <button
-              className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
+              className="btn-add-member h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
               onClick={() => {
                 onAdd();
               }}
@@ -218,7 +202,7 @@ export const ModalAddMember = () => {
               ADD
             </button>
             <button
-              className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
+              className="btn-close-member h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
               onClick={() => {
                 setModalIsOpen(false);
               }}
@@ -234,7 +218,7 @@ export const ModalAddMember = () => {
           clearContent();
           setModalIsOpen(true);
         }}
-        className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
+        className="btn-member h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
       >
         + New Member
       </button>

@@ -57,7 +57,7 @@ export const ModalAddProject = () => {
   return (
     <div className="w-80 float-right">
       {modalIsOpen && (
-        <div className="absolute w-screen h-screen bg-black bg-opacity-50 top-0 left-0 flex justify-center items-center z-10">
+        <form className="absolute w-screen h-screen bg-black bg-opacity-50 top-0 left-0 flex justify-center items-center z-10">
           <div className="w-4/6 h-4/6 bg-white opacity-100 overflow-auto p-4">
             <label
               className="mb-2 uppercase text-lg text-gray-700"
@@ -95,24 +95,26 @@ export const ModalAddProject = () => {
             <div className="mb-2 uppercase text-lg text-gray-700">
               Project-Team:
             </div>
-            <MultiSelect
-              options={options}
-              value={selected}
-              onChange={(optionsArray: Option[]) => {
-                setShowAlertTeam(false);
-                setSelected(optionsArray);
-                let team: Member[] = [];
-                optionsArray.forEach((option) => {
-                  members.forEach((member: Member) => {
-                    if (option.value === member.id) {
-                      team.push(member);
-                    }
+            <div className="selectField">
+              <MultiSelect
+                options={options}
+                value={selected}
+                onChange={(optionsArray: Option[]) => {
+                  setShowAlertTeam(false);
+                  setSelected(optionsArray);
+                  let team: Member[] = [];
+                  optionsArray.forEach((option) => {
+                    members.forEach((member: Member) => {
+                      if (option.value === member.id) {
+                        team.push(member);
+                      }
+                    });
                   });
-                });
-                setTeam(team);
-              }}
-              labelledBy="Select"
-            />
+                  setTeam(team);
+                }}
+                labelledBy="Select"
+              />
+            </div>
             {showAlertName && (
               <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mt-4 mb-4 rounded relative">
                 Please fill out a name for this project!
@@ -124,7 +126,7 @@ export const ModalAddProject = () => {
               </div>
             )}
             <button
-              className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
+              className="btn-add-project h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
               onClick={() => {
                 onAdd();
               }}
@@ -132,7 +134,7 @@ export const ModalAddProject = () => {
               ADD
             </button>
             <button
-              className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
+              className="btn-close-project h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
               onClick={() => {
                 setModalIsOpen(false);
               }}
@@ -140,7 +142,7 @@ export const ModalAddProject = () => {
               CLOSE
             </button>
           </div>
-        </div>
+        </form>
       )}
 
       <button
@@ -148,7 +150,7 @@ export const ModalAddProject = () => {
           clearContent();
           setModalIsOpen(true);
         }}
-        className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
+        className="btn-project -10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
       >
         + New Project
       </button>

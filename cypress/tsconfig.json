@@ -1,15 +1,11 @@
 {
   "extends": "../tsconfig.json",
-  "include": [
-    "../node_modules/cypress",
-    "*/*.ts",
-    "**/*.ts"
-  ],
+  "include": ["../node_modules/cypress", "*/*.ts", "**/*.ts"],
   "compilerOptions": {
     "noEmit": false,
     "target": "es5",
     "lib": ["es5", "dom"],
-    "types": ["cypress"],
+    "types": ["cypress", "cypress-file-upload"],
     "isolatedModules": false
   }
 }
