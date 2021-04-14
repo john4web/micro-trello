@@ -22,25 +22,28 @@ interface IProps {
 
 export const DropDownMenu = ({ type, item, project }: IProps) => {
   let [dropDownIsOpen, dropDownIsVisible] = React.useState<boolean>(false);
-  let [modalMemberIsOpen, setModalMemberIsOpen] = React.useState<boolean>(
+  const [modalMemberIsOpen, setModalMemberIsOpen] = React.useState<boolean>(
     false
   );
-  let [modalProjectIsOpen, setModalProjectIsOpen] = React.useState<boolean>(
+  const [modalProjectIsOpen, setModalProjectIsOpen] = React.useState<boolean>(
     false
   );
-  let [modalColumnIsOpen, setModalColumnIsOpen] = React.useState<boolean>(
+  const [modalColumnIsOpen, setModalColumnIsOpen] = React.useState<boolean>(
     false
   );
-  let [modalTaskIsOpen, setModalTaskIsOpen] = React.useState<boolean>(false);
+  const [modalTaskIsOpen, setModalTaskIsOpen] = React.useState<boolean>(false);
   const dispatch = useDispatch();
 
+  //sets listener for dropdown menu
   React.useEffect(() => {
+    //adds global listener and closes every open dropdown
     document.addEventListener("click", () => {
       if (dropDownIsOpen) {
         dropDownIsVisible(false);
         dropDownIsOpen = false;
       }
     });
+    //sets listener on modal close btn if modal is open
     let btnList = document.getElementsByClassName("close-update-modal");
     if (btnList.length !== 0) {
       for (let btn of Array.from(btnList)) {
@@ -56,6 +59,7 @@ export const DropDownMenu = ({ type, item, project }: IProps) => {
               setModalColumnIsOpen(false);
               break;
             case "task":
+              preventDragging(false, type);
               setModalTaskIsOpen(false);
               break;
             default:
@@ -63,7 +67,9 @@ export const DropDownMenu = ({ type, item, project }: IProps) => {
           }
         });
 
+        //listener for the modal update btn, if redux store is changed close the modal window and enable drag&drop for tasks
         store.subscribe(() => {
+          preventDragging(false, type);
           setModalMemberIsOpen(false);
           setModalProjectIsOpen(false);
           setModalColumnIsOpen(false);
@@ -71,14 +77,9 @@ export const DropDownMenu = ({ type, item, project }: IProps) => {
         });
       }
     }
-    document.addEventListener("click", () => {
-      if (dropDownIsOpen) {
-        dropDownIsVisible(false);
-        dropDownIsOpen = false;
-      }
-    });
   });
 
+  //sets modal window for update logic
   function setModalWindowForUpdate() {
     switch (type) {
       case "member":
@@ -118,6 +119,7 @@ export const DropDownMenu = ({ type, item, project }: IProps) => {
         dispatch(removeColumnFromProject(item));
         break;
       case "task":
+        preventDragging(false, type);
         dispatch(removeTaskFromProjectColumn(item));
         break;
       default:
@@ -138,11 +140,33 @@ export const DropDownMenu = ({ type, item, project }: IProps) => {
         break;
       case "task":
         setModalTaskIsOpen(true);
+        preventDragging(true, type);
         break;
       default:
         console.log("It was not possible to remove the current object");
     }
   };
+
+  //prevent drag & drop functionality when task modal window is open
+  function preventDragging(prevent: Boolean, type: String) {
+    if (type === "task") {
+      let task = document.getElementById(item.id);
+      //if true removes the attributes for drag & drop funcitonality
+      if (prevent) {
+        task?.removeAttribute("data-rbd-drag-handle-draggable-id");
+        let modalId = "modal-" + item.id;
+        let modal = document.getElementById(modalId);
+        if (modal) {
+          modal.style.cursor = "default";
+        }
+        //if false adds the attributes for drag & drop functionality if they do not exist
+      } else {
+        if (!task?.getAttribute("data-rbd-drag-handle-draggable-id")) {
+          task?.setAttribute("data-rbd-drag-handle-draggable-id", item.id);
+        }
+      }
+    }
+  }
 
   return (
     <Fragment>

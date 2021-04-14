@@ -7,6 +7,7 @@ const reducers = combineReducers({
   member: memberReducer,
   project: projectReducer,
 });
+//set persistentState to get data from the local storage on start of the application
 const persitentState = loadLocalStorage();
 export const store = createStore(reducers, persitentState);
 

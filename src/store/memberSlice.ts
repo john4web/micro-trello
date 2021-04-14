@@ -46,9 +46,7 @@ const memberSlice = createSlice({
       }
     },
   },
-  //TODO: implement methods updateMember
 });
 
 export default memberSlice.reducer;
-
 export const { addMember, updateMember, removeMember } = memberSlice.actions;

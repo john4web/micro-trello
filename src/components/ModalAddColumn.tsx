@@ -9,11 +9,11 @@ interface IProps {
 }
 
 export const ModalAddColumn = ({ project }: IProps) => {
+  const [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
   const [name, setName] = React.useState<string>("");
   const dispatch = useDispatch();
 
-  const [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
-  let [showAlert, setShowAlert] = React.useState<Boolean>(false);
+  const [showAlert, setShowAlert] = React.useState<Boolean>(false);
 
   const onAdd = () => {
     if (name !== "") {
@@ -22,7 +22,6 @@ export const ModalAddColumn = ({ project }: IProps) => {
         name: name,
         projectID: project.id,
       };
-
       dispatch(addColumnToProject(newColumn));
       setModalIsOpen(false);
     } else {

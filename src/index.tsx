@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import { store } from "./store";
 import { saveLocalStorage } from "./store/localStorage";
 
+//if redux storage is changed it changes the local storage also
 store.subscribe(() => {
   saveLocalStorage(store.getState());
 });

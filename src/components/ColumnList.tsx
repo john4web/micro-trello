@@ -13,7 +13,7 @@ export const ColumnList = ({ boardID, project }: IProps) => {
   const dispatch = useDispatch();
   const onDragEnd = (result: any) => {
     if (result.destination === null) {
-      //Wenn Task ins "nichts" gezogen wird  --> abbrechen
+      //when the task is dragged to nothing -> cancel
       return;
     }
 
@@ -23,7 +23,7 @@ export const ColumnList = ({ boardID, project }: IProps) => {
     //explanation: https://www.samanthaming.com/tidbits/70-3-ways-to-clone-objects/#_3-using-json
     let projectCopy = JSON.parse(JSON.stringify(project));
     if (source.droppableId !== destination.droppableId) {
-      // When task is dragged into any other column
+      //when task is dragged into any other column
       let draggedTask!: Task;
 
       projectCopy.columns!.every((column: Column) => {
@@ -53,8 +53,7 @@ export const ColumnList = ({ boardID, project }: IProps) => {
         return true;
       });
     } else {
-      //When task is dragged into the same column
-
+      //when task is dragged into the same column
       const column: Column = projectCopy.columns!.filter(
         (column: Column) => column.id === source.droppableId
       )[0];

@@ -11,13 +11,14 @@ import { RootState } from "../store";
 import React from "react";
 
 export const ModalAddProject = () => {
+  const [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
   const [name, setName] = React.useState<string>("");
   const [color, setColor] = React.useState<string>("#ff0000");
   const [selected, setSelected] = useState<Option[]>([]);
   const [team, setTeam] = useState<Member[]>([]);
-  let [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
-  const dispatch = useDispatch();
   const { members } = useSelector((state: RootState) => state.member);
+  const dispatch = useDispatch();
+
   const options: Option[] = members.map((member) => {
     return {
       label: `${member.firstname} ${member.lastname}`,
@@ -25,8 +26,8 @@ export const ModalAddProject = () => {
     };
   });
 
-  let [showAlertName, setShowAlertName] = useState<Boolean>(false);
-  let [showAlertTeam, setShowAlertTeam] = useState<Boolean>(false);
+  const [showAlertName, setShowAlertName] = useState<Boolean>(false);
+  const [showAlertTeam, setShowAlertTeam] = useState<Boolean>(false);
 
   const onAdd = () => {
     if (name !== "" && color !== "" && team.length !== 0) {

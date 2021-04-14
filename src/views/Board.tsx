@@ -14,7 +14,6 @@ export const Board = () => {
   let currentProject: Project = projects.filter(
     (project) => project.id === boardID
   )[0];
-  //TODO: Wenn current Project undefined ist (also wenn jemand eine falsche id eingegeben hat) -> dann auf Home weiterleiten
 
   return (
     <div className="bg-gray-100 w-full overflow-auto">

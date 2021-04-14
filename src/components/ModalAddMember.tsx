@@ -10,28 +10,19 @@ export const ModalAddMember = () => {
   const [job, setJob] = React.useState<string>("");
   const [skill, setSkill] = React.useState<string>("");
   const [photo, setPhoto] = React.useState<string>("");
-
   const dispatch = useDispatch();
-  let picture = "";
 
-  let [showAlertFirstName, setShowAlertFirstName] = React.useState<Boolean>(
+  const [showAlertFirstName, setShowAlertFirstName] = React.useState<Boolean>(
     false
   );
-  let [showAlertLastName, setShowAlertLastName] = React.useState<Boolean>(
+  const [showAlertLastName, setShowAlertLastName] = React.useState<Boolean>(
     false
   );
-  let [showAlertJob, setShowAlertJob] = React.useState<Boolean>(false);
-  let [showAlertSkill, setShowAlertSkill] = React.useState<Boolean>(false);
-  let [showAlertPhoto, setShowAlertPhoto] = React.useState<Boolean>(false);
+  const [showAlertJob, setShowAlertJob] = React.useState<Boolean>(false);
+  const [showAlertSkill, setShowAlertSkill] = React.useState<Boolean>(false);
 
   const onAdd = () => {
-    if (
-      firstname !== "" &&
-      lastname !== "" &&
-      job !== "" &&
-      skill !== "" &&
-      photo !== ""
-    ) {
+    if (firstname !== "" && lastname !== "" && job !== "" && skill !== "") {
       const newMember: Member = {
         id: "",
         firstname: firstname,
@@ -56,27 +47,25 @@ export const ModalAddMember = () => {
     if (skill === "") {
       setShowAlertSkill(true);
     }
-    if (photo === "") {
-      setShowAlertPhoto(true);
-    }
   };
 
+  //resize & crop uploaded image
   function handleUploadResize(event: any) {
-    var reader = new FileReader();
+    let reader = new FileReader();
     reader.readAsDataURL(event.target.files[0]);
 
     reader.onload = function (e) {
-      var base64data = reader.result;
-      var photoURL = String(base64data);
-      var img = new Image();
+      let base64data = reader.result;
+      let photoURL = String(base64data);
+      let img = new Image();
 
       img.onload = function () {
-        var canvas = document.createElement("canvas");
-        var ctx = canvas.getContext("2d")!;
+        let canvas = document.createElement("canvas");
+        let ctx = canvas.getContext("2d")!;
         canvas.width = 400;
         canvas.height = 400;
         ctx.drawImage(img, 0, 0);
-        var photoURL = canvas.toDataURL(event.target.files[0].type);
+        let photoURL = canvas.toDataURL(event.target.files[0].type);
         setPhoto(photoURL);
       };
       img.src = photoURL;
@@ -179,7 +168,6 @@ export const ModalAddMember = () => {
               type="file"
               onChange={(e) => {
                 handleUploadResize(e);
-                setShowAlertPhoto(false);
               }}
             />
 
@@ -202,11 +190,6 @@ export const ModalAddMember = () => {
             {showAlertSkill && (
               <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mt-4 mb-4 rounded relative">
                 Please fill out one or more skills!
-              </div>
-            )}
-            {showAlertPhoto && (
-              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mt-4 mb-4 rounded relative">
-                Please upload a photo!
               </div>
             )}
             <button

@@ -12,17 +12,22 @@ interface IProps {
 
 export const ModalUdateColumn = ({ column, modalIsOpen }: IProps) => {
   const [name, setName] = React.useState<string>(column.name);
+  const [showAlert, setShowAlert] = React.useState<Boolean>(false);
   const dispatch = useDispatch();
 
   const onUpdate = () => {
-    let updateCurrentColumn: Column = {
-      id: column.id,
-      name: name,
-      projectID: column.projectID,
-      tasks: column.tasks,
-    };
-
-    dispatch(updateColumnFromProject(updateCurrentColumn));
+    if (name !== "") {
+      let updateCurrentColumn: Column = {
+        id: column.id,
+        name: name,
+        projectID: column.projectID,
+        tasks: column.tasks,
+      };
+      dispatch(updateColumnFromProject(updateCurrentColumn));
+    } else {
+      setShowAlert(true);
+      return;
+    }
   };
 
   return (
@@ -38,13 +43,21 @@ export const ModalUdateColumn = ({ column, modalIsOpen }: IProps) => {
             </label>
             <input
               value={name}
-              onChange={(e) => setName(e.currentTarget.value)}
+              onChange={(e) => {
+                setName(e.currentTarget.value);
+                setShowAlert(false);
+              }}
               type="text"
               id="column-name"
               name="column-name"
-              className="border py-2 px-3 text-gray-700 ml-4"
+              className="border py-2 px-3 text-gray-700 m-4"
             />
-
+            <br></br>
+            {showAlert && (
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mt-4 mb-4 rounded relative">
+                Please fill out a name for the column!
+              </div>
+            )}
             <button
               className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
               onClick={() => {

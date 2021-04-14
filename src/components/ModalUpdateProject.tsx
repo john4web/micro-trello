@@ -19,6 +19,8 @@ export const ModalUpdateProject = ({ project, modalIsOpen }: IProps) => {
   const [name, setName] = React.useState<string>(project.name);
   const [color, setColor] = React.useState<string>(project.color);
   const { members } = useSelector((state: RootState) => state.member);
+  const [team, setTeam] = React.useState<Member[]>(project.team);
+  const dispatch = useDispatch();
 
   const options: Option[] = members.map((member) => {
     return {
@@ -27,6 +29,7 @@ export const ModalUpdateProject = ({ project, modalIsOpen }: IProps) => {
     };
   });
 
+  //sets the preselection of the members
   function setPreselection() {
     let preSelection: Option[] = [];
     options.map((option) => {
@@ -40,11 +43,9 @@ export const ModalUpdateProject = ({ project, modalIsOpen }: IProps) => {
     });
     return preSelection;
   }
-
   const [selected, setSelected] = useState<Option[]>(setPreselection());
-  const [team, setTeam] = React.useState<Member[]>(project.team);
-  const dispatch = useDispatch();
-  let [showAlert, setShowAlert] = React.useState<Boolean>(false);
+  const [showAlertName, setShowAlertName] = useState<Boolean>(false);
+  const [showAlertTeam, setShowAlertTeam] = useState<Boolean>(false);
 
   const onUpdate = () => {
     if (name !== "" && color !== "" && team.length !== 0) {
@@ -56,8 +57,12 @@ export const ModalUpdateProject = ({ project, modalIsOpen }: IProps) => {
         columns: project.columns,
       };
       dispatch(updateProject(updateCurrentProject));
-    } else {
-      return;
+    }
+    if (name === "") {
+      setShowAlertName(true);
+    }
+    if (team.length === 0) {
+      setShowAlertTeam(true);
     }
   };
 
@@ -76,31 +81,27 @@ export const ModalUpdateProject = ({ project, modalIsOpen }: IProps) => {
               value={name}
               onChange={(e) => {
                 setName(e.currentTarget.value);
-                setShowAlert(false);
+                setShowAlertName(false);
               }}
               type="text"
               id="project-name"
               name="project-name"
-              className="border py-2 px-3 text-gray-700 ml-4"
+              className="border py-2 px-3 text-gray-700 m-4"
             />
-
-            {showAlert && (
-              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
-                Please fill out every field!!
-              </div>
-            )}
-
             <div className="flex">
               <div className="mb-2 uppercase  text-lg text-gray-700">
                 Project Color:{" "}
               </div>
               <div
                 style={{ backgroundColor: `${color}` }}
-                className="w-10 h-10 border-black border-2"
+                className="w-10 h-10 border-black border-2 m-4 mt-0"
               ></div>
+              <HexColorPicker
+                color={color}
+                onChange={setColor}
+                style={{ width: "150px", height: "150px" }}
+              />
             </div>
-
-            <HexColorPicker color={color} onChange={setColor} />
 
             <div className="mb-2 uppercase text-lg text-gray-700">
               Project-Team:
@@ -109,7 +110,7 @@ export const ModalUpdateProject = ({ project, modalIsOpen }: IProps) => {
               options={options}
               value={selected}
               onChange={(optionsArray: Option[]) => {
-                setShowAlert(false);
+                setShowAlertTeam(false);
                 setSelected(optionsArray);
                 let team: Member[] = [];
                 optionsArray.forEach((option) => {
@@ -123,6 +124,16 @@ export const ModalUpdateProject = ({ project, modalIsOpen }: IProps) => {
               }}
               labelledBy="Select"
             />
+            {showAlertName && (
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mt-4 mb-4 rounded relative">
+                Please fill out a name for this project!
+              </div>
+            )}
+            {showAlertTeam && (
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mt-4 mb-4 rounded relative">
+                Please assign at least one team member to this project!
+              </div>
+            )}
             <button
               className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
               onClick={() => {

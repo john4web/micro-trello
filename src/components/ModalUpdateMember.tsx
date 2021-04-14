@@ -16,25 +16,61 @@ export const ModalUpdateMember = ({ member, modalIsOpen }: IProps) => {
   const [photo, setPhoto] = React.useState<string>(member.photo);
   const dispatch = useDispatch();
 
+  const [showAlertFirstName, setShowAlertFirstName] = React.useState<Boolean>(
+    false
+  );
+  const [showAlertLastName, setShowAlertLastName] = React.useState<Boolean>(
+    false
+  );
+  const [showAlertJob, setShowAlertJob] = React.useState<Boolean>(false);
+  const [showAlertSkill, setShowAlertSkill] = React.useState<Boolean>(false);
+
   const onUpdate = () => {
-    const updateCurrentMember: Member = {
-      id: member.id,
-      firstname: firstname,
-      lastname: lastname,
-      job: job,
-      skill: skill,
-      photo: photo,
-    };
-    dispatch(updateMember(updateCurrentMember));
+    if (firstname !== "" && lastname !== "" && job !== "" && skill !== "") {
+      const updateCurrentMember: Member = {
+        id: member.id,
+        firstname: firstname,
+        lastname: lastname,
+        job: job,
+        skill: skill,
+        photo: photo,
+      };
+      dispatch(updateMember(updateCurrentMember));
+    }
+    if (firstname === "") {
+      setShowAlertFirstName(true);
+    }
+    if (lastname === "") {
+      setShowAlertLastName(true);
+    }
+    if (job === "") {
+      setShowAlertJob(true);
+    }
+    if (skill === "") {
+      setShowAlertSkill(true);
+    }
   };
 
-  function handleUpload(event: any) {
-    var reader = new FileReader();
+  //resize & crop uploaded image
+  function handleUploadResize(event: any) {
+    let reader = new FileReader();
     reader.readAsDataURL(event.target.files[0]);
-    reader.onloadend = function () {
-      var base64data = reader.result;
-      var photoURL = String(base64data);
-      setPhoto(photoURL);
+
+    reader.onload = function (e) {
+      let base64data = reader.result;
+      let photoURL = String(base64data);
+      let img = new Image();
+
+      img.onload = function () {
+        let canvas = document.createElement("canvas");
+        let ctx = canvas.getContext("2d")!;
+        canvas.width = 400;
+        canvas.height = 400;
+        ctx.drawImage(img, 0, 0);
+        let photoURL = canvas.toDataURL(event.target.files[0].type);
+        setPhoto(photoURL);
+      };
+      img.src = photoURL;
     };
   }
 
@@ -51,11 +87,14 @@ export const ModalUpdateMember = ({ member, modalIsOpen }: IProps) => {
             </label>
             <input
               value={firstname}
-              onChange={(e) => setFirstName(e.currentTarget.value)}
+              onChange={(e) => {
+                setFirstName(e.currentTarget.value);
+                setShowAlertFirstName(false);
+              }}
               type="text"
               id="member-firstname"
               name="member-firstname"
-              className="border py-2 px-3 text-gray-700 ml-4"
+              className="border py-2 px-3 text-gray-700 m-4"
             />
             <br></br>
             <label
@@ -66,11 +105,14 @@ export const ModalUpdateMember = ({ member, modalIsOpen }: IProps) => {
             </label>
             <input
               value={lastname}
-              onChange={(e) => setLastName(e.currentTarget.value)}
+              onChange={(e) => {
+                setLastName(e.currentTarget.value);
+                setShowAlertLastName(false);
+              }}
               type="text"
               id="member-lastname"
               name="member-lastname"
-              className="border py-2 px-3 text-gray-700 ml-4"
+              className="border py-2 px-3 text-gray-700 m-4"
             />
             <br></br>
             <label
@@ -81,11 +123,14 @@ export const ModalUpdateMember = ({ member, modalIsOpen }: IProps) => {
             </label>
             <input
               value={job}
-              onChange={(e) => setJob(e.currentTarget.value)}
+              onChange={(e) => {
+                setJob(e.currentTarget.value);
+                setShowAlertJob(false);
+              }}
               type="text"
               id="member-job"
               name="member-job"
-              className="border py-2 px-3 text-gray-700 ml-4"
+              className="border py-2 px-3 text-gray-700 m-4"
             />
             <br></br>
             <label
@@ -96,22 +141,50 @@ export const ModalUpdateMember = ({ member, modalIsOpen }: IProps) => {
             </label>
             <input
               value={skill}
-              onChange={(e) => setSkill(e.currentTarget.value)}
+              onChange={(e) => {
+                setSkill(e.currentTarget.value);
+                setShowAlertSkill(false);
+              }}
               type="text"
               id="member-skill"
               name="member-skill"
-              className="border py-2 px-3 text-gray-700 ml-4"
+              className="border py-2 px-3 text-gray-700 m-4"
             />
             <br></br>
             <label
-              className="mb-2 uppercase text-lg text-gray-700"
+              className="mb-2 uppercase text-lg text-gray-700 mr-4"
               htmlFor="member-skill"
             >
               Photo:
             </label>
-            <input type="file" onChange={handleUpload} />
+            <input
+              type="file"
+              onChange={(e) => {
+                handleUploadResize(e);
+              }}
+            />
 
             <br></br>
+            {showAlertFirstName && (
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mt-4 mb-4 rounded relative">
+                Please fill out a first name!
+              </div>
+            )}
+            {showAlertLastName && (
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mt-4 mb-4 rounded relative">
+                Please fill out a last name!
+              </div>
+            )}
+            {showAlertJob && (
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mt-4 mb-4 rounded relative">
+                Please fill out your job!
+              </div>
+            )}
+            {showAlertSkill && (
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mt-4 mb-4 rounded relative">
+                Please fill out one or more skills!
+              </div>
+            )}
             <button
               className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
               onClick={() => {

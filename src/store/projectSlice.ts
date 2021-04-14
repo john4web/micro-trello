@@ -43,7 +43,6 @@ const projectSlice = createSlice({
         });
       } catch (e) {
         console.log(e);
-        //Todo: auf fehler reagieren!
       }
     },
     addTaskToProjectColumn(state, action: PayloadAction<Task>) {
@@ -68,7 +67,6 @@ const projectSlice = createSlice({
         });
       } catch (e) {
         console.log(e);
-        //Todo: auf fehler reagieren!
       }
     },
     removeTaskFromProjectColumn(state, action: PayloadAction<Task>) {
@@ -92,7 +90,6 @@ const projectSlice = createSlice({
         });
       } catch (e) {
         console.log(e);
-        //Todo: auf fehler reagieren!
       }
     },
     updateTaskFromProjectColumn(state, action: PayloadAction<Task>) {
@@ -115,7 +112,6 @@ const projectSlice = createSlice({
         });
       } catch (e) {
         console.log(e);
-        //Todo: auf fehler reagieren!
       }
     },
     addColumnToProject(state, action: PayloadAction<Column>) {
@@ -135,7 +131,6 @@ const projectSlice = createSlice({
         });
       } catch (e) {
         console.log(e);
-        //Todo: auf fehler reagieren!
       }
     },
     removeColumnFromProject(state, action: PayloadAction<Column>) {
@@ -174,7 +169,6 @@ const projectSlice = createSlice({
 });
 
 export default projectSlice.reducer;
-
 export const {
   addProject,
   updateProject,

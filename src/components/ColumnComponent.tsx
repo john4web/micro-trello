@@ -45,6 +45,7 @@ export const ColumnComponent = ({ boardID, column, project }: IProps) => {
                     {(provided, snapshot) => {
                       return (
                         <div
+                          id={task.id}
                           className="border-l-8"
                           ref={provided.innerRef}
                           {...provided.draggableProps}

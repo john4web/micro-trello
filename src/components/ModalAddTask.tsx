@@ -14,14 +14,13 @@ interface IProps {
 }
 
 export const ModalAddTask = ({ boardID, column, project }: IProps) => {
+  const [modalIsOpen, setModalIsOpen] = React.useState<Boolean>(false);
   const [name, setName] = React.useState<string>("");
   const [deadline, setDeadline] = React.useState<string>("");
   const [priority, setPriority] = React.useState<string>("medium");
-  const dispatch = useDispatch();
   const [selected, setSelected] = React.useState<Option[]>([]);
   const [team, setTeam] = React.useState<Member[]>(project.team);
-
-  const [modalIsOpen, setModalIsOpen] = React.useState<Boolean>(false);
+  const dispatch = useDispatch();
 
   const options: Option[] = project.team?.map((member) => {
     return {
@@ -29,11 +28,12 @@ export const ModalAddTask = ({ boardID, column, project }: IProps) => {
       value: member.id,
     };
   });
-  let [showAlertName, setShowAlertName] = React.useState<Boolean>(false);
-  let [showAlertDeadline, setShowAlertDeadline] = React.useState<Boolean>(
+
+  const [showAlertName, setShowAlertName] = React.useState<Boolean>(false);
+  const [showAlertDeadline, setShowAlertDeadline] = React.useState<Boolean>(
     false
   );
-  let [showAlertTeam, setShowAlertTeam] = React.useState<Boolean>(false);
+  const [showAlertTeam, setShowAlertTeam] = React.useState<Boolean>(false);
 
   const onAdd = () => {
     if (
