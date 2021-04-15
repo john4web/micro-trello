@@ -32,14 +32,14 @@ describe("Member Component", () => {
     photo: "",
   };
 
-  test("addMembers", () => {
+  test("add member", () => {
     testStore.dispatch(addMember(member1));
     expect(testStore.getState().member.members.length).toEqual(1);
     testStore.dispatch(addMember(member2));
     expect(testStore.getState().member.members.length).toEqual(2);
   });
 
-  test("updateMember", () => {
+  test("update member", () => {
     const member2update: Member = {
       id: testStore.getState().member.members[1].id,
       firstname: "Max",
@@ -59,7 +59,7 @@ describe("Member Component", () => {
     expect(testStore.getState().member.members[1].skill).toEqual("webdev pro");
   });
 
-  test("removeMember", () => {
+  test("remove member", () => {
     testStore.dispatch(removeMember(testStore.getState().member.members[0].id));
     expect(testStore.getState().member.members.length).toEqual(1);
     expect(testStore.getState().member.members[0].firstname).toEqual("Max");
