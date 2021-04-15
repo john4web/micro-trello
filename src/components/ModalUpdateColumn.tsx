@@ -46,7 +46,7 @@ export const ModalUdateColumn = ({ column, modalIsOpen }: IProps) => {
             />
 
             <button
-              className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
+              className="btn-update-column h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
               onClick={() => {
                 onUpdate();
               }}

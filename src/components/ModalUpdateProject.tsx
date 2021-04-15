@@ -124,7 +124,7 @@ export const ModalUpdateProject = ({ project, modalIsOpen }: IProps) => {
               labelledBy="Select"
             />
             <button
-              className="update-project h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
+              className="btn-update-project h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
               onClick={() => {
                 onUpdate();
               }}

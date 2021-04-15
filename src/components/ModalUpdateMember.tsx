@@ -113,7 +113,7 @@ export const ModalUpdateMember = ({ member, modalIsOpen }: IProps) => {
 
             <br></br>
             <button
-              className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
+              className="btn-update-member h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700"
               onClick={() => {
                 onUpdate();
               }}

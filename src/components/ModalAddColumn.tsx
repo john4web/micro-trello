@@ -39,7 +39,7 @@ export const ModalAddColumn = ({ project }: IProps) => {
     <div className="w-80 float-right">
       {modalIsOpen && (
         <div className="absolute w-screen h-screen bg-black bg-opacity-50 top-0 left-0 flex justify-center items-center z-10">
-          <form className="w-4/6 h-4/6 bg-white opacity-100 p-4">
+          <div className="form-column w-4/6 h-4/6 bg-white opacity-100 p-4">
             <label
               className="mb-2 uppercase text-lg text-gray-700"
               htmlFor="column-name"
@@ -79,7 +79,7 @@ export const ModalAddColumn = ({ project }: IProps) => {
             >
               CLOSE
             </button>
-          </form>
+          </div>
         </div>
       )}
       <button
