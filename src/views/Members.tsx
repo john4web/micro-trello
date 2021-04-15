@@ -10,7 +10,7 @@ export const Members = () => {
         </div>
         <ModalAddMember />
       </div>
-      <main className="grid grid-rows-3 gap-1 grid-flow-col">
+      <main className="grid grid-rows-4 gap-1 grid-flow-col">
         <MemberList />
       </main>
     </div>

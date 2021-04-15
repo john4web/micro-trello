@@ -22,7 +22,13 @@ export const ModalAddMember = () => {
   const [showAlertSkill, setShowAlertSkill] = React.useState<Boolean>(false);
 
   const onAdd = () => {
-    if (firstname !== "" && lastname !== "" && job !== "" && skill !== "") {
+    if (
+      firstname !== "" &&
+      lastname !== "" &&
+      job !== "" &&
+      skill !== "" &&
+      photo !== ""
+    ) {
       const newMember: Member = {
         id: "",
         firstname: firstname,
@@ -30,6 +36,24 @@ export const ModalAddMember = () => {
         job: job,
         skill: skill,
         photo: photo,
+      };
+
+      dispatch(addMember(newMember));
+      setModalIsOpen(false);
+    } else if (
+      firstname !== "" &&
+      lastname !== "" &&
+      job !== "" &&
+      skill !== ""
+    ) {
+      const newMember: Member = {
+        id: "",
+        firstname: firstname,
+        lastname: lastname,
+        job: job,
+        skill: skill,
+        photo:
+          "https://drive.google.com/uc?export=view&id=1ZYVdWriQ1uUiKkIRNEjnER1grFNS1xON",
       };
 
       dispatch(addMember(newMember));
@@ -49,7 +73,6 @@ export const ModalAddMember = () => {
     }
   };
 
-  //resize & crop uploaded image
   function handleUploadResize(event: any) {
     let reader = new FileReader();
     reader.readAsDataURL(event.target.files[0]);
@@ -62,9 +85,25 @@ export const ModalAddMember = () => {
       img.onload = function () {
         let canvas = document.createElement("canvas");
         let ctx = canvas.getContext("2d")!;
-        canvas.width = 400;
-        canvas.height = 400;
-        ctx.drawImage(img, 0, 0);
+        var MAX_WIDTH = 400;
+        var MAX_HEIGHT = 400;
+        var width = img.width;
+        var height = img.height;
+
+        if (width > height) {
+          if (width > MAX_WIDTH) {
+            height *= MAX_WIDTH / width;
+            width = MAX_WIDTH;
+          }
+        } else {
+          if (height > MAX_HEIGHT) {
+            width *= MAX_HEIGHT / height;
+            height = MAX_HEIGHT;
+          }
+        }
+        canvas.width = width;
+        canvas.height = height;
+        ctx.drawImage(img, 0, 0, width, height);
         let photoURL = canvas.toDataURL(event.target.files[0].type);
         setPhoto(photoURL);
       };
