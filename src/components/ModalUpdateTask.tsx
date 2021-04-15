@@ -36,7 +36,6 @@ export const ModalUpdateTask = ({ task, project, modalIsOpen }: IProps) => {
         }
       });
     });
-    console.log(preSelection);
     return preSelection;
   }
 
@@ -49,7 +48,6 @@ export const ModalUpdateTask = ({ task, project, modalIsOpen }: IProps) => {
   const [showAlertTeam, setShowAlertTeam] = React.useState<Boolean>(false);
 
   const onUpdate = () => {
-    console.log(team);
     if (
       name !== "" &&
       team.length !== 0 &&

@@ -6,11 +6,12 @@ import { ModalUpdateMember } from "./ModalUpdateMember";
 import { store } from "../store";
 import {
   removeColumnFromProject,
+  removeMemberFromAllProjects,
   removeProject,
   removeTaskFromProjectColumn,
 } from "../store/projectSlice";
 import { ModalUpdateProject } from "./ModalUpdateProject";
-import { ModalUdateColumn } from "./ModalUpdateColumn";
+import { ModalUpdateColumn } from "./ModalUpdateColumn";
 import { ModalUpdateTask } from "./ModalUpdateTask";
 import { Project } from "../types/types";
 
@@ -92,7 +93,7 @@ export const DropDownMenu = ({ type, item, project }: IProps) => {
         );
       case "column":
         return (
-          <ModalUdateColumn column={item} modalIsOpen={modalColumnIsOpen} />
+          <ModalUpdateColumn column={item} modalIsOpen={modalColumnIsOpen} />
         );
       case "task":
         return (
@@ -111,6 +112,7 @@ export const DropDownMenu = ({ type, item, project }: IProps) => {
     switch (type) {
       case "member":
         dispatch(removeMember(item.id));
+        dispatch(removeMemberFromAllProjects(item));
         break;
       case "project":
         dispatch(removeProject(item.id));

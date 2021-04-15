@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { updateMember } from "../store/memberSlice";
+import { updateMemberInAllProjects } from "../store/projectSlice";
 import { Member } from "../types/types";
 
 interface IProps {
@@ -36,6 +37,7 @@ export const ModalUpdateMember = ({ member, modalIsOpen }: IProps) => {
         photo: photo,
       };
       dispatch(updateMember(updateCurrentMember));
+      dispatch(updateMemberInAllProjects(updateCurrentMember));
     }
     if (firstname === "") {
       setShowAlertFirstName(true);

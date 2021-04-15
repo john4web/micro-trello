@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Column, Project, Task } from "../types/types";
+import { Column, Member, Project, Task } from "../types/types";
 import { v4 as uuid } from "uuid";
 
 type ProjectState = {
@@ -165,6 +165,92 @@ const projectSlice = createSlice({
         return true;
       });
     },
+    updateMemberInAllProjects(state, action: PayloadAction<Member>) {
+      try {
+        state.projects.every((project) => {
+          project.team.every((member, index) => {
+            if (member.id === action.payload.id) {
+              // replaces 1 element at index
+              project.team.splice(index, 1, action.payload);
+              project.columns?.every((column) => {
+                column.tasks?.every((task) => {
+                  task.team.every((member, index2) => {
+                    if (member.id === action.payload.id) {
+                      // replaces 1 element at index
+                      task.team.splice(index2, 1, action.payload);
+                      return false;
+                    }
+                    return true;
+                  });
+                  return true;
+                });
+                return true;
+              });
+              return false;
+            }
+            return true;
+          });
+          return true;
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    },
+
+    removeMemberFromAllProjects(state, action: PayloadAction<Member>) {
+      try {
+        let array: any = [];
+
+        state.projects.every((project, index1) => {
+          project.team.every((member, index2) => {
+            if (member.id === action.payload.id) {
+              if (project.team.length === 1) {
+                //delete project
+                // state.projects.splice(index1, 1);
+                array.push({ index: index1, array: state.projects });
+                console.log("project deleted");
+              } else {
+                //delete member
+                //project.team.splice(index2, 1);
+                array.push({ index: index2, array: project.team });
+                console.log("member deleted");
+                project.columns?.every((column) => {
+                  column.tasks?.every((task, index3) => {
+                    task.team.every((member, index4) => {
+                      if (member.id === action.payload.id) {
+                        if (task.team.length === 1) {
+                          //delete task
+                          //column.tasks?.splice(index3, 1);
+                          array.push({ index: index3, array: column.tasks });
+                          console.log("task deleted");
+                        } else {
+                          //delete member from task
+                          //task.team.splice(index4, 1);
+                          array.push({ index: index4, array: task.team });
+                        }
+                        return false;
+                      }
+                      return true;
+                    });
+                    return true;
+                  });
+                  return true;
+                });
+              }
+              return false;
+            }
+            return true;
+          });
+          return true;
+        });
+
+        array.forEach((item: any) => {
+          item.array.splice(item.index, 1);
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    },
   },
 });
 
@@ -179,4 +265,6 @@ export const {
   addColumnToProject,
   removeColumnFromProject,
   updateColumnFromProject,
+  updateMemberInAllProjects,
+  removeMemberFromAllProjects,
 } = projectSlice.actions;
