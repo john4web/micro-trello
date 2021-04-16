@@ -76,7 +76,7 @@ export const ColumnList = ({ boardID, project }: IProps) => {
       <DragDropContext onDragEnd={onDragEnd}>
         {project?.columns?.map((column, index) => {
           return (
-            <div key={index}>
+            <div key={index} className="droppable">
               <ColumnComponent
                 boardID={boardID}
                 column={column}

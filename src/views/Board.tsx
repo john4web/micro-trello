@@ -16,9 +16,9 @@ export const Board = () => {
   )[0];
 
   return (
-    <div className="bg-gray-100 w-full overflow-auto">
+    <div className="bg-gray-100 w-full">
       <div
-        className="bg-gray-300 h-20 border-b-2 overflow-auto"
+        className="bg-gray-300 h-20 border-b-2"
         style={{ borderColor: `${currentProject?.color}` }}
       >
         <div className="float-left m-2 mt-6">
@@ -51,7 +51,7 @@ export const Board = () => {
       <div className="flex p-5">
         <Link
           to="/"
-          className=" flex items-center   h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700                                    "
+          className="btn-back-home flex items-center   h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700                                    "
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

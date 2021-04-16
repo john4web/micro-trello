@@ -20,6 +20,7 @@ export const ProjectList = () => {
               <DropDownMenu type="project" item={project} />
             </div>
             <Link
+              className="projectLink"
               to={{
                 pathname: `/board/${project.id}`,
                 state: project.name,
