@@ -208,12 +208,10 @@ const projectSlice = createSlice({
                 //delete project
                 // state.projects.splice(index1, 1);
                 array.push({ index: index1, array: state.projects });
-                console.log("project deleted");
               } else {
                 //delete member
                 //project.team.splice(index2, 1);
                 array.push({ index: index2, array: project.team });
-                console.log("member deleted");
                 project.columns?.every((column) => {
                   column.tasks?.every((task, index3) => {
                     task.team.every((member, index4) => {
@@ -222,7 +220,6 @@ const projectSlice = createSlice({
                           //delete task
                           //column.tasks?.splice(index3, 1);
                           array.push({ index: index3, array: column.tasks });
-                          console.log("task deleted");
                         } else {
                           //delete member from task
                           //task.team.splice(index4, 1);
