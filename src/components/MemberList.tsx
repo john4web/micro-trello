@@ -14,7 +14,10 @@ export const MemberList = () => {
             key={index}
             className="m-4 p-4 shadow-md border bg-white w-60 text-gray-700"
           >
-            <div className="float-right">
+            <div
+              className="float-right bg-black flex justify-center overflow-hidden"
+              style={{ width: "28px", height: "28px" }}
+            >
               <img
                 id="memberPhoto"
                 src={member.photo}
