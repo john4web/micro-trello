@@ -47,12 +47,28 @@ export const Board = () => {
         </div>
         <ModalAddColumn project={currentProject} />
       </div>
+
+      <div className="flex p-5">
+        <Link
+          to="/"
+          className=" flex items-center   h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700                                    "
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="10"
+            height="10"
+            viewBox="0 0 24 24"
+            fill="#ffffff"
+          >
+            <path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z" />
+          </svg>
+          Back to Home
+        </Link>
+      </div>
+
       <main className="grid grid-rows-1 gap-1 grid-flow-col">
         <ColumnList boardID={boardID} project={currentProject} />
       </main>
-      <button className="h-10 px-5 m-2 mt-5 text-white transition-colors duration-150 bg-red-500 rounded-lg focus:shadow-outline hover:bg-red-700">
-        <Link to="/">Back to Home</Link>
-      </button>
     </div>
   );
 };

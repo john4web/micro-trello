@@ -16,7 +16,7 @@ export const ModalUpdateTask = ({ task, project, modalIsOpen }: IProps) => {
   const [name, setName] = React.useState<string>(task.name);
   const [deadline, setDeadline] = React.useState<string>(task.deadline);
   const [priority, setPriority] = React.useState<string>(task.priority);
-  const [team, setTeam] = React.useState<Member[]>(project.team);
+  const [team, setTeam] = React.useState<Member[]>(task.team);
   const dispatch = useDispatch();
 
   const options: Option[] = project.team?.map((member: Member) => {
@@ -26,17 +26,15 @@ export const ModalUpdateTask = ({ task, project, modalIsOpen }: IProps) => {
     };
   });
 
-  //sets preselestion of the members
+  //sets preselection of the members
   function setPreselection() {
     let preSelection: Option[] = [];
-    options.map((option) => {
-      task.team.map((member: Member) => {
+    options.forEach((option) => {
+      task.team.forEach((member: Member) => {
         if (option.value === member.id) {
           preSelection.push(option);
         }
-        return true;
       });
-      return true;
     });
     return preSelection;
   }
@@ -194,7 +192,7 @@ export const ModalUpdateTask = ({ task, project, modalIsOpen }: IProps) => {
             )}
             {showAlertTeam && (
               <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mt-4 mb-4 rounded relative">
-                Please add at least on team member to this task!
+                Please add at least one team member to this task!
               </div>
             )}
             {showAlertDeadline && (

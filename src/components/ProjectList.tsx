@@ -11,7 +11,7 @@ export const ProjectList = () => {
     <Fragment>
       {projects.map((project, index) => {
         return (
-          <ul
+          <div
             key={index}
             className="m-4 shadow-md border border-l-8 bg-white w-60"
             style={{ borderColor: `${project.color}` }}
@@ -25,11 +25,11 @@ export const ProjectList = () => {
                 state: project.name,
               }}
             >
-              <li>
-                <div className="m-4 block px-9 py-10">{project.name}</div>
-              </li>
+              <div>
+                <div className="p-16">{project.name}</div>
+              </div>
             </Link>
-          </ul>
+          </div>
         );
       })}
     </Fragment>

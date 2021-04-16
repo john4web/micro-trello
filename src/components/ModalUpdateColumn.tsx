@@ -10,7 +10,7 @@ interface IProps {
   modalIsOpen: boolean;
 }
 
-export const ModalUdateColumn = ({ column, modalIsOpen }: IProps) => {
+export const ModalUpdateColumn = ({ column, modalIsOpen }: IProps) => {
   const [name, setName] = React.useState<string>(column.name);
   const [showAlert, setShowAlert] = React.useState<Boolean>(false);
   const dispatch = useDispatch();
